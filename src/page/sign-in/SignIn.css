@@ -1,11 +1,17 @@
+.sign-in-page {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .sign-in-form {
     text-align: center;
     border: 1px solid #c5c5c5;
     border-radius: 8px;
-    width: fit-content;
-    margin: 8% auto;
     padding: 3%;
-    font-family: 'Roboto', sans-serif;}
+    font-family: 'Roboto', sans-serif;
+}
 
 
 .fundoo-logo {
@@ -55,4 +61,38 @@
 
 .link-div {
     padding: 5% 0 10%;
+}
+
+.bottom-div {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding-top: 10%;
+}
+
+@media only screen and (max-width:600px) {
+    .sign-in-form {
+        padding: 10%;
+        width: 100%;
+        border: none;
+    }
+
+    .fundoo-logo {
+        padding: 15px;
+    }
+
+    .sign-in-head,
+    .sign-in-tag {
+        margin-bottom: 15px;
+    }
+}
+
+@media only screen and (max-width:250px) { 
+
+    .bottom-div {
+        display: flex;
+        flex-direction: column;
+        padding-top: 10%;
+    }
+
 }

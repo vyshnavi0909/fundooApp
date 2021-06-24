@@ -6,7 +6,7 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormHelperText from "@material-ui/core/FormHelperText";
 import Checkbox from "@material-ui/core/Checkbox";
 import Button from "@material-ui/core/Button";
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom";
 
 export class NewAccount extends Component {
   constructor(props) {
@@ -28,9 +28,9 @@ export class NewAccount extends Component {
 
   changeHandler = (e) => {
     this.setState({
-      [e.target.name] : e.target.value
-    })
-  }
+      [e.target.name]: e.target.value,
+    });
+  };
 
   validation = () => {
     let isError = false;
@@ -42,23 +42,28 @@ export class NewAccount extends Component {
     error.confirmPassError = this.state.confirmPass === "" ? true : false;
 
     this.setState({
-      ...error
-    })
+      ...error,
+    });
 
-    isError = error.fNameError || error.lNameError || error.userNameError || error.passwordError || error.confirmPassError;
-    return isError ;
-  } 
+    isError =
+      error.fNameError ||
+      error.lNameError ||
+      error.userNameError ||
+      error.passwordError ||
+      error.confirmPassError;
+    return isError;
+  };
 
   onClicked = () => {
     var isValid = this.validation();
-    if(isValid){
+    if (isValid) {
       console.log("Validation failed");
     }
-  }
+  };
 
   render() {
     return (
-      <div>
+      <div className="outer-box">
         <form className="form-box">
           <div className="first-box">
             <div>
@@ -108,7 +113,11 @@ export class NewAccount extends Component {
               <TextField
                 name="userName"
                 error={this.state.userNameError}
-                helperText={this.state.userNameError ? "Enter Username" : "You can use letters, numbers and periods"}
+                helperText={
+                  this.state.userNameError
+                    ? "Enter Username"
+                    : "You can use letters, numbers and periods"
+                }
                 label="Username"
                 className="username"
                 InputProps={{
@@ -136,13 +145,17 @@ export class NewAccount extends Component {
                 onChange={(e) => this.changeHandler(e)}
               />
               <TextField
-              name="confirmPass"
-              error={this.state.confirmPassError}
-              helperText={this.state.confirmPassError ? "Enter confirmation password" : ""}
+                name="confirmPass"
+                error={this.state.confirmPassError}
+                helperText={
+                  this.state.confirmPassError
+                    ? "Enter confirmation password"
+                    : ""
+                }
                 className="password-field"
                 label="Confirm"
                 variant="outlined"
-                onChange={(e)=> this.changeHandler(e)}
+                onChange={(e) => this.changeHandler(e)}
               />
             </div>
             <FormHelperText>
@@ -159,7 +172,11 @@ export class NewAccount extends Component {
               <Link className="sign-in-instead" to="/sign-in">
                 Sign in instead
               </Link>
-              <Button variant="contained" color="primary" onClick={this.onClicked}>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={this.onClicked}
+              >
                 Next
               </Button>
             </div>
