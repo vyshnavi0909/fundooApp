@@ -11,8 +11,6 @@ function App() {
       <Route exact path="/sign-in" component={SignIn}></Route>
     </div>
     </Router>
-    
-    
   );
 }
 

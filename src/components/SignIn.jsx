@@ -3,16 +3,13 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import { Link } from "react-router-dom";
 
-
 export class SignIn extends Component {
-    constructor(props) {
-        super(props)
-    
-        this.state = {
-             
-        }
-    }
-    
+  constructor(props) {
+    super(props);
+
+    this.state = {};
+  }
+
   render() {
     return (
       <div id="sign-in-link">
@@ -42,21 +39,31 @@ export class SignIn extends Component {
             <p className="sign-in-tag">Use your Fundoo Account</p>
           </div>
           <TextField
+            required
             className="email-field"
             id="mail-phone"
             label="Email or phone"
             variant="outlined"
           />
           <div className="middle-box">
-            <a className="forgot-link" href="#forgot-email">Forgot email?</a>
-            <p className="tag">Not your computer? Use Guest mode to sign in privately.</p>
-            <a className="learn-more-link" href="https://support.google.com/chrome/answer/6130773?hl=en">
+            <a className="forgot-link" href="#forgot-email">
+              Forgot email?
+            </a>
+            <p className="tag">
+              Not your computer? Use Guest mode to sign in privately.
+            </p>
+            <a
+              className="learn-more-link"
+              href="https://support.google.com/chrome/answer/6130773?hl=en"
+            >
               Learn more
             </a>
           </div>
           <div className="bottom-div">
-            <Link className="create-acc" to="/">Create account</Link>
-            <Button variant="contained" color="primary">
+            <Link className="create-acc" to="/">
+              Create account
+            </Link>
+            <Button type="submit" variant="contained" color="primary">
               Next
             </Button>
           </div>
