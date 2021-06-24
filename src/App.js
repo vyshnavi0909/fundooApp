@@ -1,7 +1,7 @@
 import './App.css';
-import NewAccount from './components/NewAccount'
+import NewAccount from './page/create-account/NewAccount'
 import { BrowserRouter as Router, Route } from "react-router-dom";
-import SignIn from './components/SignIn'
+import SignIn from './page/sign-in/SignIn'
 
 function App() {
   return (

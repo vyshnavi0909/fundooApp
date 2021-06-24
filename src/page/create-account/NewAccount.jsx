@@ -1,3 +1,4 @@
+import "./NewAccount.css";
 import React, { Component } from "react";
 import TextField from "@material-ui/core/TextField";
 import InputAdornment from "@material-ui/core/InputAdornment";
@@ -11,7 +12,48 @@ export class NewAccount extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {};
+    this.state = {
+      fName: "",
+      lName: "",
+      userName: "",
+      password: "",
+      confirmPass: "",
+      fNameError: false,
+      lNameError: false,
+      userNameError: false,
+      passwordError: false,
+      confirmPassError: false,
+    };
+  }
+
+  changeHandler = (e) => {
+    this.setState({
+      [e.target.name] : e.target.value
+    })
+  }
+
+  validation = () => {
+    let isError = false;
+    const error = this.state;
+    error.fNameError = this.state.fName === "" ? true : false;
+    error.lNameError = this.state.lName === "" ? true : false;
+    error.userNameError = this.state.userName === "" ? true : false;
+    error.passwordError = this.state.password === "" ? true : false;
+    error.confirmPassError = this.state.confirmPass === "" ? true : false;
+
+    this.setState({
+      ...error
+    })
+
+    isError = error.fNameError || error.lNameError || error.userNameError || error.passwordError || error.confirmPassError;
+    return isError ;
+  } 
+
+  onClicked = () => {
+    var isValid = this.validation();
+    if(isValid){
+      console.log("Validation failed");
+    }
   }
 
   render() {
@@ -44,32 +86,38 @@ export class NewAccount extends Component {
             </div>
             <div className="name-div">
               <TextField
-                required
-                id="firstName"
+                name="fName"
+                error={this.state.fNameError}
+                helperText={this.state.fNameError ? "Enter First Name" : ""}
                 className="name-field"
                 label="First Name"
                 variant="outlined"
+                onChange={(e) => this.changeHandler(e)}
               />
               <TextField
-                id="lastName"
+                name="lName"
+                error={this.state.lNameError}
+                helperText={this.state.lNameError ? "Enter Last Name" : ""}
                 className="name-field"
                 label="Last Name"
                 variant="outlined"
+                onChange={(e) => this.changeHandler(e)}
               />
             </div>
             <div>
               <TextField
-                required
+                name="userName"
+                error={this.state.userNameError}
+                helperText={this.state.userNameError ? "Enter Username" : "You can use letters, numbers and periods"}
                 label="Username"
                 className="username"
-                id="userName"
                 InputProps={{
                   endAdornment: (
                     <InputAdornment position="end">@gmail.com</InputAdornment>
                   ),
                 }}
                 variant="outlined"
-                helperText="You can use letters, numbers and periods"
+                onChange={(e) => this.changeHandler(e)}
               />
             </div>
             <div className="link-div">
@@ -79,17 +127,22 @@ export class NewAccount extends Component {
             </div>
             <div className="password-div">
               <TextField
-                required
-                id="password"
+                name="password"
+                error={this.state.passwordError}
+                helperText={this.state.passwordError ? "Enter password" : ""}
                 className="password-field"
                 label="Password"
                 variant="outlined"
+                onChange={(e) => this.changeHandler(e)}
               />
               <TextField
-                id="confirm-password"
+              name="confirmPass"
+              error={this.state.confirmPassError}
+              helperText={this.state.confirmPassError ? "Enter confirmation password" : ""}
                 className="password-field"
                 label="Confirm"
                 variant="outlined"
+                onChange={(e)=> this.changeHandler(e)}
               />
             </div>
             <FormHelperText>
@@ -106,7 +159,7 @@ export class NewAccount extends Component {
               <Link className="sign-in-instead" to="/sign-in">
                 Sign in instead
               </Link>
-              <Button type="submit" variant="contained" color="primary">
+              <Button variant="contained" color="primary" onClick={this.onClicked}>
                 Next
               </Button>
             </div>

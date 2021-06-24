@@ -1,7 +1,9 @@
+import './SignIn.css';
 import React, { Component } from "react";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import { Link } from "react-router-dom";
+
 
 export class SignIn extends Component {
   constructor(props) {
@@ -12,7 +14,7 @@ export class SignIn extends Component {
 
   render() {
     return (
-      <div id="sign-in-link">
+      <div className="sign-in-page">
         <form className="sign-in-form">
           <div className="fundoo-logo">
             <svg className="fundoo-logo" height="20" width="100">

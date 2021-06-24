@@ -1,0 +1,58 @@
+.sign-in-form {
+    text-align: center;
+    border: 1px solid #c5c5c5;
+    border-radius: 8px;
+    width: fit-content;
+    margin: 8% auto;
+    padding: 3%;
+    font-family: 'Roboto', sans-serif;}
+
+
+.fundoo-logo {
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.sign-in-head,
+.sign-in-tag {
+    margin: 0 0 5%;
+}
+
+.sign-in-tag {
+    font-size: 16px;
+    font-weight: 200;
+}
+
+.email-field {
+    width: 100%;
+}
+
+.middle-box {
+    text-align: start;
+    margin-top: 5%;
+    font-size: 14px;
+}
+
+.forgot-link,
+.learn-more-link {
+    color: #3f51b5;
+    cursor: pointer;
+    text-decoration: none;
+    font-weight: 700;
+}
+
+.create-acc {
+    font-weight: 600;
+    text-decoration: none;
+    color: #3f51b5;
+    padding: 10px 0;
+}
+
+.create-acc:hover {
+    color: #2f3d96;
+    background-color: #ced8f852;
+}
+
+.link-div {
+    padding: 5% 0 10%;
+}

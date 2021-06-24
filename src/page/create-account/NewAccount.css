@@ -1,0 +1,77 @@
+.form-box {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border: 1px solid #c5c5c5;
+    border-radius: 8px;
+    width: 50%;
+    margin: 3% auto;
+    padding: 3%;
+    font-family: 'Poppins', sans-serif;
+
+}
+
+.first-box {
+    width: 60%;
+}
+
+.img-box {
+    padding: 5%;
+    text-align: center;
+}
+
+.fundoo-logo {
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.form-heading {
+    font-size: 24px;
+}
+
+.name-div {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 5%;
+}
+
+.username {
+    width: 100%;
+}
+
+.current-mail,
+.sign-in-instead {
+    font-weight: 600;
+    text-decoration: none;
+    color: #3f51b5;
+    padding: 10px 0;
+}
+
+.sign-in-instead:hover,
+.current-mail:hover {
+    color: #2f3d96;
+    background-color: #ced8f852;
+}
+
+.link-div {
+    padding: 5% 0 10%;
+}
+
+.password-div {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+}
+
+.password-field,
+.name-field {
+    width: 48%;
+}
+
+.bottom-div {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding-top: 10%;
+}
