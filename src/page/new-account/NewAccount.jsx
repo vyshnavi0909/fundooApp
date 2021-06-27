@@ -42,15 +42,6 @@ export class NewAccount extends Component {
     }
   };
 
-  // componentDidMount() {
-  //   axios
-  //     .get(`http://fundoonotes.incubation.bridgelabz.com/api/user/userSignUp`)
-  //     .then((result) => {
-  //       const output = result.data;
-  //       console.log(output);
-  //     });
-  // }
-
   changeHandler = (e) => {
     if (e.target.name === "userName") {
       this.setState({

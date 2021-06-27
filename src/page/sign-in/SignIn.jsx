@@ -2,8 +2,9 @@ import React, { Component } from "react";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import { Link } from "react-router-dom";
-import axios from "axios";
 import "./SignIn.css";
+import UserServices from "/home/babbur/Desktop/session3/React Projects/fundoo_app/src/services/userServices.js";
+const services = new UserServices();
 
 export class SignIn extends Component {
   constructor(props) {
@@ -16,15 +17,6 @@ export class SignIn extends Component {
       passwordError: false,
     };
   }
-
-  // componentDidMount() {
-  //   axios.get(`https://jsonplaceholder.typicode.com/users`)
-  //     .then(res => {
-  //       const persons = res.data;
-  //       this.setState({ persons });
-  //       console.log(this.state.persons);
-  //     })
-  // }
 
   changeHandler = (e) => {
     this.setState({
@@ -56,11 +48,16 @@ export class SignIn extends Component {
         password: this.state.password,
       };
 
-      // axios.post(`https://jsonplaceholder.typicode.com/users`, data)
-      // .then(result => {
-      //   console.log(result);
-      //   console.log(result.data);
-      // })
+      services
+        .SignIn(data)
+        .then((res) => {
+          console.log(res);
+          localStorage.setItem("token", res.data);
+          this.props.history.push("/sign-in");
+        })
+        .catch((err) => {
+          console.log("The error is:" + err);
+        });
     }
   };
 
@@ -95,40 +92,40 @@ export class SignIn extends Component {
 
           <div className="input-div">
             <TextField
-            name="mailId"
-            error={this.state.mailError}
-            helperText={
-              this.state.mailError ? "Enter your email or phone number" : ""
-            }
-            className="email-field"
-            label="Email or phone"
-            variant="outlined"
-            fullWidth="true"
-            onChange={(e) => this.changeHandler(e)}
-          />
+              name="mailId"
+              error={this.state.mailError}
+              helperText={
+                this.state.mailError ? "Enter your email or phone number" : ""
+              }
+              className="email-field"
+              label="Email or phone"
+              variant="outlined"
+              fullWidth="true"
+              onChange={(e) => this.changeHandler(e)}
+            />
           </div>
           <div className="input-div">
             <Link className="forgot-link" to="/reset-email">
-            Forgot email?
-          </Link>
+              Forgot email?
+            </Link>
           </div>
           <div className="input-div">
             <TextField
-            name="password"
-            error={this.state.passwordError}
-            helperText={this.state.passwordError ? "Enter password" : ""}
-            className="email-field"
-            label="password"
-            variant="outlined"
-            fullWidth="true"
-            onChange={(e) => this.changeHandler(e)}
-          />
+              name="password"
+              error={this.state.passwordError}
+              helperText={this.state.passwordError ? "Enter password" : ""}
+              className="email-field"
+              label="password"
+              variant="outlined"
+              fullWidth="true"
+              onChange={(e) => this.changeHandler(e)}
+            />
           </div>
-          
+
           <div className="input-div">
             <Link className="forgot-link" to="/forgot-password">
-            Forgot password?
-          </Link>
+              Forgot password?
+            </Link>
           </div>
           <div className="middle-box">
             <p className="note">

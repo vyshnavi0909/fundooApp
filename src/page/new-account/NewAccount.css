@@ -114,7 +114,6 @@
     .password-div {
         display: flex;
         flex-flow: column;
-        /* justify-content: space-between; */
     }
 
     .password-field,
