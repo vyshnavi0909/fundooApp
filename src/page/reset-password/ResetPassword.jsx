@@ -97,8 +97,8 @@ export class ResetPassword extends Component {
     return (
       <div className="reset-page">
         <form onSubmit={this.onReset} className="reset-form">
-          <div className="fundoo-logo">
-            <svg className="fundoo-logo" height="20" width="100">
+          <div className="reset-fundoo-logo">
+            <svg className="reset-fundoo-logo" height="20" width="100">
               <text x="8" y="19" fill="blue">
                 F
               </text>
@@ -118,16 +118,16 @@ export class ResetPassword extends Component {
                 o
               </text>
             </svg>
-            <h3 className="head">Reset Password</h3>
-            <p className="tag">Reset password of your fundoo account</p>
+            <h3 className="reset-head">Reset Password</h3>
+            <p className="reset-tag">Reset password of your fundoo account</p>
           </div>
-          <div className="pass-div">
+          <div className="reset-pass-div">
             <TextField
               name="password"
               type={this.state.passtextType}
               error={this.state.passwordError}
               helperText={this.state.passwordError ? "Enter password" : ""}
-              className="pass-field"
+              className="reset-pass-field"
               label="password"
               variant="outlined"
               onChange={this.changeHandler}
@@ -147,7 +147,7 @@ export class ResetPassword extends Component {
               fullWidth
             />
           </div>
-          <div className="pass-div">
+          <div className="reset-pass-div">
             <TextField
               name="confirmpass"
               type={this.state.confPassTextType}
@@ -155,7 +155,7 @@ export class ResetPassword extends Component {
               helperText={
                 this.state.confirmpassError ? "Enter Confirm password" : ""
               }
-              className="pass-field"
+              className="reset-pass-field"
               label="confirm password"
               variant="outlined"
               fullWidth

@@ -99,16 +99,13 @@
 
 @media only screen and (max-width:600px) {
     .form-box {
+        margin-top: 40%;
         border: none;
         width: 100%;
     }
 
     .name-field {
         width: 100%;
-    }
-
-    .MuiFormControl-root {
-        margin: 10px 0;
     }
 
     .password-div {
@@ -118,6 +115,7 @@
 
     .password-field,
     .name-field {
+        margin: 10px 0;
         width: 100%;
     }
 

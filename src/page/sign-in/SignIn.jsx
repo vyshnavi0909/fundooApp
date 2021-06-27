@@ -63,10 +63,10 @@ export class SignIn extends Component {
 
   render() {
     return (
-      <div className="sign-in-page">
-        <form className="sign-in-form">
-          <div className="fundoo-logo">
-            <svg className="fundoo-logo" height="20" width="100">
+      <div className="signin-page">
+        <form className="signin-form">
+          <div className="signin-fundoo-logo">
+            <svg className="signin-fundoo-logo" height="20" width="100">
               <text x="8" y="19" fill="blue">
                 F
               </text>
@@ -86,35 +86,35 @@ export class SignIn extends Component {
                 o
               </text>
             </svg>
-            <h3 className="sign-in-head">Sign in</h3>
-            <p className="sign-in-tag">Use your Fundoo Account</p>
+            <h3 className="signin-head">Sign in</h3>
+            <p className="signin-tag">Use your Fundoo Account</p>
           </div>
 
-          <div className="input-div">
+          <div className="signin-input-div">
             <TextField
               name="mailId"
               error={this.state.mailError}
               helperText={
                 this.state.mailError ? "Enter your email or phone number" : ""
               }
-              className="email-field"
+              className="signin-email-field"
               label="Email or phone"
               variant="outlined"
               fullWidth="true"
               onChange={(e) => this.changeHandler(e)}
             />
           </div>
-          <div className="input-div">
+          <div className="signin-input-div">
             <Link className="forgot-link" to="/reset-email">
               Forgot email?
             </Link>
           </div>
-          <div className="input-div">
+          <div className="signin-input-div">
             <TextField
               name="password"
               error={this.state.passwordError}
               helperText={this.state.passwordError ? "Enter password" : ""}
-              className="email-field"
+              className="signin-email-field"
               label="password"
               variant="outlined"
               fullWidth="true"
@@ -122,13 +122,13 @@ export class SignIn extends Component {
             />
           </div>
 
-          <div className="input-div">
+          <div className="signin-input-div">
             <Link className="forgot-link" to="/forgot-password">
               Forgot password?
             </Link>
           </div>
-          <div className="middle-box">
-            <p className="note">
+          <div className="signin-middle-box">
+            <p className="signin-note">
               Not your computer? Use Guest mode to sign in privately.
             </p>
             <a
@@ -138,7 +138,7 @@ export class SignIn extends Component {
               Learn more
             </a>
           </div>
-          <div className="bottom-div">
+          <div className="signin-bottom-div">
             <Link className="create-acc" to="/">
               Create account
             </Link>

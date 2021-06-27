@@ -1,11 +1,11 @@
-.sign-in-page {
+.signin-page {
     height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.sign-in-form {
+.signin-form {
     text-align: start;
     border: 1px solid #c5c5c5;
     border-radius: 8px;
@@ -14,31 +14,31 @@
     width: 400px;
 }
 
-.note {
+.signin-note {
     font-size: 17px;
 }
 
-.fundoo-logo {
+.signin-fundoo-logo {
     text-align: center;
     font-size: 24px;
     font-weight: 600;
 }
 
-.sign-in-head,
-.sign-in-tag {
+.signin-head,
+.signin-tag {
     margin: 0 0 3%;
 }
 
-.sign-in-tag {
+.signin-tag {
     font-size: 16px;
     font-weight: 200;
 }
 
-.email-field {
+.signin-email-field {
     width: 100%;
 }
 
-.middle-box {
+.signin-middle-box {
     text-align: start;
     margin-top: 2%;
 }
@@ -64,44 +64,41 @@
 }
 
 
-.bottom-div {
+.signin-bottom-div {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     padding-top: 5%;
 }
-.input-div {
+
+.signin-input-div {
     margin: 15px 0;
 }
-  
+
 
 @media only screen and (max-width:600px) {
-    .sign-in-form {
+    .signin-form {
         padding: 10%;
         width: 100%;
         border: none;
     }
 
-    .fundoo-logo {
-        padding: 15px;
-    }
-
-    .sign-in-head,
-    .sign-in-tag {
+    .signin-head,
+    .signin-tag {
         margin-bottom: 4%;
     }
 }
 
-@media only screen and (max-width:399px){
-    .note{ 
+@media only screen and (max-width:399px) {
+    .signin-note {
         font-size: 14px;
     }
 
 }
 
-@media only screen and (max-width:250px) { 
+@media only screen and (max-width:250px) {
 
-    .bottom-div {
+    .signin-bottom-div {
         display: flex;
         flex-direction: column;
         padding-top: 10%;

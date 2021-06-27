@@ -136,24 +136,28 @@ export class NewAccount extends Component {
               <p className="form-heading">Create your Fundoo Account</p>
             </div>
             <div className="name-div">
-              <TextField
-                name="fName"
-                error={this.state.fNameError}
-                helperText={this.state.fNameError ? "Enter First Name" : ""}
-                className="name-field"
-                label="First Name"
-                variant="outlined"
-                onChange={this.changeHandler}
-              />
-              <TextField
-                name="lName"
-                error={this.state.lNameError}
-                helperText={this.state.lNameError ? "Enter Last Name" : ""}
-                className="name-field"
-                label="Last Name"
-                variant="outlined"
-                onChange={this.changeHandler}
-              />
+              <div className="name-field">
+                <TextField
+                  name="fName"
+                  error={this.state.fNameError}
+                  helperText={this.state.fNameError ? "Enter First Name" : ""}
+                  label="First Name"
+                  variant="outlined"
+                  onChange={this.changeHandler}
+                  fullWidth
+                />
+              </div>
+              <div className="name-field">
+                <TextField
+                  name="lName"
+                  error={this.state.lNameError}
+                  helperText={this.state.lNameError ? "Enter Last Name" : ""}
+                  label="Last Name"
+                  variant="outlined"
+                  onChange={this.changeHandler}
+                  fullWidth
+                />
+              </div>
             </div>
             <div>
               <TextField
@@ -173,6 +177,7 @@ export class NewAccount extends Component {
                 }}
                 variant="outlined"
                 onChange={this.changeHandler}
+                fullWidth
               />
             </div>
             <div className="link-div">
@@ -181,30 +186,34 @@ export class NewAccount extends Component {
               </a>
             </div>
             <div className="password-div">
-              <TextField
-                name="password"
-                type={this.state.textType}
-                error={this.state.passwordError}
-                helperText={this.state.passwordError ? "Enter password" : ""}
-                className="password-field"
-                label="Password"
-                variant="outlined"
-                onChange={this.changeHandler}
-              />
-              <TextField
-                name="confirmPass"
-                type={this.state.textType}
-                error={this.state.confirmPassError}
-                helperText={
-                  this.state.confirmPassError
-                    ? "Enter confirmation password"
-                    : ""
-                }
-                className="password-field"
-                label="Confirm"
-                variant="outlined"
-                onChange={this.changeHandler}
-              />
+              <div className="password-field">
+                <TextField
+                  name="password"
+                  type={this.state.textType}
+                  error={this.state.passwordError}
+                  helperText={this.state.passwordError ? "Enter password" : ""}
+                  label="Password"
+                  variant="outlined"
+                  onChange={this.changeHandler}
+                  fullWidth
+                />
+              </div>
+              <div className="password-field">
+                <TextField
+                  name="confirmPass"
+                  type={this.state.textType}
+                  error={this.state.confirmPassError}
+                  helperText={
+                    this.state.confirmPassError
+                      ? "Enter confirmation password"
+                      : ""
+                  }
+                  label="Confirm"
+                  variant="outlined"
+                  onChange={this.changeHandler}
+                  fullWidth
+                />
+              </div>
             </div>
             {this.state.password !== this.state.confirmPass ? (
               <FormHelperText error>Password no match</FormHelperText>

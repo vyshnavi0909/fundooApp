@@ -3,7 +3,7 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import "./ForgotPassword.css";
 import { Link } from "react-router-dom";
-import Userservices from "/home/babbur/Desktop/session3/React Projects/fundoo_app/src/services/userServices.js"
+import Userservices from "/home/babbur/Desktop/session3/React Projects/fundoo_app/src/services/userServices.js";
 const services = new Userservices();
 
 export class ForgotPassword extends Component {
@@ -12,7 +12,7 @@ export class ForgotPassword extends Component {
 
     this.state = {
       email: "",
-      emailError: false
+      emailError: false,
     };
   }
 
@@ -26,42 +26,43 @@ export class ForgotPassword extends Component {
     let isError = false;
     const error = this.state;
     error.emailError = this.state.email === "" ? true : false;
-    
+
     this.setState({
-      ...error
+      ...error,
     });
 
     isError = error.mailError;
     return isError;
-  }
+  };
 
   onNext = () => {
     var isInvalid = this.validation();
-    if(isInvalid){
+    if (isInvalid) {
       console.log("Validation failed");
-    }else {
+    } else {
       let data = {
-        "email" : this.state.email 
+        email: this.state.email,
       };
 
-      services.Forgot(data)
-      .then((res) => {
-        console.log(res);
-        localStorage.setItem("token", res.data);
-        this.props.history.push("/");
-      })
-      .catch((err) => {
-        console.log("The error:" + err);
-      })
+      services
+        .Forgot(data)
+        .then((res) => {
+          console.log(res);
+          localStorage.setItem("token", res.data);
+          this.props.history.push("/");
+        })
+        .catch((err) => {
+          console.log("The error:" + err);
+        });
     }
-  }
+  };
 
   render() {
     return (
-      <div className="forgot-pass-page">
-        <form className="forgot-pass-form">
-          <div className="fundoo-logo">
-            <svg className="fundoo-logo" height="20" width="100">
+      <div className="forgot-page">
+        <form className="forgot-form">
+          <div className="forgot-fundoo-logo">
+            <svg className="forgot-fundoo-logo" height="20" width="100">
               <text x="8" y="19" fill="blue">
                 F
               </text>
@@ -81,8 +82,8 @@ export class ForgotPassword extends Component {
                 o
               </text>
             </svg>
-            <h3 className="head">Forgot Password</h3>
-            <p className="tag">Enter your fundoo account mail id</p>
+            <h3 className="forgot-head">Forgot Password</h3>
+            <p className="forgot-tag">Enter your fundoo account mail id</p>
           </div>
           <TextField
             name="mailId"
@@ -90,19 +91,14 @@ export class ForgotPassword extends Component {
             helperText={
               this.state.emailError ? "Enter your email or phone number" : ""
             }
-            className="email-field"
+            className="forgot-email-field"
             label="Email or phone"
             variant="outlined"
             fullWidth
             onChange={(e) => this.changeHandler(e)}
           />
           <div className="send-btn">
-            <Button
-              className="send-btn"
-              onClick={this.onNext}
-              variant="contained"
-              color="primary"
-            >
+            <Button onClick={this.onNext} variant="contained" color="primary">
               Send
             </Button>
           </div>
