@@ -1,8 +1,9 @@
-import "./SignIn.css";
 import React, { Component } from "react";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import "./SignIn.css";
 
 export class SignIn extends Component {
   constructor(props) {
@@ -11,8 +12,19 @@ export class SignIn extends Component {
     this.state = {
       mailId: "",
       mailError: false,
+      password: "",
+      passwordError: false,
     };
   }
+
+  // componentDidMount() {
+  //   axios.get(`https://jsonplaceholder.typicode.com/users`)
+  //     .then(res => {
+  //       const persons = res.data;
+  //       this.setState({ persons });
+  //       console.log(this.state.persons);
+  //     })
+  // }
 
   changeHandler = (e) => {
     this.setState({
@@ -24,12 +36,13 @@ export class SignIn extends Component {
     let isError = false;
     const error = this.state;
     error.mailError = this.state.mailId === "" ? true : false;
+    error.passwordError = this.state.password === "" ? true : false;
 
     this.setState({
       ...error,
     });
 
-    isError = error.mailError;
+    isError = error.mailError || error.passwordError;
     return isError;
   };
 
@@ -37,6 +50,17 @@ export class SignIn extends Component {
     var isNotValid = this.validation();
     if (isNotValid) {
       console.log("Validation failed");
+    } else {
+      let data = {
+        email: this.state.mailId,
+        password: this.state.password,
+      };
+
+      // axios.post(`https://jsonplaceholder.typicode.com/users`, data)
+      // .then(result => {
+      //   console.log(result);
+      //   console.log(result.data);
+      // })
     }
   };
 
@@ -68,7 +92,9 @@ export class SignIn extends Component {
             <h3 className="sign-in-head">Sign in</h3>
             <p className="sign-in-tag">Use your Fundoo Account</p>
           </div>
-          <TextField
+
+          <div className="input-div">
+            <TextField
             name="mailId"
             error={this.state.mailError}
             helperText={
@@ -77,13 +103,35 @@ export class SignIn extends Component {
             className="email-field"
             label="Email or phone"
             variant="outlined"
+            fullWidth="true"
             onChange={(e) => this.changeHandler(e)}
           />
+          </div>
+          <div className="input-div">
+            <Link className="forgot-link" to="/reset-email">
+            Forgot email?
+          </Link>
+          </div>
+          <div className="input-div">
+            <TextField
+            name="password"
+            error={this.state.passwordError}
+            helperText={this.state.passwordError ? "Enter password" : ""}
+            className="email-field"
+            label="password"
+            variant="outlined"
+            fullWidth="true"
+            onChange={(e) => this.changeHandler(e)}
+          />
+          </div>
+          
+          <div className="input-div">
+            <Link className="forgot-link" to="/forgot-password">
+            Forgot password?
+          </Link>
+          </div>
           <div className="middle-box">
-            <a className="forgot-link" href="#forgot-email">
-              Forgot email?
-            </a>
-            <p className="tag">
+            <p className="note">
               Not your computer? Use Guest mode to sign in privately.
             </p>
             <a

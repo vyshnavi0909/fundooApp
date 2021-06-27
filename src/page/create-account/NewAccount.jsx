@@ -6,7 +6,10 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormHelperText from "@material-ui/core/FormHelperText";
 import Checkbox from "@material-ui/core/Checkbox";
 import Button from "@material-ui/core/Button";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
+import UserService from "../../services/userServices";
+
+const services = new UserService();
 
 export class NewAccount extends Component {
   constructor(props) {
@@ -23,13 +26,41 @@ export class NewAccount extends Component {
       userNameError: false,
       passwordError: false,
       confirmPassError: false,
+      textType: "password",
     };
   }
 
+  showPassword = () => {
+    if (this.state.textType === "password") {
+      this.setState({
+        textType: "text",
+      });
+    } else {
+      this.setState({
+        textType: "password",
+      });
+    }
+  };
+
+  // componentDidMount() {
+  //   axios
+  //     .get(`http://fundoonotes.incubation.bridgelabz.com/api/user/userSignUp`)
+  //     .then((result) => {
+  //       const output = result.data;
+  //       console.log(output);
+  //     });
+  // }
+
   changeHandler = (e) => {
-    this.setState({
-      [e.target.name]: e.target.value,
-    });
+    if (e.target.name === "userName") {
+      this.setState({
+        [e.target.name]: e.target.value + "@gmail.com",
+      });
+    } else {
+      this.setState({
+        [e.target.name]: e.target.value,
+      });
+    }
   };
 
   validation = () => {
@@ -58,6 +89,31 @@ export class NewAccount extends Component {
     var isValid = this.validation();
     if (isValid) {
       console.log("Validation failed");
+    } else {
+      if (this.state.password === this.state.confirmPass) {
+        let data = {
+          "firstName" : this.state.fName,
+          "lastName" : this.state.lName,
+          "email" : this.state.userName,
+          "service" : "advance",
+          "password" : this.state.password
+        };
+
+        // this.props.history.push("/sign-in");
+
+        services
+          .SignUp(data)
+          .then((res) => {
+            console.log(res);
+            localStorage.setItem("token", res.data);
+            this.props.history.push("/sign-in");
+          })
+          .catch((err) => {
+            console.log("The error is:" + err);
+          });
+      } else {
+        alert("Password and confirmation password didn't matched.");
+      }
     }
   };
 
@@ -137,6 +193,7 @@ export class NewAccount extends Component {
             <div className="password-div">
               <TextField
                 name="password"
+                type={this.state.textType}
                 error={this.state.passwordError}
                 helperText={this.state.passwordError ? "Enter password" : ""}
                 className="password-field"
@@ -146,6 +203,7 @@ export class NewAccount extends Component {
               />
               <TextField
                 name="confirmPass"
+                type={this.state.textType}
                 error={this.state.confirmPassError}
                 helperText={
                   this.state.confirmPassError
@@ -166,6 +224,7 @@ export class NewAccount extends Component {
               <FormControlLabel
                 control={<Checkbox color="primary" />}
                 label="Show Password"
+                onChange={this.showPassword}
               />
             </div>
             <div className="bottom-div">

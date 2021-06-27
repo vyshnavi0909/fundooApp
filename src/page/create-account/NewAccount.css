@@ -1,4 +1,4 @@
-.outer-box{
+.outer-box {
     height: 100%;
     display: flex;
     justify-content: center;
@@ -50,7 +50,7 @@
     font-weight: 600;
     text-decoration: none;
     color: #3f51b5;
-    padding: 10px 0;
+    padding: 2%;
 }
 
 .sign-in-instead:hover,
@@ -60,7 +60,7 @@
 }
 
 .link-div {
-    padding: 5% 0 10%;
+    padding: 5% 0;
 }
 
 .password-div {
@@ -80,9 +80,10 @@
     justify-content: space-between;
     padding-top: 10%;
 }
-@media only screen  and (max-width:1190px){
 
-    .form-box{
+@media only screen and (max-width:1190px) {
+
+    .form-box {
         width: 500px;
         padding: 5%;
     }
@@ -97,14 +98,35 @@
 }
 
 @media only screen and (max-width:600px) {
-    .form-box{
+    .form-box {
         border: none;
         width: 100%;
     }
 
+    .name-field {
+        width: 100%;
+    }
+
+    .MuiFormControl-root {
+        margin: 10px 0;
+    }
+
+    .password-div {
+        display: flex;
+        flex-flow: column;
+        /* justify-content: space-between; */
+    }
+
+    .password-field,
+    .name-field {
+        width: 100%;
+    }
+
     .name-div {
+        margin: 10px 0;
         display: flex;
         flex-direction: column;
+        justify-content: space-around;
         margin-bottom: 5%;
     }
 }
