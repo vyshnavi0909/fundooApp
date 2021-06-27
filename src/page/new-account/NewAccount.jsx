@@ -66,6 +66,7 @@ export class NewAccount extends Component {
   validation = () => {
     let isError = false;
     const error = this.state;
+
     error.fNameError = this.state.fName === "" ? true : false;
     error.lNameError = this.state.lName === "" ? true : false;
     error.userNameError = this.state.userName === "" ? true : false;
@@ -85,21 +86,21 @@ export class NewAccount extends Component {
     return isError;
   };
 
-  onClicked = () => {
+  onClicked = (e) => {
+    e.preventDefault();
+
     var isValid = this.validation();
     if (isValid) {
       console.log("Validation failed");
     } else {
       if (this.state.password === this.state.confirmPass) {
         let data = {
-          "firstName" : this.state.fName,
-          "lastName" : this.state.lName,
-          "email" : this.state.userName,
-          "service" : "advance",
-          "password" : this.state.password
+          firstName: this.state.fName,
+          lastName: this.state.lName,
+          email: this.state.userName,
+          service: "advance",
+          password: this.state.password,
         };
-
-        // this.props.history.push("/sign-in");
 
         services
           .SignUp(data)
@@ -111,8 +112,6 @@ export class NewAccount extends Component {
           .catch((err) => {
             console.log("The error is:" + err);
           });
-      } else {
-        alert("Password and confirmation password didn't matched.");
       }
     }
   };
@@ -120,7 +119,7 @@ export class NewAccount extends Component {
   render() {
     return (
       <div className="outer-box">
-        <form className="form-box">
+        <form onSubmit={this.onClicked} className="form-box">
           <div className="first-box">
             <div>
               <svg className="fundoo-logo" height="20" width="100">
@@ -153,7 +152,7 @@ export class NewAccount extends Component {
                 className="name-field"
                 label="First Name"
                 variant="outlined"
-                onChange={(e) => this.changeHandler(e)}
+                onChange={this.changeHandler}
               />
               <TextField
                 name="lName"
@@ -162,7 +161,7 @@ export class NewAccount extends Component {
                 className="name-field"
                 label="Last Name"
                 variant="outlined"
-                onChange={(e) => this.changeHandler(e)}
+                onChange={this.changeHandler}
               />
             </div>
             <div>
@@ -182,7 +181,7 @@ export class NewAccount extends Component {
                   ),
                 }}
                 variant="outlined"
-                onChange={(e) => this.changeHandler(e)}
+                onChange={this.changeHandler}
               />
             </div>
             <div className="link-div">
@@ -199,7 +198,7 @@ export class NewAccount extends Component {
                 className="password-field"
                 label="Password"
                 variant="outlined"
-                onChange={(e) => this.changeHandler(e)}
+                onChange={this.changeHandler}
               />
               <TextField
                 name="confirmPass"
@@ -213,9 +212,13 @@ export class NewAccount extends Component {
                 className="password-field"
                 label="Confirm"
                 variant="outlined"
-                onChange={(e) => this.changeHandler(e)}
+                onChange={this.changeHandler}
               />
             </div>
+            {this.state.password !== this.state.confirmPass ? (
+              <FormHelperText error>Password no match</FormHelperText>
+            ) : null}
+
             <FormHelperText>
               Use 8 or more characters with a mix of letters, numbers and
               symbols
@@ -231,11 +234,7 @@ export class NewAccount extends Component {
               <Link className="sign-in-instead" to="/sign-in">
                 Sign in instead
               </Link>
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={this.onClicked}
-              >
+              <Button variant="contained" color="primary" type="submit">
                 Next
               </Button>
             </div>

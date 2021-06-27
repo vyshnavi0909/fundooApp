@@ -2,12 +2,11 @@ import "./ResetPassword.css";
 import React, { Component } from "react";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
-
-// import { Link } from "react-router-dom";
+import FormHelperText from "@material-ui/core/FormHelperText";
 import InputAdornment from "@material-ui/core/InputAdornment";
-import show from "./show.png"
-import hide from "./hidden.png"
-import UserServices from "/home/babbur/Desktop/session3/React Projects/fundoo_app/src/services/userServices.js"
+import show from "./show.png";
+import hide from "./hidden.png";
+import UserServices from "/home/babbur/Desktop/session3/React Projects/fundoo_app/src/services/userServices.js";
 
 const services = new UserServices();
 
@@ -21,39 +20,35 @@ export class ResetPassword extends Component {
       passwordError: false,
       confirmpassError: false,
       passtextType: "password",
-      confPassTextType : "password",
-      passIcon : hide,
-      confIcon : hide,
+      confPassTextType: "password",
+      passIcon: hide,
+      confIcon: hide,
     };
   }
 
   showPass = (e) => {
-      if(e.target.name === "pass"){
-        if(this.state.passIcon === hide){
-            this.setState({
-                passtextType : "text",
-                passIcon : show
-            })
-        }else{
-            this.setState({
-                passtextType : "password",
-                passIcon : hide
-            })
-        }
-      }else if (e.target.name === "confirm"){
-          if(this.state.confIcon === hide) {
-              this.setState({
-                  confPassTextType : "text",
-                  confIcon : show
-              })
-          }else{
-              this.setState({
-                  confPassTextType : "password",
-                  confIcon : hide
-              })
-          }
-      }
-  }
+    if (e.target.name === "pass" && this.state.passIcon === hide) {
+      this.setState({
+        passtextType: "text",
+        passIcon: show,
+      });
+    } else if (e.target.name === "pass" && this.state.passIcon === show) {
+      this.setState({
+        passtextType: "password",
+        passIcon: hide,
+      });
+    } else if (e.target.name === "confirm" && this.state.confIcon === hide) {
+      this.setState({
+        confPassTextType: "text",
+        confIcon: show,
+      });
+    } else {
+      this.setState({
+        confPassTextType: "password",
+        confIcon: hide,
+      });
+    }
+  };
 
   changeHandler = (e) => {
     this.setState({
@@ -66,27 +61,27 @@ export class ResetPassword extends Component {
     const err = this.state;
     err.passwordError = this.state.password === "" ? true : false;
     err.confirmpassError = this.state.confirmpass === "" ? true : false;
-
     this.setState({
-      ...err
-    })
+      ...err,
+    });
 
     isError = err.passwordError || err.confirmpassError;
     return isError;
-  }
+  };
 
-  onReset = () => {
+  onReset = (e) => {
+    e.preventDefault();
+
     var isInvalid = this.validation();
-    if(isInvalid){
+    if (isInvalid) {
       console.log("Validation failed");
-    }else {
-      if(this.state.confirmpass === this.state.password){
-        
-        let data = {
-          "newPassword" : this.state.password
-        }
+    } else if (this.state.confirmpass === this.state.password) {
+      let data = {
+        newPassword: this.state.password,
+      };
 
-        services.Reset(data)
+      services
+        .Reset(data)
         .then((res) => {
           console.log(res);
           localStorage.setItem("token", res.data);
@@ -94,17 +89,14 @@ export class ResetPassword extends Component {
         })
         .catch((err) => {
           console.log("The error:" + err);
-        })
-      }else {
-        alert("Password and confirmation password didn't matched.");
-      }
+        });
     }
-  }
+  };
 
   render() {
     return (
       <div className="reset-page">
-        <form className="reset-form">
+        <form onSubmit={this.onReset} className="reset-form">
           <div className="fundoo-logo">
             <svg className="fundoo-logo" height="20" width="100">
               <text x="8" y="19" fill="blue">
@@ -138,21 +130,26 @@ export class ResetPassword extends Component {
               className="pass-field"
               label="password"
               variant="outlined"
-              
-              onChange={(e) => this.changeHandler(e)}
+              onChange={this.changeHandler}
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
-                      <img name="pass" className="show-icon" src={this.state.passIcon} alt=""  onClick={e=>this.showPass(e)}/>
+                    <img
+                      name="pass"
+                      className="show-icon"
+                      src={this.state.passIcon}
+                      alt=""
+                      onClick={this.showPass}
+                    />
                   </InputAdornment>
-                )
+                ),
               }}
               fullWidth
             />
           </div>
           <div className="pass-div">
             <TextField
-              name="confirm-password"
+              name="confirmpass"
               type={this.state.confPassTextType}
               error={this.state.confirmpassError}
               helperText={
@@ -162,23 +159,29 @@ export class ResetPassword extends Component {
               label="confirm password"
               variant="outlined"
               fullWidth
-              onChange={(e) => this.changeHandler(e)}
+              onChange={this.changeHandler}
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
-                      <img name="confirm" className="show-icon" src={this.state.confIcon} alt=""  onClick={e=>this.showPass(e)}/>
+                    <img
+                      name="confirm"
+                      className="show-icon"
+                      src={this.state.confIcon}
+                      alt=""
+                      onClick={(e) => this.showPass(e)}
+                    />
                   </InputAdornment>
-                )
+                ),
               }}
             />
           </div>
 
+          {this.state.password !== this.state.confirmpass ? (
+            <FormHelperText error>Password no match</FormHelperText>
+          ) : null}
+
           <div className="reset-btn">
-            <Button
-              onClick={this.onReset}
-              variant="contained"
-              color="primary"
-            >
+            <Button type="submit" variant="contained" color="primary">
               Reset
             </Button>
           </div>
