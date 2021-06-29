@@ -22,11 +22,17 @@ class UserServices {
     return axiosServices.postMethod(`${baseURL}user/reset`, data, config);
   };
 
-  Reset = (data) => {
+  Reset = (data, token) => {
     return axiosServices.postMethod(
       `${baseURL}user/reset-password`,
       data,
       config
+      //   {
+      //     headers: {
+      //       "Content-Type": "application/json",
+      //       Authorization: token,
+      //     },
+      //   }
     );
   };
 }

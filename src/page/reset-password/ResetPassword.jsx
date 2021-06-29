@@ -76,17 +76,22 @@ export class ResetPassword extends Component {
     if (isInvalid) {
       console.log("Validation failed");
     } else if (this.state.confirmpass === this.state.password) {
+      var url = window.location.href;
+      var tokeninput = url.split("/");
+      var reqToken = tokeninput[4];
+      var token = reqToken.split("?");
+      var requiredToken = token[0];
+
       let data = {
         newPassword: this.state.password,
-        confirmNewPassword: this.state.confirmpass,
-        token: this.activatedRoute.snapshot.paramMap.get("token"),
+        token: requiredToken,
       };
 
       services
         .Reset(data)
         .then((res) => {
           console.log(res);
-          localStorage.setItem("token", res.data);
+          localStorage.setItem("token", res.data.token);
           this.props.history.push("/sign-in");
         })
         .catch((err) => {

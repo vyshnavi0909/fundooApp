@@ -128,7 +128,7 @@ export default function DashBoard(props) {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
-  const [header, setHeader] = React.useState("Keep");
+  // const [header, setHeader] = React.useState("Keep");
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -146,6 +146,7 @@ export default function DashBoard(props) {
         className={clsx(classes.appBar, {
           [classes.appBarShift]: open,
         })}
+        color="inherit"
       >
         <Toolbar>
           <IconButton

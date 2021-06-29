@@ -52,7 +52,7 @@ export class SignIn extends Component {
         .SignIn(data)
         .then((res) => {
           console.log(res);
-          localStorage.setItem("token", res.data);
+          localStorage.setItem("token", res.data.id);
           this.props.history.push("/dashboard");
         })
         .catch((err) => {
