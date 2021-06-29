@@ -20,7 +20,13 @@ import ArchiveIcon from "@material-ui/icons/ArchiveOutlined";
 import TrashIcon from "@material-ui/icons/DeleteOutlined";
 import InputBase from "@material-ui/core/InputBase";
 import SearchIcon from "@material-ui/icons/Search";
+import RefreshIcon from "@material-ui/icons/RefreshOutlined";
+import ListViewIcon from "@material-ui/icons/DnsOutlined";
+import SettingsIcon from "@material-ui/icons/SettingsOutlined";
+import AppsIcon from "@material-ui/icons/AppsOutlined";
+import AccountIcon from "@material-ui/icons/AccountCircleOutlined";
 import KeepIcon from "./keep.png";
+import "./Dashboard.css";
 
 const drawerWidth = 240;
 
@@ -43,9 +49,9 @@ const useStyles = makeStyles((theme) => ({
       duration: theme.transitions.duration.enteringScreen,
     }),
   },
-  menuButton: {
-    marginRight: 36,
-  },
+  // menuButton: {
+  //   marginRight: 36,
+  // },
   hide: {
     display: "none",
   },
@@ -85,63 +91,37 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(3),
   },
 
-  title: {
-    display: "none",
-    [theme.breakpoints.up("sm")]: {
-      display: "block",
-    },
-  },
-  search: {
-    flexGrow: 0.5,
-    position: "relative",
-    borderRadius: theme.shape.borderRadius,
-    backgroundColor: fade(theme.palette.common.white, 0.15),
-    "&:hover": {
-      backgroundColor: fade(theme.palette.common.white, 0.25),
-    },
-    marginRight: theme.spacing(2),
-    marginLeft: 0,
-    width: "100%",
-    [theme.breakpoints.up("sm")]: {
-      marginLeft: theme.spacing(3),
-      width: "auto",
-    },
-  },
-  searchIcon: {
-    padding: theme.spacing(0, 2),
-    height: "100%",
-    position: "absolute",
-    pointerEvents: "none",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  inputRoot: {
-    color: "inherit",
-  },
-  inputInput: {
-    padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
-    transition: theme.transitions.create("width"),
-    width: "100%",
-    [theme.breakpoints.up("sm")]: {
-      width: "12ch",
-      "&:focus": {
-        width: "20ch",
-      },
-    },
-  },
-  keepIcon: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  icon: {
-    "&:hover": {
-      backgroundColor: "feefc3",
-    },
-  },
+  // title: {
+  //   display: "none",
+  //   [theme.breakpoints.up("sm")]: {
+  //     display: "block",
+  //   },
+  // },
+  // search: {
+  //   flexGrow: 0.5,
+  //   position: "relative",
+  //   borderRadius: theme.shape.borderRadius,
+  //   backgroundColor: fade(theme.palette.common.white, 0.15),
+  //   "&:hover": {
+  //     backgroundColor: fade(theme.palette.common.white, 0.25),
+  //   },
+  //   marginRight: theme.spacing(2),
+  //   marginLeft: 0,
+  //   width: "100%",
+  //   [theme.breakpoints.up("sm")]: {
+  //     marginLeft: theme.spacing(3),
+  //     width: "auto",
+  //   },
+  // },
+  // searchIcon: {
+  //   padding: theme.spacing(0, 2),
+  //   height: "100%",
+  //   position: "absolute",
+  //   pointerEvents: "none",
+  //   display: "flex",
+  //   alignItems: "center",
+  //   justifyContent: "center",
+  // },
 }));
 
 export default function DashBoard(props) {
@@ -173,30 +153,40 @@ export default function DashBoard(props) {
             aria-label="open drawer"
             onClick={handleDrawerOpen}
             edge="start"
-            className={clsx(classes.menuButton, {
-              [classes.hide]: open,
-            })}
+            className={
+              ("dashbd-menu-btn",
+              clsx({
+                [classes.hide]: open,
+              }))
+            }
           >
             <MenuIcon />
           </IconButton>
           <Typography className={classes.title} variant="h6" Wrap>
-            <div className={classes.keepIcon}>
+            <div className="dashbd-keep-icon">
               <img src={KeepIcon} alt="keep-icon" />
-              <p>Keep</p>
+              <span>Keep</span>
             </div>
           </Typography>
-          <div className={classes.search}>
-            <div className={classes.searchIcon}>
+          <div className="dashbd-search">
+            <div className="dashbd-search-icon">
               <SearchIcon />
             </div>
             <InputBase
               placeholder="Search…"
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput,
-              }}
+              classes="dashbd-inputbase"
+              style={{ paddingLeft: 50 + "px" }}
               inputProps={{ "aria-label": "search" }}
             />
+          </div>
+          <div className="dashbd-header-icons">
+            <RefreshIcon className="ref-icon" />
+            <ListViewIcon className="lis-icon" />
+            <SettingsIcon className="set-icon" />
+            <div className="google-icons">
+              <AppsIcon className="app-icon" />
+              <AccountIcon className="acc-icon" />
+            </div>
           </div>
         </Toolbar>
       </AppBar>
@@ -225,13 +215,13 @@ export default function DashBoard(props) {
           </IconButton>
         </div>
         <Divider />
-        <List>
+        <List className="dashbd-list">
           {["Notes", "Reminders", "Edit labels", "Archive", "Trash"].map(
             (text, index) => (
               <ListItem button key={text}>
-                <ListItemIcon className={classes.icon}>
+                <ListItemIcon>
                   {index === 0 ? (
-                    <NotesIcon />
+                    <NotesIcon className="dashbd-icon" />
                   ) : index === 1 ? (
                     <ReminderIcon />
                   ) : index === 2 ? (

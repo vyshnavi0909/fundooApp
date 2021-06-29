@@ -1,18 +1,92 @@
-.dashbd-appbar {}
+.dashbd-appbar {
+    /* background-color: #feefc3; */
+}
 
 .dashbd-menu-btn {
-    margin-right: 36px;
+    margin-right: 50px;
 }
 
 .dashbd-search {
-    flex-grow: 0.5;
+    flex-grow: 1;
     position: relative;
-    border-radius: 3px;
-    background-color: #acacac;
+    border-radius: 5px;
+    background-color: #e4e4e4b6;
+    color: #252525;
+    margin: 0 5%;
+    box-shadow: 1px 1px 3px #979797;
+    padding: 7px;
 }
 
-.dashbd-search:active {
+.dashbd-search:hover {
     background-color: #fff;
-    margin-right: 3%;
-    margin-left: 0;
+}
+
+.dashbd-keep-icon {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.dashbd-search-icon {
+    padding: 0 2%;
+    height: 100%;
+    position: absolute;
+    bottom: 1px;
+    cursor: none;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.dashbd-inputbase {
+    padding: 1px;
+    padding-left: 1px;
+    /* transition: theme.transitions.create("width"), */
+    width: 100%;
+    color: #252525;
+}
+
+
+.dashbd-header-icons {
+    margin-left: 15%;
+    display: flex;
+    flex-grow: 0.5;
+    justify-content: space-evenly;
+    color: #575757;
+
+}
+
+.ref-icon:hover,
+.lis-icon:hover,
+.app-icon:hover,
+.acc-icon:hover,
+.set-icon:hover {
+    color: #252525;
+}
+
+.google-icons {
+    display: flex;
+    flex-direction: row;
+}
+
+.acc-icon,
+.app-icon {
+    margin: 0 10%;
+}
+
+.MuiAppBar-colorPrimary {
+    background-color: #fff;
+}
+
+..MuiListItem-button {
+    border-top-right-radius: 30px;
+    border-bottom-right-radius: 30px;
+}
+
+.MuiListItem-button:hover {
+    background-color: #feefc3;
+    border-top-right-radius: 30px;
+    border-bottom-right-radius: 30px;
 }
