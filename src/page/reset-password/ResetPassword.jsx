@@ -78,6 +78,8 @@ export class ResetPassword extends Component {
     } else if (this.state.confirmpass === this.state.password) {
       let data = {
         newPassword: this.state.password,
+        confirmNewPassword: this.state.confirmpass,
+        token: this.activatedRoute.snapshot.paramMap.get("token"),
       };
 
       services
@@ -85,7 +87,7 @@ export class ResetPassword extends Component {
         .then((res) => {
           console.log(res);
           localStorage.setItem("token", res.data);
-          this.props.history.push("/");
+          this.props.history.push("/sign-in");
         })
         .catch((err) => {
           console.log("The error:" + err);

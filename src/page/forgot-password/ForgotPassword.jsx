@@ -11,7 +11,7 @@ export class ForgotPassword extends Component {
     super(props);
 
     this.state = {
-      email: "",
+      mailId: "",
       emailError: false,
     };
   }
@@ -41,7 +41,7 @@ export class ForgotPassword extends Component {
       console.log("Validation failed");
     } else {
       let data = {
-        email: this.state.email,
+        email: this.state.mailId,
       };
 
       services

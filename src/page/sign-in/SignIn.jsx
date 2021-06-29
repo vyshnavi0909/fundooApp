@@ -53,7 +53,7 @@ export class SignIn extends Component {
         .then((res) => {
           console.log(res);
           localStorage.setItem("token", res.data);
-          this.props.history.push("/sign-in");
+          this.props.history.push("/dashboard");
         })
         .catch((err) => {
           console.log("The error is:" + err);
@@ -112,6 +112,7 @@ export class SignIn extends Component {
           <div className="signin-input-div">
             <TextField
               name="password"
+              type="password"
               error={this.state.passwordError}
               helperText={this.state.passwordError ? "Enter password" : ""}
               className="signin-email-field"

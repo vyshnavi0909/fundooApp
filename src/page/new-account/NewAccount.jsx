@@ -103,6 +103,8 @@ export class NewAccount extends Component {
           .catch((err) => {
             console.log("The error is:" + err);
           });
+      } else {
+        alert("password didn't match");
       }
     }
   };
