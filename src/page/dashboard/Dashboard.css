@@ -80,10 +80,7 @@
     background-color: #fff;
 }
 
-..MuiListItem-button {
-    border-top-right-radius: 30px;
-    border-bottom-right-radius: 30px;
-}
+
 
 .MuiListItem-button:hover {
     background-color: #feefc3;
