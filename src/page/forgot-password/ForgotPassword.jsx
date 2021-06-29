@@ -16,6 +16,10 @@ export class ForgotPassword extends Component {
     };
   }
 
+  componentDidMount() {
+    document.title = "Forgot password";
+  }
+
   changeHandler = (e) => {
     this.setState({
       [e.target.name]: e.target.value,

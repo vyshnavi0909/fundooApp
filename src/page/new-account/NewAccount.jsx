@@ -30,6 +30,10 @@ export class NewAccount extends Component {
     };
   }
 
+  componentDidMount() {
+    document.title = "Create a fundoo account";
+  }
+
   showPassword = () => {
     if (this.state.textType === "password") {
       this.setState({

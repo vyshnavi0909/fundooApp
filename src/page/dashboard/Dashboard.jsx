@@ -1,18 +1,14 @@
 import React from "react";
 import clsx from "clsx";
-import { fade, makeStyles, useTheme } from "@material-ui/core/styles";
+import { makeStyles, useTheme } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import List from "@material-ui/core/List";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Typography from "@material-ui/core/Typography";
-import Divider from "@material-ui/core/Divider";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
 import NotesIcon from "@material-ui/icons/EmojiObjectsOutlined";
 import ReminderIcon from "@material-ui/icons/NotificationsOutlined";
 import EditIcon from "@material-ui/icons/EditOutlined";
@@ -26,6 +22,11 @@ import SettingsIcon from "@material-ui/icons/SettingsOutlined";
 import AppsIcon from "@material-ui/icons/AppsOutlined";
 import AccountIcon from "@material-ui/icons/AccountCircleOutlined";
 import KeepIcon from "./keep.png";
+import Notes from "../../components/Notes";
+import Card from "@material-ui/core/Card";
+import CardContent from "@material-ui/core/CardContent";
+import TakeANote from "../../components/TakeANote";
+
 import "./Dashboard.css";
 
 const drawerWidth = 240;
@@ -49,9 +50,6 @@ const useStyles = makeStyles((theme) => ({
       duration: theme.transitions.duration.enteringScreen,
     }),
   },
-  // menuButton: {
-  //   marginRight: 36,
-  // },
   hide: {
     display: "none",
   },
@@ -78,50 +76,6 @@ const useStyles = makeStyles((theme) => ({
       width: theme.spacing(9) + 1,
     },
   },
-  toolbar: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "flex-start",
-    padding: theme.spacing(0, 1),
-    // necessary for content to be below app bar
-    ...theme.mixins.toolbar,
-  },
-  content: {
-    flexGrow: 1,
-    padding: theme.spacing(3),
-  },
-
-  // title: {
-  //   display: "none",
-  //   [theme.breakpoints.up("sm")]: {
-  //     display: "block",
-  //   },
-  // },
-  // search: {
-  //   flexGrow: 0.5,
-  //   position: "relative",
-  //   borderRadius: theme.shape.borderRadius,
-  //   backgroundColor: fade(theme.palette.common.white, 0.15),
-  //   "&:hover": {
-  //     backgroundColor: fade(theme.palette.common.white, 0.25),
-  //   },
-  //   marginRight: theme.spacing(2),
-  //   marginLeft: 0,
-  //   width: "100%",
-  //   [theme.breakpoints.up("sm")]: {
-  //     marginLeft: theme.spacing(3),
-  //     width: "auto",
-  //   },
-  // },
-  // searchIcon: {
-  //   padding: theme.spacing(0, 2),
-  //   height: "100%",
-  //   position: "absolute",
-  //   pointerEvents: "none",
-  //   display: "flex",
-  //   alignItems: "center",
-  //   justifyContent: "center",
-  // },
 }));
 
 export default function DashBoard(props) {
@@ -130,36 +84,28 @@ export default function DashBoard(props) {
   const [open, setOpen] = React.useState(false);
   // const [header, setHeader] = React.useState("Keep");
 
-  const handleDrawerOpen = () => {
-    setOpen(true);
+  const handleDrawer = () => {
+    if (open) {
+      setOpen(false);
+    } else {
+      setOpen(true);
+    }
   };
 
-  const handleDrawerClose = () => {
-    setOpen(false);
-  };
+  document.body.style.backgroundColor = "white";
+  document.title = "Dashboard";
 
   return (
-    <div className={classes.root}>
+    <div>
       <CssBaseline />
-      <AppBar
-        position="fixed"
-        className={clsx(classes.appBar, {
-          [classes.appBarShift]: open,
-        })}
-        color="inherit"
-      >
+      <AppBar position="fixed" className={clsx(classes.appBar)} color="inherit">
         <Toolbar>
           <IconButton
             color="default"
             aria-label="open drawer"
-            onClick={handleDrawerOpen}
+            onClick={handleDrawer}
             edge="start"
-            className={
-              ("dashbd-menu-btn",
-              clsx({
-                [classes.hide]: open,
-              }))
-            }
+            className="dashbd-menu-btn"
           >
             <MenuIcon />
           </IconButton>
@@ -175,18 +121,18 @@ export default function DashBoard(props) {
             </div>
             <InputBase
               placeholder="Search…"
-              classes="dashbd-inputbase"
-              style={{ paddingLeft: 50 + "px" }}
+              className="dashbd-inputbase"
+              style={{ paddingLeft: 30 + "px" }}
               inputProps={{ "aria-label": "search" }}
             />
           </div>
           <div className="dashbd-header-icons">
-            <RefreshIcon className="ref-icon" />
-            <ListViewIcon className="lis-icon" />
-            <SettingsIcon className="set-icon" />
+            <RefreshIcon className="ref-icon icons" />
+            <ListViewIcon className="lis-icon icons" />
+            <SettingsIcon className="set-icon icons" />
             <div className="google-icons">
-              <AppsIcon className="app-icon" />
-              <AccountIcon className="acc-icon" />
+              <AppsIcon className="app-icon icons" />
+              <AccountIcon className="acc-icon icons" />
             </div>
           </div>
         </Toolbar>
@@ -204,42 +150,41 @@ export default function DashBoard(props) {
           }),
         }}
       >
-        <div className={classes.toolbar}>
-          <IconButton
-            color="default"
-            aria-label="open drawer"
-            edge="start"
-            onClick={handleDrawerClose}
-            className={classes.menu2}
-          >
-            {theme.direction === "rtl" ? <MenuIcon /> : <MenuIcon />}
-          </IconButton>
-        </div>
-        <Divider />
         <List className="dashbd-list">
-          {["Notes", "Reminders", "Edit labels", "Archive", "Trash"].map(
-            (text, index) => (
-              <ListItem button key={text}>
-                <ListItemIcon>
-                  {index === 0 ? (
-                    <NotesIcon className="dashbd-icon" />
-                  ) : index === 1 ? (
-                    <ReminderIcon />
-                  ) : index === 2 ? (
-                    <EditIcon />
-                  ) : index === 3 ? (
-                    <ArchiveIcon />
-                  ) : (
-                    <TrashIcon />
-                  )}
-                </ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItem>
-            )
-          )}
+          <div className="list-items">
+            <NotesIcon />
+            <span className="list-name">Notes</span>
+          </div>
+          <div className="list-items">
+            <ReminderIcon />
+            <span className="list-name">Reminder</span>
+          </div>
+          <div className="list-items">
+            <EditIcon />
+            <span className="list-name">Edit Label</span>
+          </div>
+          <div className="list-items">
+            <ArchiveIcon />
+            <span className="list-name">Archive</span>
+          </div>
+          <div className="list-items">
+            <TrashIcon />
+            <span className="list-name">Trash</span>
+          </div>
         </List>
-        <Divider />
       </Drawer>
+      <div className="content-container">
+        <div className="note-taker-div">
+          <TakeANote />
+        </div>
+        <div className="cards-container">
+          <Card className="note-card">
+            <CardContent>
+              <Notes />
+            </CardContent>
+          </Card>
+        </div>
+      </div>
     </div>
   );
 }

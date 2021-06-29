@@ -18,6 +18,10 @@ export class SignIn extends Component {
     };
   }
 
+  componentDidMount() {
+    document.title = "Fundoo Login";
+  }
+
   changeHandler = (e) => {
     this.setState({
       [e.target.name]: e.target.value,

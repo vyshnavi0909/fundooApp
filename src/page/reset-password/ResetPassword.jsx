@@ -26,6 +26,10 @@ export class ResetPassword extends Component {
     };
   }
 
+  componentDidMount() {
+    document.title = "Reset Password";
+  }
+
   showPass = (e) => {
     if (e.target.name === "pass" && this.state.passIcon === hide) {
       this.setState({
