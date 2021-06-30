@@ -2,6 +2,14 @@ import React, { Component } from "react";
 import DisplayNotes from "./DisplayNotes";
 
 export class Notes extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      iconsDisplay: false,
+    };
+  }
+
   render() {
     return (
       <div className="displaynotes">

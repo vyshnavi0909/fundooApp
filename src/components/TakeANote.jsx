@@ -16,7 +16,16 @@ export class TakeANote extends Component {
   }
 
   handleOnClick = () => {
-    this.setState({ showContent: true });
+    if (!this.state.showContent) {
+      this.setState({ showContent: true });
+    }
+  };
+
+  onClickClose = () => {
+    console.log("close");
+    this.setState({
+      showContent: false,
+    });
   };
 
   render() {
@@ -28,7 +37,7 @@ export class TakeANote extends Component {
           style={{ display: this.state.showContent ? "none" : "flex" }}
         >
           <p>Take a note...</p>
-          <div>
+          <div className="add-icons">
             <CheckBoxIcon className="add-note-icons" />
             <BrushIcon className="add-note-icons" />
             <PhotoIcon className="add-note-icons" />
@@ -39,15 +48,11 @@ export class TakeANote extends Component {
           style={{ display: this.state.showContent ? "flex" : "none" }}
           onClick={this.handleOnClick}
         >
-          <TextField
-            className="input"
-            placeholder="Title"
-            style={{ borderBottom: "none" }}
-          />
-          <TextField className="input" placeholder="Take a note" />
+          <input className="note-input" placeholder="Title" />
+          <input className="note-input" placeholder="Take a note" />
           <div className="iconBar-with-btn">
             <IconBar />
-            <Button>close</Button>
+            <Button onClick={this.onClickClose}>close</Button>
           </div>
         </div>
       </>
