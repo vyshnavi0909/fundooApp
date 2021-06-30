@@ -22,18 +22,20 @@ class UserServices {
     return axiosServices.postMethod(`${baseURL}user/reset`, data, config);
   };
 
-  Reset = (data, token) => {
+  Reset = (data) => {
     return axiosServices.postMethod(
       `${baseURL}user/reset-password`,
       data,
       config
-      //   {
-      //     headers: {
-      //       "Content-Type": "application/json",
-      //       Authorization: token,
-      //     },
-      //   }
     );
+  };
+
+  AddANote = (data) => {
+    return axiosServices.postMethod(`${baseURL}notes/addNotes`, data, config);
+  };
+
+  GetANote = () => {
+    return axiosServices.getMethod(`${baseURL}notes/getNotesList`, config);
   };
 }
 

@@ -5,6 +5,8 @@ import PhotoIcon from "@material-ui/icons/PhotoOutlined";
 import IconBar from "./NotesIconBar";
 // import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
+import UserServices from "../services/userServices";
+const services = new UserServices();
 
 export class TakeANote extends Component {
   constructor(props) {
@@ -12,8 +14,16 @@ export class TakeANote extends Component {
 
     this.state = {
       showContent: false,
+      newNote: "",
+      noteTitle: "",
     };
   }
+
+  handleChange = (e) => {
+    this.setState({
+      [e.target.name]: e.target.value,
+    });
+  };
 
   handleOnClick = () => {
     if (!this.state.showContent) {
@@ -26,7 +36,29 @@ export class TakeANote extends Component {
     this.setState({
       showContent: false,
     });
-    // axios.postnotes()
+
+    let data = {
+      title: this.state.noteTitle,
+      description: this.state.newNote,
+    };
+
+    services
+      .AddANote(data)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    services
+      .GetANote()
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((Err) => {
+        console.log(Err);
+      });
   };
 
   render() {
@@ -46,8 +78,18 @@ export class TakeANote extends Component {
     } else {
       onClickContent = (
         <div className="after-click">
-          <input className="note-input" placeholder="Title" />
-          <input className="note-input" placeholder="Take a note" />
+          <input
+            className="note-input"
+            name="noteTitle"
+            placeholder="Title"
+            onChange={this.handleChange}
+          />
+          <input
+            className="note-input"
+            name="newNote"
+            placeholder="Take a note"
+            onChange={this.handleChange}
+          />
           <div className="iconBar-with-btn">
             <IconBar />
             <Button onClick={this.onClickClose}>close</Button>

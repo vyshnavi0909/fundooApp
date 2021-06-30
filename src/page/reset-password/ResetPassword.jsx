@@ -95,7 +95,7 @@ export class ResetPassword extends Component {
         .Reset(data)
         .then((res) => {
           console.log(res);
-          localStorage.setItem("token", res.data.token);
+          localStorage.setItem("token", res.data.id);
           this.props.history.push("/sign-in");
         })
         .catch((err) => {
