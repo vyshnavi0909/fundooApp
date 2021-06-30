@@ -1,25 +1,35 @@
-.content-box {
-    width: 100%;
-    height: 120px;
-}
-
 .bottom-bar {
     align-items: flex-end;
     bottom: 0;
     visibility: hidden;
 }
 
-/* display notes */
-.displaynotes {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    height: 250px;
+.note-card:hover>.bottom-bar {
+    visibility: visible;
 }
 
+.note-div {
+    display: inline-block;
+    padding: 10px;
+}
 
-.displaynotes:hover>.bottom-bar {
-    visibility: visible;
+.note-card {
+    width: 300px;
+    padding: 0 10px;
+    border: 1px solid #c4c4c4;
+}
+
+.note-card:hover {
+    box-shadow: 1px 1px 5px #a5a5a5;
+}
+
+@media only screen and (max-width:599px) {
+    .note-card {
+        width: 100%;
+        height: 200px;
+        border: 1px solid #c4c4c4;
+        margin: 0;
+    }
 }
 
 @media only screen and (max-width:790px) {

@@ -1,33 +1,55 @@
 import React, { Component } from "react";
 import TakeANote from "../take-a-note/TakeANote";
-import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
 import DisplayNotes from "../display-notes/DisplayNotes";
+import GetNotesContext from "../context-files/GetNotesContext";
+import UserServices from "../../services/userServices";
 import "./Notes.css";
+
+const services = new UserServices();
 
 export class Notes extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      iconsDisplay: false,
+      notes: [],
     };
+  }
+
+  getNote = () => {
+    services
+      .GetNotesList()
+      .then((res) => {
+        console.log(res.data.data.data);
+        var note = res.data.data.data;
+        this.setState({
+          notes: note,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  componentDidMount() {
+    this.getNote();
   }
 
   render() {
     return (
-      <div>
-        <div className="note-taker-div">
-          <TakeANote />
+      <GetNotesContext.Provider value={{
+        getNote: this.getNote,
+        notes : this.state.notes
+      }}>
+        <div>
+          <div className="note-taker-div">
+            <TakeANote />
+          </div>
+          <div className="cards-container">
+            <DisplayNotes  />
+          </div>
         </div>
-        <div className="cards-container">
-          <Card className="note-card">
-            <CardContent>
-              <DisplayNotes />
-            </CardContent>
-          </Card>
-        </div>
-      </div>
+      </GetNotesContext.Provider>
     );
   }
 }

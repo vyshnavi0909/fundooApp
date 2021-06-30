@@ -34,7 +34,7 @@ class UserServices {
     return axiosServices.postMethod(`${baseURL}notes/addNotes`, data, config);
   };
 
-  GetANote = () => {
+  GetNotesList = () => {
     return axiosServices.getMethod(`${baseURL}notes/getNotesList`, config);
   };
 }

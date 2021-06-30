@@ -3,9 +3,9 @@ import CheckBoxIcon from "@material-ui/icons/CheckBoxOutlined";
 import BrushIcon from "@material-ui/icons/BrushOutlined";
 import PhotoIcon from "@material-ui/icons/PhotoOutlined";
 import IconBar from "../icon-bar/IconBar";
-// import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import "./TakeANote.css";
+import { withGetNotes } from "../context-files/GetNotesContext";
 import UserServices from "../../services/userServices";
 const services = new UserServices();
 
@@ -47,21 +47,23 @@ export class TakeANote extends Component {
       .AddANote(data)
       .then((res) => {
         console.log(res);
+        // themeGetNotes();
+        this.props.getNote();
       })
       .catch((err) => {
         console.log(err);
       });
 
-    services
-      .GetANote()
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((Err) => {
-        console.log(Err);
-      });
+    // services
+    //   .GetNotesList()
+    //   .then((res) => {
+    //     console.log("getting data");
+    //     console.log(res.data.data.data);
+    //   })
+    //   .catch((Err) => {
+    //     console.log(Err);
+    //   });
   };
-
   render() {
     const clicked = this.state.showContent;
     let onClickContent;
@@ -100,7 +102,7 @@ export class TakeANote extends Component {
     }
     return (
       <>
-        <div className="take-a-note " onClick={this.handleOnClick}>
+        <div className="take-a-note" onClick={this.handleOnClick}>
           {onClickContent}
         </div>
       </>
@@ -108,4 +110,4 @@ export class TakeANote extends Component {
   }
 }
 
-export default TakeANote;
+export default withGetNotes(TakeANote);

@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import "./ForgotPassword.css";
-import { Link } from "react-router-dom";
 import Userservices from "/home/babbur/Desktop/session3/React Projects/fundoo_app/src/services/userServices.js";
 const services = new Userservices();
 
