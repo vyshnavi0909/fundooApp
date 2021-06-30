@@ -35,7 +35,7 @@ body {
 }
 
 .dashbd-search-icon {
-    padding: 0 2%;
+    padding: 0 1%;
     height: 100%;
     position: absolute;
     bottom: 1px;
@@ -288,8 +288,6 @@ body {
     .add-icons {
         justify-content: space-around;
     }
-
-
 
     .content-container {
         padding-right: 40px;

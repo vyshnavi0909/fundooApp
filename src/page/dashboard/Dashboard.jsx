@@ -23,9 +23,6 @@ import AppsIcon from "@material-ui/icons/AppsOutlined";
 import AccountIcon from "@material-ui/icons/AccountCircleOutlined";
 import KeepIcon from "./keep.png";
 import Notes from "../../components/Notes";
-import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
-import TakeANote from "../../components/TakeANote";
 
 import "./Dashboard.css";
 
@@ -109,7 +106,7 @@ export default function DashBoard(props) {
           >
             <MenuIcon />
           </IconButton>
-          <Typography className={classes.title} variant="h6" Wrap>
+          <Typography className={classes.title} variant="h6">
             <div className="dashbd-keep-icon">
               <img src={KeepIcon} alt="keep-icon" />
               <span>Keep</span>
@@ -174,16 +171,7 @@ export default function DashBoard(props) {
         </List>
       </Drawer>
       <div className="content-container">
-        <div className="note-taker-div">
-          <TakeANote />
-        </div>
-        <div className="cards-container">
-          <Card className="note-card">
-            <CardContent>
-              <Notes />
-            </CardContent>
-          </Card>
-        </div>
+        <Notes />
       </div>
     </div>
   );

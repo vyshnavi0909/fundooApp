@@ -1,11 +1,16 @@
 import React, { Component } from "react";
-import NotesIconBar from "./NotesIconBar";
+import IconsBar from "./NotesIconBar";
 
 export class DisplayNotes extends Component {
+  // axios.getnotes(url)
+
   render() {
     return (
       <div>
-        <NotesIconBar />
+        <div className="content-box">Hello World</div>
+        <div className="bottom-bar">
+          <IconsBar />
+        </div>
       </div>
     );
   }

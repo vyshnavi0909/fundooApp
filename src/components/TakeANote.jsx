@@ -3,7 +3,7 @@ import CheckBoxIcon from "@material-ui/icons/CheckBoxOutlined";
 import BrushIcon from "@material-ui/icons/BrushOutlined";
 import PhotoIcon from "@material-ui/icons/PhotoOutlined";
 import IconBar from "./NotesIconBar";
-import TextField from "@material-ui/core/TextField";
+// import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 
 export class TakeANote extends Component {
@@ -26,16 +26,15 @@ export class TakeANote extends Component {
     this.setState({
       showContent: false,
     });
+    // axios.postnotes()
   };
 
   render() {
-    return (
-      <>
-        <div
-          className="take-a-note before-click"
-          onClick={this.handleOnClick}
-          style={{ display: this.state.showContent ? "none" : "flex" }}
-        >
+    const clicked = this.state.showContent;
+    let onClickContent;
+    if (!clicked) {
+      onClickContent = (
+        <div className="before-click">
           <p>Take a note...</p>
           <div className="add-icons">
             <CheckBoxIcon className="add-note-icons" />
@@ -43,17 +42,23 @@ export class TakeANote extends Component {
             <PhotoIcon className="add-note-icons" />
           </div>
         </div>
-        <div
-          className="take-a-note after-click"
-          style={{ display: this.state.showContent ? "flex" : "none" }}
-          onClick={this.handleOnClick}
-        >
+      );
+    } else {
+      onClickContent = (
+        <div className="after-click">
           <input className="note-input" placeholder="Title" />
           <input className="note-input" placeholder="Take a note" />
           <div className="iconBar-with-btn">
             <IconBar />
             <Button onClick={this.onClickClose}>close</Button>
           </div>
+        </div>
+      );
+    }
+    return (
+      <>
+        <div className="take-a-note " onClick={this.handleOnClick}>
+          {onClickContent}
         </div>
       </>
     );
