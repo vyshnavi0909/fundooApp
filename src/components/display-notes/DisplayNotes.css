@@ -1,0 +1,31 @@
+.content-box {
+    width: 100%;
+    height: 120px;
+}
+
+.bottom-bar {
+    align-items: flex-end;
+    bottom: 0;
+    visibility: hidden;
+}
+
+/* display notes */
+.displaynotes {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 250px;
+}
+
+
+.displaynotes:hover>.bottom-bar {
+    visibility: visible;
+}
+
+@media only screen and (max-width:790px) {
+
+    .displaynotes {
+        width: 100%;
+        height: 200px;
+    }
+}

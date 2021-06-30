@@ -23,7 +23,7 @@ import SettingsIcon from "@material-ui/icons/SettingsOutlined";
 import AppsIcon from "@material-ui/icons/AppsOutlined";
 import AccountIcon from "@material-ui/icons/AccountCircleOutlined";
 import KeepIcon from "./keep.png";
-import Notes from "../../components/Notes";
+import Notes from "../../components/notes/Notes";
 
 import "./Dashboard.css";
 

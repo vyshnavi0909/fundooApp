@@ -1,0 +1,9 @@
+.bar-icon {
+    margin: 10px;
+}
+
+@media only screen and (max-width:790px) {
+    .bar-icon {
+        margin: 5px 3px;
+    }
+}

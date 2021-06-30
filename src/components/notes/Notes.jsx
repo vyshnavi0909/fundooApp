@@ -1,8 +1,9 @@
 import React, { Component } from "react";
-import TakeANote from "./TakeANote";
+import TakeANote from "../take-a-note/TakeANote";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
-import DisplayNotes from "./DisplayNotes";
+import DisplayNotes from "../display-notes/DisplayNotes";
+import "./Notes.css";
 
 export class Notes extends Component {
   constructor(props) {

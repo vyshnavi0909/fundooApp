@@ -2,10 +2,11 @@ import React, { Component } from "react";
 import CheckBoxIcon from "@material-ui/icons/CheckBoxOutlined";
 import BrushIcon from "@material-ui/icons/BrushOutlined";
 import PhotoIcon from "@material-ui/icons/PhotoOutlined";
-import IconBar from "./NotesIconBar";
+import IconBar from "../icon-bar/IconBar";
 // import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
-import UserServices from "../services/userServices";
+import "./TakeANote.css";
+import UserServices from "../../services/userServices";
 const services = new UserServices();
 
 export class TakeANote extends Component {
