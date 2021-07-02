@@ -17,6 +17,9 @@ export class TakeANote extends Component {
       showContent: false,
       newNote: "",
       noteTitle: "",
+      isArchived: false,
+      isDeleted: false,
+      color: "",
     };
   }
 
@@ -32,6 +35,24 @@ export class TakeANote extends Component {
     }
   };
 
+  handleArchive = () => {
+    this.setState({
+      isArchived: true,
+    });
+  };
+
+  addcolor = (e) => {
+    this.setState({
+      color: e.target.name,
+    });
+  };
+
+  handleDelete = () => {
+    this.setState({
+      isDeleted: true,
+    });
+  };
+
   onClickClose = () => {
     console.log("close");
     this.setState({
@@ -41,28 +62,26 @@ export class TakeANote extends Component {
     let data = {
       title: this.state.noteTitle,
       description: this.state.newNote,
+      color: this.state.color,
+      isArchived: this.state.isArchived,
     };
 
     services
       .AddANote(data)
       .then((res) => {
         console.log(res);
-        // themeGetNotes();
         this.props.getNote();
+        this.setState({
+          color: "#ffffff",
+          isArchived: false,
+          isDeleted: false,
+          newNote: "",
+          noteTitle: "",
+        });
       })
       .catch((err) => {
         console.log(err);
       });
-
-    // services
-    //   .GetNotesList()
-    //   .then((res) => {
-    //     console.log("getting data");
-    //     console.log(res.data.data.data);
-    //   })
-    //   .catch((Err) => {
-    //     console.log(Err);
-    //   });
   };
   render() {
     const clicked = this.state.showContent;
@@ -80,7 +99,10 @@ export class TakeANote extends Component {
       );
     } else {
       onClickContent = (
-        <div className="after-click">
+        <div
+          className="after-click"
+          style={{ backgroundColor: this.state.color }}
+        >
           <input
             className="note-input"
             name="noteTitle"
@@ -94,7 +116,12 @@ export class TakeANote extends Component {
             onChange={this.handleChange}
           />
           <div className="iconBar-with-btn">
-            <IconBar />
+            <IconBar
+              color={this.addcolor}
+              noteType="newNote"
+              archive={this.handleArchive}
+              // deleteNote={this.handleDelete}
+            />
             <Button onClick={this.onClickClose}>close</Button>
           </div>
         </div>

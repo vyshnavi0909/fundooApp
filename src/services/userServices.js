@@ -37,6 +37,22 @@ class UserServices {
   GetNotesList = () => {
     return axiosServices.getMethod(`${baseURL}notes/getNotesList`, config);
   };
+
+  DeleteNote = (data) => {
+    return axiosServices.postMethod(`${baseURL}notes/trashNotes`, data, config);
+  };
+
+  ArchiveNote = (data) => {
+    return axiosServices.postMethod(
+      `${baseURL}notes/archiveNotes`,
+      data,
+      config
+    );
+  };
+
+  UpdateNotes = (data) => {
+    return axiosServices.putMethod(`${baseURL}notes/updateNotes`, data, config);
+  };
 }
 
 export default UserServices;

@@ -63,6 +63,25 @@
     background-color: #e8eaed;
 }
 
+ul {
+    list-style-type: none;
+    color: #000;
+    padding: 0;
+    font-size: 15px;
+    letter-spacing: 0;
+}
+
+li {
+    padding: 4px 15px;
+}
+
+li:hover {
+    background-color: #ebebeb;
+}
+
+.optionsPaper {
+    box-shadow: 1px 1px 5px #a0a0a0;
+}
 
 @media only screen and (max-width:790px) {
     .bar-icon {

@@ -118,6 +118,7 @@ body {
 .content-container {
     width: 100%;
     padding: 100px;
+    height: fit-content;
 }
 
 
@@ -159,6 +160,6 @@ body {
 @media only screen and (max-width:400px) {
 
     .content-container {
-        padding-right: 40px;
+        padding-right: 30px;
     }
 }

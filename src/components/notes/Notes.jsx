@@ -16,20 +16,37 @@ export class Notes extends Component {
     };
   }
 
+  archiveNotes = () => {};
+
   getNote = () => {
     services
       .GetNotesList()
       .then((res) => {
         console.log(res.data.data.data);
-        var note = res.data.data.data;
-        this.setState({
-          notes: note,
-        });
+        var notes = res.data.data.data;
+        this.filterNotes(notes);
       })
       .catch((err) => {
         console.log(err);
       });
   };
+
+  filterNotes = (notes) => {
+    let reqNotes = notes.filter((note) => {
+      if (note.isArchived !== true && note.isDeleted !== true) {
+        return note;
+      }
+    });
+    this.setState({
+      notes: reqNotes,
+    });
+  };
+
+  // archiveNote = () => {
+  //   this.setState({
+  //     isArchived: true,
+  //   });
+  // };
 
   componentDidMount() {
     this.getNote();
@@ -37,16 +54,20 @@ export class Notes extends Component {
 
   render() {
     return (
-      <GetNotesContext.Provider value={{
-        getNote: this.getNote,
-        notes : this.state.notes
-      }}>
+      <GetNotesContext.Provider
+        value={{
+          getNote: this.getNote,
+          notes: this.state.notes,
+          delete: this.deleteNote,
+          // archive: this.archiveNote,
+        }}
+      >
         <div>
           <div className="note-taker-div">
             <TakeANote />
           </div>
           <div className="cards-container">
-            <DisplayNotes  />
+            <DisplayNotes />
           </div>
         </div>
       </GetNotesContext.Provider>
