@@ -160,6 +160,7 @@ body {
 @media only screen and (max-width:400px) {
 
     .content-container {
-        padding-right: 30px;
+        padding-left: 60px;
+        padding-right: 10px;
     }
 }

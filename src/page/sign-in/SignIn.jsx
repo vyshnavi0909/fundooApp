@@ -4,6 +4,7 @@ import Button from "@material-ui/core/Button";
 import { Link } from "react-router-dom";
 import "./SignIn.css";
 import UserServices from "/home/babbur/Desktop/session3/React Projects/fundoo_app/src/services/userServices.js";
+import Auth from "../../components/auth/Auth";
 const services = new UserServices();
 
 export class SignIn extends Component {
@@ -148,7 +149,12 @@ export class SignIn extends Component {
               Create account
             </Link>
             <Button
-              onClick={this.onClicked}
+              // onClick={this.onClicked}
+              onClick={() => {
+                Auth.SignIn(() => {
+                  this.props.history.push("/dashboard");
+                });
+              }}
               variant="contained"
               color="primary"
             >

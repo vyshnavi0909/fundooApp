@@ -51,6 +51,10 @@
         flex-direction: column;
     }
 
+    .take-a-note {
+        margin-left: 20px;
+    }
+
     .add-icons {
         justify-content: space-around;
     }

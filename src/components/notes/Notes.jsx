@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import TakeANote from "../take-a-note/TakeANote";
 import DisplayNotes from "../display-notes/DisplayNotes";
-import GetNotesContext from "../context-files/GetNotesContext";
+import NotesContext from "../context-files/NotesContext";
 import UserServices from "../../services/userServices";
 import "./Notes.css";
 
@@ -13,16 +13,14 @@ export class Notes extends Component {
 
     this.state = {
       notes: [],
+      image: null,
     };
   }
-
-  archiveNotes = () => {};
 
   getNote = () => {
     services
       .GetNotesList()
       .then((res) => {
-        console.log(res.data.data.data);
         var notes = res.data.data.data;
         this.filterNotes(notes);
       })
@@ -38,39 +36,39 @@ export class Notes extends Component {
       }
     });
     this.setState({
-      notes: reqNotes,
+      notes: reqNotes.reverse(),
     });
   };
-
-  // archiveNote = () => {
-  //   this.setState({
-  //     isArchived: true,
-  //   });
-  // };
 
   componentDidMount() {
     this.getNote();
   }
 
+  setImage = (content) => {
+    this.setState({ image: content });
+  };
+
   render() {
     return (
-      <GetNotesContext.Provider
+      <NotesContext.Provider
         value={{
           getNote: this.getNote,
           notes: this.state.notes,
-          delete: this.deleteNote,
-          // archive: this.archiveNote,
+          setImage: this.setImage,
         }}
       >
         <div>
           <div className="note-taker-div">
             <TakeANote />
           </div>
+          {/* {this.state.image && <img alt="Note" src={this.state.image} />} */}
           <div className="cards-container">
-            <DisplayNotes />
+            <DisplayNotes
+            // image={this.state.image}
+            />
           </div>
         </div>
-      </GetNotesContext.Provider>
+      </NotesContext.Provider>
     );
   }
 }

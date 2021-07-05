@@ -5,7 +5,9 @@ import SignIn from "./page/sign-in/SignIn";
 import ForgotPassword from "./page/forgot-password/ForgotPassword";
 import ResetPassword from "./page/reset-password/ResetPassword";
 import DashBoard from "./page/dashboard/Dashboard";
-
+import Archive from "./components/archive/Archive";
+import Trash from "./components/trash/Trash";
+import ProtectedRoute from "./components/protected-route/ProtectedRoute";
 function App() {
   return (
     <Router>
@@ -14,7 +16,19 @@ function App() {
         <Route exact path="/sign-in" component={SignIn}></Route>
         <Route exact path="/forgot-password" component={ForgotPassword}></Route>
         <Route path="/resetpassword" component={ResetPassword}></Route>
-        <Route path="/dashboard/" component={DashBoard}></Route>
+        <ProtectedRoute
+          exact
+          path="/dashboard/"
+          component={DashBoard}
+        ></ProtectedRoute>
+        <ProtectedRoute
+          path="/dashboard/archive"
+          component={Archive}
+        ></ProtectedRoute>
+        <ProtectedRoute
+          path="/dashboard/trash"
+          component={Trash}
+        ></ProtectedRoute>
       </div>
     </Router>
   );

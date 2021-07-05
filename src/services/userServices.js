@@ -50,8 +50,31 @@ class UserServices {
     );
   };
 
+  ChangeColor = (data) => {
+    return axiosServices.postMethod(
+      `${baseURL}notes/changesColorNotes`,
+      data,
+      config
+    );
+  };
+
   UpdateNotes = (data) => {
-    return axiosServices.putMethod(`${baseURL}notes/updateNotes`, data, config);
+    return axiosServices.postMethod(
+      `${baseURL}notes/updateNotes`,
+      data,
+      config
+    );
+  };
+
+  GetArchiveNotesList = () => {
+    return axiosServices.getMethod(
+      `${baseURL}notes/getArchiveNotesList`,
+      config
+    );
+  };
+
+  GetTrashNotesList = () => {
+    return axiosServices.getMethod(`${baseURL}notes/getTrashNotesList`, config);
   };
 }
 

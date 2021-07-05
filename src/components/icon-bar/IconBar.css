@@ -2,6 +2,10 @@
     margin: 10px;
 }
 
+.bar-icon:active {
+    background-color: #a0a0a0;
+}
+
 .color-palette {
     width: 130px;
     margin-bottom: 10px;
@@ -81,6 +85,10 @@ li:hover {
 
 .optionsPaper {
     box-shadow: 1px 1px 5px #a0a0a0;
+}
+
+.file-input {
+    display: none;
 }
 
 @media only screen and (max-width:790px) {

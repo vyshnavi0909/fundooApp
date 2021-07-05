@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Popper from "@material-ui/core/Popper";
-import { withGetNotes } from "../context-files/GetNotesContext";
+import { withGetNotes } from "../context-files/Consumer";
 import AddAlertIcon from "@material-ui/icons/AddAlertOutlined";
 import CollaboratorIcon from "@material-ui/icons/PersonAddOutlined";
 import ColorLensIcon from "@material-ui/icons/ColorLensOutlined";
@@ -26,6 +26,23 @@ export class NotesIconBar extends Component {
     };
   }
 
+  handleBlur = () => {
+    this.setState({
+      openColor: false,
+      anchorEl: null,
+      openOptions: false,
+    });
+  };
+
+  handleImage = (e) => {
+    const file = e.target.files[0];
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      this.props.setImage(reader.result);
+    };
+    reader.readAsDataURL(file);
+  };
+
   handleColorPalette = (e) => {
     this.setState({
       openColor: !this.state.openColor,
@@ -50,7 +67,6 @@ export class NotesIconBar extends Component {
 
   onArchive = () => {
     if (this.props.noteType === "updateNote") {
-      console.log(this.props.res);
       let data = {
         isArchived: true,
         noteIdList: [this.props.res.id],
@@ -59,7 +75,6 @@ export class NotesIconBar extends Component {
       services
         .ArchiveNote(data)
         .then((res) => {
-          console.log(res);
           this.props.getNote();
         })
         .catch((err) => {
@@ -67,6 +82,29 @@ export class NotesIconBar extends Component {
         });
     } else if (this.props.noteType === "newNote") {
       this.props.archive();
+    }
+  };
+
+  handleChangeColor = (e) => {
+    this.setState({
+      color: e.target.name,
+    });
+    if (this.props.noteType === "updateNote") {
+      let data = {
+        noteIdList: [this.props.res.id],
+        color: this.state.color,
+      };
+      services
+        .ChangeColor(data)
+        .then((res) => {
+          console.log(res);
+          this.props.getNote();
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else if (this.props.noteType === "newNote") {
+      this.props.color(this.state.color);
     }
   };
 
@@ -88,26 +126,9 @@ export class NotesIconBar extends Component {
     }
   };
 
-  updatingANote = () => {
-    let data = {
-      noteId: this.props.value.id,
-      title: this.state.title,
-      description: this.state.description,
-      color: this.state.color,
-      isArchived: this.state.isArchived,
-      isDeleted: this.state.isDeleted,
-    };
-
-    services.UpdateNotes(data).then((res) => {
-      this.props.update();
-    });
-  };
-
-  insertImage = () => {};
-
   render() {
     return (
-      <div className="icons-div">
+      <div className="icons-div" onMouseLeave={this.handleBlur}>
         <Popper
           name="colorPopper"
           open={this.state.openColor}
@@ -120,73 +141,73 @@ export class NotesIconBar extends Component {
               <Paper>
                 <div className="color-palette">
                   <button
-                    onClick={this.props.color}
+                    onClick={this.handleChangeColor}
                     title="Default"
                     name="#ffffff"
                     className="color color-1"
                   ></button>
                   <button
-                    onClick={this.props.color}
+                    onClick={this.handleChangeColor}
                     title="Red"
                     name="#f28b82"
                     className="color color-2"
                   ></button>
                   <button
-                    onClick={this.props.color}
+                    onClick={this.handleChangeColor}
                     title="Orange"
                     name="#fbbc04"
                     className="color color-3"
                   ></button>
                   <button
-                    onClick={this.props.color}
+                    onClick={this.handleChangeColor}
                     title="Yellow"
                     name="#fff475"
                     className="color color-4"
                   ></button>
                   <button
-                    onClick={this.props.color}
+                    onClick={this.handleChangeColor}
                     title="Green"
                     name="#ccff90"
                     className="color color-5"
                   ></button>
                   <button
-                    onClick={this.props.color}
+                    onClick={this.handleChangeColor}
                     title="Teal"
                     name="#a7ffeb"
                     className="color color-6"
                   ></button>
                   <button
-                    onClick={this.props.color}
+                    onClick={this.handleChangeColor}
                     title="Blue"
                     name="#cbf0f8"
                     className="color color-7"
                   ></button>
                   <button
-                    onClick={this.props.color}
+                    onClick={this.handleChangeColor}
                     title="Dark Blue"
                     name="#aecbfa"
                     className="color color-8"
                   ></button>
                   <button
-                    onClick={this.props.color}
+                    onClick={this.handleChangeColor}
                     title="Purple"
                     name="#d7aefb"
                     className="color color-9"
                   ></button>
                   <button
-                    onClick={this.props.color}
+                    onClick={this.handleChangeColor}
                     title="Pink"
                     name="#fdcfe8"
                     className="color color-10"
                   ></button>
                   <button
-                    onClick={this.props.color}
+                    onClick={this.handleChangeColor}
                     title="Brown"
                     name="#e6c9a8"
                     className="color color-11"
                   ></button>
                   <button
-                    onClick={this.props.color}
+                    onClick={this.handleChangeColor}
                     title="Grey"
                     name="#e8eaed"
                     className="color color-12"
@@ -268,14 +289,22 @@ export class NotesIconBar extends Component {
         <ColorLensIcon
           title="Change color"
           className="bar-icon"
-          onMouseOver={this.handleColorPalette}
+          onMouseEnter={this.handleColorPalette}
         />
-        {/* <input type="file" id="file" onChange={this.handleImage} /> */}
-        <PhotoIcon
-          title="Add image"
-          className="bar-icon"
-          onClick={this.insertImage}
+        <label htmlFor="file">
+          <PhotoIcon
+            title="Add image"
+            className="bar-icon"
+            onClick={this.insertImage}
+          />
+        </label>
+        <input
+          id="file"
+          type="file"
+          className="file-input"
+          onChange={this.handleImage}
         />
+
         <ArchiveIcon
           title="Archive"
           className="bar-icon"
@@ -284,7 +313,8 @@ export class NotesIconBar extends Component {
         <MoreIcon
           title="More"
           className="bar-icon"
-          onMouseOver={this.moreOptions}
+          onClick={this.moreOptions}
+          // onMouseLeave={this.handleBlur}
         />
       </div>
     );

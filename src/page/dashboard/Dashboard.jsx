@@ -24,8 +24,11 @@ import AppsIcon from "@material-ui/icons/AppsOutlined";
 import AccountIcon from "@material-ui/icons/AccountCircleOutlined";
 import KeepIcon from "./keep.png";
 import Notes from "../../components/notes/Notes";
+import Archive from "../../components/archive/Archive";
+import Trash from "../../components/trash/Trash";
 
 import "./Dashboard.css";
+import { Route, Switch, useHistory } from "react-router";
 
 const drawerWidth = 240;
 
@@ -80,13 +83,38 @@ export default function DashBoard(props) {
   const classes = useStyles();
   // const theme = useTheme();
   const [open, setOpen] = React.useState(false);
-  // const [header, setHeader] = React.useState("Keep");
+  const history = useHistory();
 
   const handleDrawer = () => {
     if (open) {
       setOpen(false);
     } else {
       setOpen(true);
+    }
+  };
+
+  // var comp = <Notes />;
+  const redirect = (e) => {
+    const url = e;
+
+    // if (url === "notes") {
+    //   comp = <Notes />;
+    // } else if (url === "archive") {
+    //   comp = <Archive />;
+    // } else if (url === "trash") {
+    //   comp = <Trash />;
+    // }
+    console.log(url);
+    if (url === "notes") {
+      history.push("/dashboard");
+    } else if (url === "reminder") {
+      history.push("/dashboard/reminder");
+    } else if (url === "editlabel") {
+      history.push("/dashboard/editlabels");
+    } else if (url === "archive") {
+      history.push("/dashboard/archive");
+    } else if (url === "trash") {
+      history.push("/dashboard/trash");
     }
   };
 
@@ -149,30 +177,37 @@ export default function DashBoard(props) {
         }}
       >
         <List className="dashbd-list">
-          <div className="list-items">
+          <div
+            className="list-items"
+            name="notes"
+            onClick={() => redirect("notes")}
+          >
             <NotesIcon />
             <span className="list-name">Notes</span>
           </div>
-          <div className="list-items">
+          <div className="list-items" onClick={() => redirect("reminder")}>
             <ReminderIcon />
             <span className="list-name">Reminder</span>
           </div>
-          <div className="list-items">
+          <div className="list-items" onClick={() => redirect("editlabel")}>
             <EditIcon />
             <span className="list-name">Edit Label</span>
           </div>
-          <div className="list-items">
+          <div className="list-items" onClick={() => redirect("archive")}>
             <ArchiveIcon />
             <span className="list-name">Archive</span>
           </div>
-          <div className="list-items">
+          <div className="list-items" onClick={() => redirect("trash")}>
             <TrashIcon />
             <span className="list-name">Trash</span>
           </div>
         </List>
       </Drawer>
       <div className="content-container">
-        <Notes />
+        {/* <Route component={Notes}></Route> */}
+        <Route exact path="/dashboard" component={Notes}></Route>
+        <Route path="/dashboard/archive" component={Archive}></Route>
+        <Route path="/dashboard/trash" component={Trash}></Route>
       </div>
     </div>
   );

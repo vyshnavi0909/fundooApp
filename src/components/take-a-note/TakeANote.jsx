@@ -5,8 +5,9 @@ import PhotoIcon from "@material-ui/icons/PhotoOutlined";
 import IconBar from "../icon-bar/IconBar";
 import Button from "@material-ui/core/Button";
 import "./TakeANote.css";
-import { withGetNotes } from "../context-files/GetNotesContext";
+import { withGetNotes } from "../context-files/Consumer";
 import UserServices from "../../services/userServices";
+import { TextareaAutosize } from "@material-ui/core";
 const services = new UserServices();
 
 export class TakeANote extends Component {
@@ -38,12 +39,15 @@ export class TakeANote extends Component {
   handleArchive = () => {
     this.setState({
       isArchived: true,
+      showContent: false,
     });
+
+    this.onClickClose();
   };
 
   addcolor = (e) => {
     this.setState({
-      color: e.target.name,
+      color: e,
     });
   };
 
@@ -54,7 +58,7 @@ export class TakeANote extends Component {
   };
 
   onClickClose = () => {
-    console.log("close");
+    console.log(this.state);
     this.setState({
       showContent: false,
     });
@@ -71,13 +75,6 @@ export class TakeANote extends Component {
       .then((res) => {
         console.log(res);
         this.props.getNote();
-        this.setState({
-          color: "#ffffff",
-          isArchived: false,
-          isDeleted: false,
-          newNote: "",
-          noteTitle: "",
-        });
       })
       .catch((err) => {
         console.log(err);
@@ -103,13 +100,13 @@ export class TakeANote extends Component {
           className="after-click"
           style={{ backgroundColor: this.state.color }}
         >
-          <input
+          <TextareaAutosize
             className="note-input"
             name="noteTitle"
             placeholder="Title"
             onChange={this.handleChange}
           />
-          <input
+          <TextareaAutosize
             className="note-input"
             name="newNote"
             placeholder="Take a note"
@@ -120,7 +117,6 @@ export class TakeANote extends Component {
               color={this.addcolor}
               noteType="newNote"
               archive={this.handleArchive}
-              // deleteNote={this.handleDelete}
             />
             <Button onClick={this.onClickClose}>close</Button>
           </div>
