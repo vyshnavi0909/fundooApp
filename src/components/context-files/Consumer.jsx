@@ -7,13 +7,7 @@ export function withGetNotes(BaseComponent) {
     render() {
       return (
         <NotesContext.Consumer>
-          {(value) => (
-            <BaseComponent
-              {...value}
-              // archive={props.archive}
-              {...this.props}
-            />
-          )}
+          {(value) => <BaseComponent {...value} {...this.props} />}
         </NotesContext.Consumer>
       );
     }

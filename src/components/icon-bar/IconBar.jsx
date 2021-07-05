@@ -75,6 +75,8 @@ export class NotesIconBar extends Component {
       services
         .ArchiveNote(data)
         .then((res) => {
+          console.log(res);
+          console.log(data.isArchived);
           this.props.getNote();
         })
         .catch((err) => {

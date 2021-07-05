@@ -105,7 +105,7 @@ export class SignIn extends Component {
               className="signin-email-field"
               label="Email or phone"
               variant="outlined"
-              fullWidth="true"
+              fullWidth
               onChange={(e) => this.changeHandler(e)}
             />
           </div>
@@ -123,7 +123,7 @@ export class SignIn extends Component {
               className="signin-email-field"
               label="password"
               variant="outlined"
-              fullWidth="true"
+              fullWidth
               onChange={(e) => this.changeHandler(e)}
             />
           </div>

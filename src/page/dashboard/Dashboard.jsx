@@ -1,6 +1,5 @@
 import React from "react";
 import clsx from "clsx";
-// import { makeStyles, useTheme } from "@material-ui/core/styles";
 import { makeStyles } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
 import AppBar from "@material-ui/core/AppBar";
@@ -93,17 +92,9 @@ export default function DashBoard(props) {
     }
   };
 
-  // var comp = <Notes />;
   const redirect = (e) => {
     const url = e;
 
-    // if (url === "notes") {
-    //   comp = <Notes />;
-    // } else if (url === "archive") {
-    //   comp = <Archive />;
-    // } else if (url === "trash") {
-    //   comp = <Trash />;
-    // }
     console.log(url);
     if (url === "notes") {
       history.push("/dashboard");
@@ -204,10 +195,11 @@ export default function DashBoard(props) {
         </List>
       </Drawer>
       <div className="content-container">
-        {/* <Route component={Notes}></Route> */}
-        <Route exact path="/dashboard" component={Notes}></Route>
-        <Route path="/dashboard/archive" component={Archive}></Route>
-        <Route path="/dashboard/trash" component={Trash}></Route>
+        <Switch>
+          <Route exact path="/dashboard" component={Notes}></Route>
+          <Route path="/dashboard/archive" component={Archive}></Route>
+          <Route path="/dashboard/trash" component={Trash}></Route>
+        </Switch>
       </div>
     </div>
   );

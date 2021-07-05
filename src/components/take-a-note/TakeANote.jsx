@@ -58,27 +58,30 @@ export class TakeANote extends Component {
   };
 
   onClickClose = () => {
-    console.log(this.state);
-    this.setState({
-      showContent: false,
-    });
-
-    let data = {
-      title: this.state.noteTitle,
-      description: this.state.newNote,
-      color: this.state.color,
-      isArchived: this.state.isArchived,
-    };
-
-    services
-      .AddANote(data)
-      .then((res) => {
-        console.log(res);
-        this.props.getNote();
-      })
-      .catch((err) => {
-        console.log(err);
+    if (this.state.title !== "") {
+      console.log(this.state);
+      this.setState({
+        showContent: false,
       });
+
+      let data = {
+        title: this.state.noteTitle,
+        description: this.state.newNote,
+        color: this.state.color,
+        isArchived: this.state.isArchived,
+      };
+
+      services
+        .AddANote(data)
+        .then((res) => {
+          console.log(res);
+          console.log(data.isArchived);
+          this.props.getNote();
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   };
   render() {
     const clicked = this.state.showContent;

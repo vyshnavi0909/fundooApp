@@ -1,5 +1,6 @@
 .bar-icon {
     margin: 10px;
+    padding: 2px;
 }
 
 .bar-icon:active {
@@ -94,5 +95,12 @@ li:hover {
 @media only screen and (max-width:790px) {
     .bar-icon {
         margin: 5px 3px;
+    }
+}
+
+@media only screen and (max-width:400px) {
+
+    .bar-icon {
+        padding: 3px;
     }
 }

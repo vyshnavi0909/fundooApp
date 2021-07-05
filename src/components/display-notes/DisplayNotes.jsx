@@ -41,7 +41,6 @@ export class DisplayNotes extends Component {
   handleClose = () => {
     this.setState({
       open: false,
-      // noteID: ,
     });
 
     let data = {
@@ -90,7 +89,6 @@ export class DisplayNotes extends Component {
           <div key={index}>
             <CardContent className="card-content">
               <TextareaAutosize
-                // style={{ textTransform: "capitalize" }}
                 className="note-textarea note-title"
                 name="title"
                 onChange={this.handleChange}
@@ -107,11 +105,7 @@ export class DisplayNotes extends Component {
             </CardContent>
           </div>
           <div className="bottom-bar">
-            <IconsBar
-              res={note}
-              noteType="updateNote"
-              archive={this.props.archive}
-            />
+            <IconsBar res={note} noteType="updateNote" />
             <Button onClick={this.handleClose}>close</Button>
           </div>
         </Card>

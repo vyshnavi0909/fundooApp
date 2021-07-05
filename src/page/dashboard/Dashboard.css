@@ -95,7 +95,6 @@ body {
 
 .dashbd-list {
     top: 60px;
-
 }
 
 .list-items {
@@ -162,5 +161,10 @@ body {
     .content-container {
         padding-left: 60px;
         padding-right: 10px;
+    }
+
+
+    .icons {
+        padding: 0 3px;
     }
 }
