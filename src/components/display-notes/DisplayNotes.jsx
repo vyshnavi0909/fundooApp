@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import IconsBar from "../icon-bar/IconBar";
 import "./DisplayNotes.css";
 import UserServices from "../../services/userServices";
@@ -26,17 +26,25 @@ export class DisplayNotes extends Component {
       title: "",
       desc: "",
       noteID: "",
+      fileName: "",
     };
   }
 
-  // handleClickOpen = (res, index) => {
-  //   this.setState({
-  //     open: true,
-  //     title: res.title,
-  //     desc: res.description,
-  //     noteID: index,
-  //   });
-  // };
+  handleImage = (filename) => {
+    this.setState({
+      fileName: filename,
+    });
+    console.log(this.state.fileName);
+  };
+
+  handleClickOpen = (note) => {
+    this.setState({
+      open: true,
+      title: note.title,
+      desc: note.description,
+      noteID: note.id,
+    });
+  };
 
   handleClose = () => {
     this.setState({
@@ -44,9 +52,10 @@ export class DisplayNotes extends Component {
     });
 
     let data = {
-      noteIdList: this.state.noteID,
+      noteId: this.state.noteID,
       title: this.state.title,
       description: this.state.description,
+      file: this.state.fileName,
     };
 
     services
@@ -59,93 +68,65 @@ export class DisplayNotes extends Component {
       });
   };
 
-  handleChange = (e) => {
+  // handleChange = (e) => {
+  //   this.setState({
+  //     [e.target.name]: e.target.value,
+  //   });
+  // };
+
+  handleTitleChange = (e) => {
     this.setState({
-      [e.target.name]: e.target.value,
+      title: e.target.value,
     });
   };
 
-  // handleTitleChange = (e) => {
-  //   this.setState({
-  //     title: e.target.value,
-  //   });
-  //   let data = {
-  //     noteIdList: note.id,
-  //     title: this.state.title,
-  //   };
-  // };
-
-  // handleDescChange = (e) => {
-  //   this.setState({
-  //     desc: e.target.value,
-  //   });
-  // };
+  handleDescChange = (e) => {
+    this.setState({
+      desc: e.target.value,
+    });
+  };
 
   render() {
     const notesList = this.props.notes;
     var listItems = notesList.map((note, index) => (
       <div className="note-div" key={index}>
         <Card className="note-card" style={{ backgroundColor: note.color }}>
-          <div key={index}>
+          <div
+            onClick={() => {
+              this.handleClickOpen(note);
+            }}
+          >
             <CardContent className="card-content">
-              <TextareaAutosize
-                className="note-textarea note-title"
-                name="title"
-                onChange={this.handleChange}
-              >
+              <h4 className="note-textarea note-title" name="title">
                 {note.title}
-              </TextareaAutosize>
-              <TextareaAutosize
-                className="notes-para note-textarea"
-                name="desc"
-                onChange={this.handleChange}
-              >
+              </h4>
+              <p className="notes-para note-textarea" name="desc">
                 {note.description}
-              </TextareaAutosize>
+              </p>
             </CardContent>
           </div>
           <div className="bottom-bar">
             <IconsBar res={note} noteType="updateNote" />
-            <Button onClick={this.handleClose}>close</Button>
           </div>
         </Card>
+      </div>
+    ));
 
-        {/* <div className="note-div" key={index}>
-          <Card className="note-card" style={{ backgroundColor: note.color }}>
-            <Button
-              className="display-notes-btn"
-              style={{ textTransform: "capitalize" }}
-              onClick={this.handleClickOpen}
-              key={index}
-            >
-              <CardContent>
-                <h4>{note.title}</h4>
-                <p className="notes-para">{note.description}</p>
-              </CardContent>
-            </Button>
-
-            <div className="bottom-bar">
-              <IconsBar
-                res={note}
-                noteType="updateNote"
-                archive={this.props.archive}
-              />
-            </div>
-          </Card>
-        </div> */}
-        {/* <Dialog
+    return (
+      <div className="displaynotes">
+        {listItems}
+        <Dialog
           className="dialog-box"
           open={this.state.open}
           fullWidth
           aria-labelledby="responsive-dialog-title"
           style={{ backgroundColor: "none" }}
-          onClose={this.handleClose}
         >
           <DialogTitle id="responsive-dialog-title">
             <TextareaAutosize
               name="title"
               className="note-title"
-              defaultValue={note.title}
+              defaultValue={this.state.title}
               onChange={this.handleTitleChange}
             />
           </DialogTitle>
@@ -154,26 +135,20 @@ export class DisplayNotes extends Component {
               <TextareaAutosize
                 name="description"
                 className="note-desc"
-                defaultValue={note.description}
+                defaultValue={this.state.desc}
                 onChange={this.handleDescChange}
               />
             </DialogContentText>
           </DialogContent>
           <DialogActions>
             <div className="bar-onclicked">
-              <IconsBar
-              // res={this.state.noteid}
-              // noteType="updateNote"
-              // archive={this.props.archive}
-              />
+              <IconsBar noteType="updateNote" imageFunc={this.handleImage} />
               <Button onClick={this.handleClose}>close</Button>
             </div>
           </DialogActions>
-        </Dialog> */}
+        </Dialog>
       </div>
-    ));
-
-    return <div className="displaynotes">{listItems}</div>;
+    );
   }
 }
 

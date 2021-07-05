@@ -24,9 +24,12 @@
 
 
 .note-div {
-    width: 30%;
+    width: 300px;
     display: inline-block;
     padding: 10px;
+    height: 200px;
+    margin: 20px 5px;
+    vertical-align: top;
 }
 
 .note-card {
@@ -71,16 +74,22 @@
     flex-direction: column;
 }
 
+/* .displaynotes {
+    display: flex;
+    flex-flow: row wrap;
+    align-items: flex-start;
+} */
+
 @media only screen and (max-width:1250px) {
     .note-div {
-        width: 50%;
+        width: 300px;
     }
 }
 
 @media only screen and (max-width:599px) {
 
     .note-div {
-        width: 100%;
+        width: 70%;
     }
 
     .note-card {
@@ -91,7 +100,8 @@
 
 @media only screen and (max-width:790px) {
     .note-div {
-        width: 80%;
+        width: 230px;
+        height: 100%;
     }
 
     .note-card {

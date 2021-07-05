@@ -35,12 +35,17 @@ export class NotesIconBar extends Component {
   };
 
   handleImage = (e) => {
-    const file = e.target.files[0];
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      this.props.setImage(reader.result);
-    };
-    reader.readAsDataURL(file);
+    if (this.props.noteType === "updateNote") {
+      const file = e.target.files[0];
+      const fileName = file.name;
+      this.props.imageFunc(fileName);
+    }
+
+    // const reader = new FileReader();
+    // reader.onloadend = () => {
+    //   this.props.setImage(reader.result);
+    // };
+    // reader.readAsDataURL(file);
   };
 
   handleColorPalette = (e) => {
@@ -83,18 +88,15 @@ export class NotesIconBar extends Component {
           console.log(err);
         });
     } else if (this.props.noteType === "newNote") {
-      this.props.archive();
+      this.props.archiveFunc();
     }
   };
 
   handleChangeColor = (e) => {
-    this.setState({
-      color: e.target.name,
-    });
     if (this.props.noteType === "updateNote") {
       let data = {
         noteIdList: [this.props.res.id],
-        color: this.state.color,
+        color: e.target.name,
       };
       services
         .ChangeColor(data)
@@ -106,7 +108,7 @@ export class NotesIconBar extends Component {
           console.log(err);
         });
     } else if (this.props.noteType === "newNote") {
-      this.props.color(this.state.color);
+      this.props.color(e.target.name);
     }
   };
 

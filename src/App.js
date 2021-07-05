@@ -17,18 +17,11 @@ function App() {
         <Route exact path="/forgot-password" component={ForgotPassword}></Route>
         <Route path="/resetpassword" component={ResetPassword}></Route>
         <ProtectedRoute
-          exact
           path="/dashboard/"
           component={DashBoard}
         ></ProtectedRoute>
-        <ProtectedRoute
-          path="/dashboard/archive"
-          component={Archive}
-        ></ProtectedRoute>
-        <ProtectedRoute
-          path="/dashboard/trash"
-          component={Trash}
-        ></ProtectedRoute>
+        <ProtectedRoute path="/archive" component={Archive}></ProtectedRoute>
+        <ProtectedRoute path="trash" component={Trash}></ProtectedRoute>
       </div>
     </Router>
   );

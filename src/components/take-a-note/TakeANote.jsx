@@ -38,11 +38,25 @@ export class TakeANote extends Component {
 
   handleArchive = () => {
     this.setState({
-      isArchived: true,
       showContent: false,
     });
+    let data = {
+      title: this.state.noteTitle,
+      description: this.state.newNote,
+      color: this.state.color,
+      isArchived: true,
+    };
 
-    this.onClickClose();
+    services
+      .AddANote(data)
+      .then((res) => {
+        console.log(res);
+        console.log(data.isArchived);
+        this.props.getNote();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   addcolor = (e) => {
@@ -57,13 +71,8 @@ export class TakeANote extends Component {
     });
   };
 
-  onClickClose = () => {
+  handleClose = () => {
     if (this.state.title !== "") {
-      console.log(this.state);
-      this.setState({
-        showContent: false,
-      });
-
       let data = {
         title: this.state.noteTitle,
         description: this.state.newNote,
@@ -75,13 +84,19 @@ export class TakeANote extends Component {
         .AddANote(data)
         .then((res) => {
           console.log(res);
-          console.log(data.isArchived);
           this.props.getNote();
         })
         .catch((err) => {
           console.log(err);
         });
     }
+    this.setState({
+      showContent: false,
+      newNote: "",
+      noteTitle: "",
+      color: "",
+      isArchived: false,
+    });
   };
   render() {
     const clicked = this.state.showContent;
@@ -119,9 +134,9 @@ export class TakeANote extends Component {
             <IconBar
               color={this.addcolor}
               noteType="newNote"
-              archive={this.handleArchive}
+              archiveFunc={this.handleArchive}
             />
-            <Button onClick={this.onClickClose}>close</Button>
+            <Button onClick={this.handleClose}>close</Button>
           </div>
         </div>
       );
