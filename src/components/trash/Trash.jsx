@@ -19,8 +19,9 @@ export class Trash extends Component {
       .then((res) => {
         var reqnotes = res.data.data.data;
 
+        var noteArr = reqnotes.reverse();
         this.setState({
-          notes: reqnotes,
+          notes: noteArr,
         });
       })
       .catch((err) => {

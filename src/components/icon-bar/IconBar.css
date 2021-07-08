@@ -8,14 +8,15 @@
 }
 
 .color-palette {
-    width: 130px;
+    width: 150px;
     margin-bottom: 10px;
     padding: 4px;
 }
 
 .color {
-    width: 30px;
-    height: 30px;
+    width: 29px;
+    height: 29px;
+    margin: 2px 3px;
     border-radius: 20px;
     border: 1px solid #a0a0a0;
 }

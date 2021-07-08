@@ -12,9 +12,11 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
+  Divider,
   TextareaAutosize,
 } from "@material-ui/core";
-
+import AccountIcon from "@material-ui/icons/AccountCircleOutlined";
+import PersonAddIcon from "@material-ui/icons/PersonAddOutlined";
 const services = new UserServices();
 
 export class DisplayNotes extends Component {
@@ -22,20 +24,14 @@ export class DisplayNotes extends Component {
     super(props);
 
     this.state = {
+      collaboratorOpen: false,
       open: false,
       title: "",
       desc: "",
       noteID: "",
-      fileName: "",
+      image: null,
     };
   }
-
-  handleImage = (filename) => {
-    this.setState({
-      fileName: filename,
-    });
-    console.log(this.state.fileName);
-  };
 
   handleClickOpen = (note) => {
     this.setState({
@@ -43,36 +39,45 @@ export class DisplayNotes extends Component {
       title: note.title,
       desc: note.description,
       noteID: note.id,
+      color: note.color,
+      image: note.imageUrl,
+    });
+  };
+
+  close = () => {
+    this.setState({
+      collaboratorOpen: false,
+    });
+  };
+
+  handleCollaborator = () => {
+    this.setState({
+      collaboratorOpen: true,
     });
   };
 
   handleClose = () => {
-    this.setState({
-      open: false,
-    });
-
-    let data = {
-      noteId: this.state.noteID,
-      title: this.state.title,
-      description: this.state.description,
-      file: this.state.fileName,
-    };
-
+    const data = new FormData();
+    data.append("noteId", this.state.noteID);
+    data.append("title", this.state.title);
+    data.append("description", this.state.desc);
+    if (this.state.image !== null) {
+      data.append("file", this.state.image);
+    }
+    console.log(data);
     services
       .UpdateNotes(data)
       .then((res) => {
         console.log(res);
+        this.props.getNote();
+        this.setState({
+          open: false,
+        });
       })
       .catch((err) => {
         console.log(err);
       });
   };
-
-  // handleChange = (e) => {
-  //   this.setState({
-  //     [e.target.name]: e.target.value,
-  //   });
-  // };
 
   handleTitleChange = (e) => {
     this.setState({
@@ -86,6 +91,17 @@ export class DisplayNotes extends Component {
     });
   };
 
+  setImageUpdateNote = (content) => {
+    this.setState({ image: content });
+  };
+
+  displayImage = (image) => {
+    console.log(image);
+    if (image !== "") {
+      return <img alt="imageUrl" src={image} />;
+    }
+  };
+
   render() {
     const notesList = this.props.notes;
     var listItems = notesList.map((note, index) => (
@@ -97,16 +113,23 @@ export class DisplayNotes extends Component {
             }}
           >
             <CardContent className="card-content">
+              {/* <img className="note-image" alt="" src={note.imageUrl} /> */}
               <h4 className="note-textarea note-title" name="title">
                 {note.title}
               </h4>
               <p className="notes-para note-textarea" name="desc">
                 {note.description}
               </p>
+              {this.displayImage(note.imageUrl)}
             </CardContent>
           </div>
           <div className="bottom-bar">
-            <IconsBar res={note} noteType="updateNote" />
+            <IconsBar
+              res={note}
+              noteType="updateNote"
+              handleCollaborator={this.handleCollaborator}
+              setImage={this.setImageUpdateNote}
+            />
           </div>
         </Card>
       </div>
@@ -115,6 +138,9 @@ export class DisplayNotes extends Component {
     return (
       <div className="displaynotes">
         {listItems}
+
+        {/* note - dialog box */}
+
         <Dialog
           className="dialog-box"
           open={this.state.open}
@@ -122,7 +148,10 @@ export class DisplayNotes extends Component {
           aria-labelledby="responsive-dialog-title"
           style={{ backgroundColor: "none" }}
         >
-          <DialogTitle id="responsive-dialog-title">
+          <DialogTitle
+            id="responsive-dialog-title"
+            style={{ backgroundColor: this.state.color }}
+          >
             <TextareaAutosize
               name="title"
               className="note-title"
@@ -130,20 +159,75 @@ export class DisplayNotes extends Component {
               onChange={this.handleTitleChange}
             />
           </DialogTitle>
-          <DialogContent>
-            <DialogContentText>
+          <DialogContent style={{ backgroundColor: this.state.color }}>
+            <DialogContentText style={{ backgroundColor: this.state.color }}>
               <TextareaAutosize
                 name="description"
                 className="note-desc"
                 defaultValue={this.state.desc}
                 onChange={this.handleDescChange}
               />
+              {this.displayImage(this.state.image)}
             </DialogContentText>
           </DialogContent>
-          <DialogActions>
-            <div className="bar-onclicked">
-              <IconsBar noteType="updateNote" imageFunc={this.handleImage} />
+          <DialogActions style={{ backgroundColor: this.state.color }}>
+            <div
+              className="bar-onclicked"
+              style={{ backgroundColor: this.state.color }}
+            >
+              <IconsBar
+                noteType="updateNote"
+                note={this.state}
+                setImage={this.setImageUpdateNote}
+                handleCollaborator={this.handleCollaborator}
+              />
               <Button onClick={this.handleClose}>close</Button>
+            </div>
+          </DialogActions>
+        </Dialog>
+
+        {/* collaborator dialog box */}
+
+        <Dialog
+          className="collab-dialog-box"
+          open={this.state.collaboratorOpen}
+          fullWidth
+          aria-labelledby="responsive-collab-dialog-title"
+          style={{ backgroundColor: "none" }}
+        >
+          <DialogTitle id="responsive-collab-dialog-title">
+            Collaborators
+          </DialogTitle>
+          <Divider light />
+          <DialogContent>
+            <div>
+              <div className="first">
+                <AccountIcon fontSize="large" className="owner-icon" />
+                <div>
+                  <div>
+                    <b className="owner-name">Babbur Vyshnavi</b>
+                    <span>(Owner)</span>
+                  </div>
+                  <p className="owner-tag">vyshu.goud1998@gmail.com</p>
+                </div>
+              </div>
+            </div>
+            <div className="second">
+              <div className="collab-add-icon">
+                <PersonAddIcon />
+              </div>
+              <TextareaAutosize
+                className="collab-input"
+                placeholder="Person or email to share with"
+              />
+            </div>
+          </DialogContent>
+          <DialogActions className="collab-btns">
+            <div>
+              <button className="action-btn" onClick={this.close}>
+                Cancel
+              </button>
+              <button className="action-btn">Save</button>
             </div>
           </DialogActions>
         </Dialog>

@@ -59,6 +59,12 @@ class UserServices {
   };
 
   UpdateNotes = (data) => {
+    const headers = {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        Authorization: localStorage.getItem("token"),
+      },
+    };
     return axiosServices.postMethod(
       `${baseURL}notes/updateNotes`,
       data,

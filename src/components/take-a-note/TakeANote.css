@@ -29,6 +29,7 @@
     font-size: 16px;
     padding: 10px 10px;
     background-color: #57575700;
+    font-family: sans-serif;
 }
 
 .note-input:focus {

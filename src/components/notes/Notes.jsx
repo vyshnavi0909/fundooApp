@@ -44,28 +44,20 @@ export class Notes extends Component {
     this.getNote();
   }
 
-  setImage = (content) => {
-    this.setState({ image: content });
-  };
-
   render() {
     return (
       <NotesContext.Provider
         value={{
           getNote: this.getNote,
           notes: this.state.notes,
-          setImage: this.setImage,
         }}
       >
         <div>
           <div className="note-taker-div">
             <TakeANote />
           </div>
-          {/* {this.state.image && <img alt="Note" src={this.state.image} />} */}
           <div className="cards-container">
-            <DisplayNotes
-            // image={this.state.image}
-            />
+            <DisplayNotes />
           </div>
         </div>
       </NotesContext.Provider>

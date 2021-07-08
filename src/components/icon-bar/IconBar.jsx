@@ -23,6 +23,7 @@ export class NotesIconBar extends Component {
       anchorEl: null,
       color: "#ffffff",
       openOptions: false,
+      image: null,
     };
   }
 
@@ -36,16 +37,10 @@ export class NotesIconBar extends Component {
 
   handleImage = (e) => {
     if (this.props.noteType === "updateNote") {
-      const file = e.target.files[0];
-      const fileName = file.name;
-      this.props.imageFunc(fileName);
+      this.props.setImageUpdateNote(e.target.files[0].name);
+    } else if (this.props.noteType === "newNote") {
+      this.props.setImage(e);
     }
-
-    // const reader = new FileReader();
-    // reader.onloadend = () => {
-    //   this.props.setImage(reader.result);
-    // };
-    // reader.readAsDataURL(file);
   };
 
   handleColorPalette = (e) => {
@@ -288,19 +283,23 @@ export class NotesIconBar extends Component {
             </Fade>
           )}
         </Popper>
+
         <AddAlertIcon title="Remind me" className="bar-icon" />
-        <CollaboratorIcon title="Collaborator" className="bar-icon" />
+
+        <CollaboratorIcon
+          title="Collaborator"
+          className="bar-icon"
+          onClick={this.props.handleCollaborator}
+        />
+
         <ColorLensIcon
           title="Change color"
           className="bar-icon"
           onMouseEnter={this.handleColorPalette}
         />
+
         <label htmlFor="file">
-          <PhotoIcon
-            title="Add image"
-            className="bar-icon"
-            onClick={this.insertImage}
-          />
+          <PhotoIcon title="Add image" className="bar-icon" />
         </label>
         <input
           id="file"

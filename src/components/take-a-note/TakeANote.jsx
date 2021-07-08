@@ -21,8 +21,15 @@ export class TakeANote extends Component {
       isArchived: false,
       isDeleted: false,
       color: "",
+      image: "",
     };
   }
+
+  setImage = (e) => {
+    this.setState({
+      image: e.target.files[0].name,
+    });
+  };
 
   handleChange = (e) => {
     this.setState({
@@ -73,31 +80,35 @@ export class TakeANote extends Component {
 
   handleClose = () => {
     if (this.state.title !== "") {
-      let data = {
-        title: this.state.noteTitle,
-        description: this.state.newNote,
-        color: this.state.color,
-        isArchived: this.state.isArchived,
-      };
-
+      const data = new FormData();
+      data.append("title", this.state.noteTitle);
+      data.append("description", this.state.newNote);
+      data.append("color", this.state.color);
+      data.append("isArchived", this.state.isArchived);
+      data.append("file", this.state.image);
       services
         .AddANote(data)
         .then((res) => {
           console.log(res);
           this.props.getNote();
+          this.setState({
+            showContent: false,
+            newNote: "",
+            noteTitle: "",
+            isArchived: false,
+            isDeleted: false,
+            color: "",
+            image: "",
+          });
         })
         .catch((err) => {
           console.log(err);
         });
     }
-    this.setState({
-      showContent: false,
-      newNote: "",
-      noteTitle: "",
-      color: "",
-      isArchived: false,
-    });
   };
+
+  collabDialog = () => {};
+
   render() {
     const clicked = this.state.showContent;
     let onClickContent;
@@ -135,6 +146,8 @@ export class TakeANote extends Component {
               color={this.addcolor}
               noteType="newNote"
               archiveFunc={this.handleArchive}
+              setImage={this.setImage}
+              collab={this.collabDialog}
             />
             <Button onClick={this.handleClose}>close</Button>
           </div>
