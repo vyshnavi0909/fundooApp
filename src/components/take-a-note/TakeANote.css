@@ -47,11 +47,17 @@
     flex-direction: row;
 }
 
-.new-note-collab {}
+.new-note-collab {
+    padding: 15px;
+    padding-bottom: 0;
+    color: #000;
+}
 
 .collab-title {
     font-weight: 600;
     color: #000;
+    margin: 0;
+    margin-bottom: 10px;
 }
 
 
@@ -75,7 +81,7 @@
 }
 
 .new-collab-btns {
-    background-color: #e2e2e2;
+    background-color: #f0f0f0;
     padding: 10px;
     display: flex;
     justify-content: flex-end;
@@ -93,7 +99,7 @@
 
 .cancel-btn:hover,
 .save-btn:hover {
-    background-color: #cfcfcf;
+    background-color: #e4e4e4;
 }
 
 

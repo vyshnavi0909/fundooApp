@@ -106,7 +106,10 @@ export class DisplayNotes extends Component {
     const notesList = this.props.notes;
     var listItems = notesList.map((note, index) => (
       <div className="note-div" key={index}>
-        <Card className="note-card" style={{ backgroundColor: note.color }}>
+        <Card
+          className="note-card"
+          style={{ backgroundColor: note.color, borderRadius: "7px" }}
+        >
           <div
             onClick={() => {
               this.handleClickOpen(note);

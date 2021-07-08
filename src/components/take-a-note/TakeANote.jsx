@@ -169,8 +169,8 @@ export class TakeANote extends Component {
     } else if (clicked && this.state.collabOpen) {
       console.log();
       onClickContent = (
-        <div className="new-note-collab">
-          <div>
+        <div>
+          <div className="new-note-collab">
             <h3 className="collab-title"> Collaborators</h3>
             <Divider light />
             <div>
@@ -179,7 +179,9 @@ export class TakeANote extends Component {
                 <div>
                   <div>
                     <b className="owner-name">Babbur Vyshnavi</b>
-                    <span>(Owner)</span>
+                    <span>
+                      <em style={{ fontSize: "11px" }}>(Owner)</em>
+                    </span>
                   </div>
                   <p className="owner-tag">vyshu.goud1998@gmail.com</p>
                 </div>
@@ -195,15 +197,15 @@ export class TakeANote extends Component {
                 placeholder="Person or email to share with"
               />
             </div>
-            <div className="new-collab-btns">
-              <div>
-                <button className="cancel-btn" onClick={this.onCancel}>
-                  Cancel
-                </button>
-                <button className="save-btn" onClick={this.handleClose}>
-                  Save
-                </button>
-              </div>
+          </div>
+          <div className="new-collab-btns">
+            <div>
+              <button className="cancel-btn" onClick={this.onCancel}>
+                Cancel
+              </button>
+              <button className="save-btn" onClick={this.handleClose}>
+                Save
+              </button>
             </div>
           </div>
         </div>
