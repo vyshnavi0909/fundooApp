@@ -7,7 +7,9 @@ import Button from "@material-ui/core/Button";
 import "./TakeANote.css";
 import { withGetNotes } from "../context-files/Consumer";
 import UserServices from "../../services/userServices";
-import { TextareaAutosize } from "@material-ui/core";
+import { Divider, TextareaAutosize } from "@material-ui/core";
+import AccountIcon from "@material-ui/icons/AccountCircleOutlined";
+import PersonAddIcon from "@material-ui/icons/PersonAddOutlined";
 const services = new UserServices();
 
 export class TakeANote extends Component {
@@ -22,6 +24,7 @@ export class TakeANote extends Component {
       isDeleted: false,
       color: "",
       image: "",
+      collabOpen: false,
     };
   }
 
@@ -107,7 +110,17 @@ export class TakeANote extends Component {
     }
   };
 
-  collabDialog = () => {};
+  collabDialog = () => {
+    this.setState({
+      collabOpen: true,
+    });
+  };
+
+  onCancel = () => {
+    this.setState({
+      collabOpen: false,
+    });
+  };
 
   render() {
     const clicked = this.state.showContent;
@@ -123,7 +136,7 @@ export class TakeANote extends Component {
           </div>
         </div>
       );
-    } else {
+    } else if (clicked && !this.state.collabOpen) {
       onClickContent = (
         <div
           className="after-click"
@@ -150,6 +163,48 @@ export class TakeANote extends Component {
               collab={this.collabDialog}
             />
             <Button onClick={this.handleClose}>close</Button>
+          </div>
+        </div>
+      );
+    } else if (clicked && this.state.collabOpen) {
+      console.log();
+      onClickContent = (
+        <div className="new-note-collab">
+          <div>
+            <h3 className="collab-title"> Collaborators</h3>
+            <Divider light />
+            <div>
+              <div className="new-first">
+                <AccountIcon fontSize="large" className="owner-icon" />
+                <div>
+                  <div>
+                    <b className="owner-name">Babbur Vyshnavi</b>
+                    <span>(Owner)</span>
+                  </div>
+                  <p className="owner-tag">vyshu.goud1998@gmail.com</p>
+                </div>
+              </div>
+            </div>
+            <div className="new-second">
+              <div className="add-new-colab-icon">
+                <PersonAddIcon />
+              </div>
+              <input
+                type="email"
+                className="collab-input"
+                placeholder="Person or email to share with"
+              />
+            </div>
+            <div className="new-collab-btns">
+              <div>
+                <button className="cancel-btn" onClick={this.onCancel}>
+                  Cancel
+                </button>
+                <button className="save-btn" onClick={this.handleClose}>
+                  Save
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       );

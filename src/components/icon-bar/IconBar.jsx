@@ -125,6 +125,14 @@ export class NotesIconBar extends Component {
     }
   };
 
+  handleCollaborator = () => {
+    if (this.props.noteType === "newNote") {
+      this.props.collab();
+    } else if (this.props.noteType === "updateNote") {
+      this.props.handleCollaborator();
+    }
+  };
+
   render() {
     return (
       <div className="icons-div" onMouseLeave={this.handleBlur}>
@@ -289,7 +297,7 @@ export class NotesIconBar extends Component {
         <CollaboratorIcon
           title="Collaborator"
           className="bar-icon"
-          onClick={this.props.handleCollaborator}
+          onClick={this.handleCollaborator}
         />
 
         <ColorLensIcon

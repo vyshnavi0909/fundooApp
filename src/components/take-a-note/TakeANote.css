@@ -47,6 +47,56 @@
     flex-direction: row;
 }
 
+.new-note-collab {}
+
+.collab-title {
+    font-weight: 600;
+    color: #000;
+}
+
+
+.new-first,
+.new-second {
+    display: flex;
+    flex-direction: row;
+}
+
+.new-first {
+    align-items: center;
+    padding: 10px 20px;
+}
+
+.new-second {
+    padding: 10px 20px;
+}
+
+.add-new-colab-icon {
+    padding: 10px;
+}
+
+.new-collab-btns {
+    background-color: #e2e2e2;
+    padding: 10px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.cancel-btn,
+.save-btn {
+    padding: 15px;
+    font-size: medium;
+    font-weight: 600;
+    margin-left: 20px;
+    border: none;
+    background-color: #57575700;
+}
+
+.cancel-btn:hover,
+.save-btn:hover {
+    background-color: #cfcfcf;
+}
+
+
 @media only screen and (max-width:400px) {
     .before-click {
         flex-direction: column;

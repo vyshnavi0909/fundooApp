@@ -114,9 +114,9 @@ export class DisplayNotes extends Component {
           >
             <CardContent className="card-content">
               {/* <img className="note-image" alt="" src={note.imageUrl} /> */}
-              <h4 className="note-textarea note-title" name="title">
+              <p className="note-textarea note-title" name="title">
                 {note.title}
-              </h4>
+              </p>
               <p className="notes-para note-textarea" name="desc">
                 {note.description}
               </p>
@@ -216,7 +216,8 @@ export class DisplayNotes extends Component {
               <div className="collab-add-icon">
                 <PersonAddIcon />
               </div>
-              <TextareaAutosize
+              <input
+                type="email"
                 className="collab-input"
                 placeholder="Person or email to share with"
               />

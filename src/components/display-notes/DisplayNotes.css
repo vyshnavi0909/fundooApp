@@ -48,7 +48,6 @@
     width: 100%;
     padding: 10px;
     font-family: sans-serif;
-    resize: none;
 }
 
 .collab-input:focus {
@@ -95,13 +94,15 @@
 }
 
 .note-div {
-    width: 300px;
+    width: 250px;
     display: flex;
     flex-direction: row;
     padding: 10px;
     height: fit-content;
+    max-height: 100vh;
     vertical-align: top;
-    margin-bottom: 5%;
+    margin-bottom: 3%;
+    margin-right: 20px;
 
 }
 
@@ -131,7 +132,7 @@
 .displaynotes {
     display: flex;
     flex-flow: row wrap;
-    justify-content: space-between;
+    justify-content: flex-start;
 }
 
 .note-textarea {
@@ -140,7 +141,9 @@
     resize: none;
     font-family: sans-serif;
     text-transform: capitalize;
+    margin: 0;
     margin-bottom: 20px;
+
 }
 
 .note-title {
