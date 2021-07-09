@@ -122,6 +122,11 @@
     border: none;
 }
 
+.note-image {
+    width: 80%;
+    height: 100px;
+}
+
 .bottom-bar {
     display: flex;
     visibility: hidden;

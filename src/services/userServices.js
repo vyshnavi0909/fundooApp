@@ -31,7 +31,17 @@ class UserServices {
   };
 
   AddANote = (data) => {
-    return axiosServices.postMethod(`${baseURL}notes/addNotes`, data, config);
+    let configFile = {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        Authorization: localStorage.getItem("token"),
+      },
+    };
+    return axiosServices.postMethod(
+      `${baseURL}notes/addNotes`,
+      data,
+      configFile
+    );
   };
 
   GetNotesList = () => {

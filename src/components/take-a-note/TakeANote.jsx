@@ -86,9 +86,16 @@ export class TakeANote extends Component {
       const data = new FormData();
       data.append("title", this.state.noteTitle);
       data.append("description", this.state.newNote);
-      data.append("color", this.state.color);
-      data.append("isArchived", this.state.isArchived);
-      data.append("file", this.state.image);
+      if (this.state.color !== "") {
+        data.append("color", this.state.color);
+      }
+      if (this.state.isArchived) {
+        data.append("isArchived", this.state.isArchived);
+      }
+      if (this.state.image !== "") {
+        data.append("file", this.state.image);
+      }
+      console.log(data.entries());
       services
         .AddANote(data)
         .then((res) => {

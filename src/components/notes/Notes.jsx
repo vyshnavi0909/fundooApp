@@ -22,6 +22,7 @@ export class Notes extends Component {
       .GetNotesList()
       .then((res) => {
         var notes = res.data.data.data;
+        // console.log(notes);
         this.filterNotes(notes);
       })
       .catch((err) => {

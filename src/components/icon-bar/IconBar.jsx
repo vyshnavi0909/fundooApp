@@ -37,7 +37,8 @@ export class NotesIconBar extends Component {
 
   handleImage = (e) => {
     if (this.props.noteType === "updateNote") {
-      this.props.setImageUpdateNote(e.target.files[0].name);
+      console.log(e.target.files[0]);
+      this.props.setImage(e.target.files[0].name);
     } else if (this.props.noteType === "newNote") {
       this.props.setImage(e);
     }

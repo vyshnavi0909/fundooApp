@@ -29,7 +29,7 @@ export class DisplayNotes extends Component {
       title: "",
       desc: "",
       noteID: "",
-      image: null,
+      image: "",
     };
   }
 
@@ -58,10 +58,14 @@ export class DisplayNotes extends Component {
 
   handleClose = () => {
     const data = new FormData();
-    data.append("noteId", this.state.noteID);
-    data.append("title", this.state.title);
-    data.append("description", this.state.desc);
-    if (this.state.image !== null) {
+    if (this.state.image === "") {
+      data.append("noteId", this.state.noteID);
+      data.append("title", this.state.title);
+      data.append("description", this.state.desc);
+    } else if (this.state.image !== "") {
+      data.append("noteId", this.state.noteID);
+      data.append("title", this.state.title);
+      data.append("description", this.state.desc);
       data.append("file", this.state.image);
     }
     console.log(data);
@@ -72,6 +76,7 @@ export class DisplayNotes extends Component {
         this.props.getNote();
         this.setState({
           open: false,
+          image: "",
         });
       })
       .catch((err) => {
@@ -93,17 +98,30 @@ export class DisplayNotes extends Component {
 
   setImageUpdateNote = (content) => {
     this.setState({ image: content });
+    this.handleClose();
   };
 
-  displayImage = (image) => {
-    console.log(image);
-    if (image !== "") {
-      return <img alt="imageUrl" src={image} />;
+  displayImage = (note, index) => {
+    let mainUrl = "http://fundoonotes.incubation.bridgelabz.com/";
+    let img = note.imageUrl;
+    if (img !== undefined && img !== "") {
+      let splitter = img.split("/");
+      if (splitter.length > 2) {
+        splitter.splice(0, 1);
+        let image = mainUrl + splitter.join("/");
+        return <img className="note-image" alt="imageUrl" src={image} />;
+      }
+      console.log("note of" + index + splitter);
+      let image = mainUrl + note.imageUrl;
+      return <img className="note-image" alt="imageUrl" src={image} />;
+    } else if (img === "") {
+      return <div></div>;
     }
   };
 
   render() {
     const notesList = this.props.notes;
+
     var listItems = notesList.map((note, index) => (
       <div className="note-div" key={index}>
         <Card
@@ -123,7 +141,7 @@ export class DisplayNotes extends Component {
               <p className="notes-para note-textarea" name="desc">
                 {note.description}
               </p>
-              {this.displayImage(note.imageUrl)}
+              {this.displayImage(note)}
             </CardContent>
           </div>
           <div className="bottom-bar">
