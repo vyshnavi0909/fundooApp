@@ -7,7 +7,7 @@ import ResetPassword from "./page/reset-password/ResetPassword";
 import DashBoard from "./page/dashboard/Dashboard";
 import Archive from "./components/archive/Archive";
 import Trash from "./components/trash/Trash";
-// import ProtectedRoute from "./components/protected-route/ProtectedRoute";
+import ProtectedRoute from "./components/protected-route/ProtectedRoute";
 function App() {
   return (
     <Router>

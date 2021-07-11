@@ -11,6 +11,7 @@
     width: 150px;
     margin-bottom: 10px;
     padding: 4px;
+
 }
 
 .color {
@@ -80,6 +81,8 @@ ul {
 li {
     padding: 4px 15px;
 }
+
+
 
 li:hover {
     background-color: #ebebeb;

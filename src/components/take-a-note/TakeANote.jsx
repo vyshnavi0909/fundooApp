@@ -50,18 +50,19 @@ export class TakeANote extends Component {
     this.setState({
       showContent: false,
     });
-    let data = {
-      title: this.state.noteTitle,
-      description: this.state.newNote,
-      color: this.state.color,
-      isArchived: true,
-    };
+    let data = new FormData();
+    data.append("title", this.state.noteTitle);
+    data.append("description", this.state.newNote);
+    data.append("color", this.state.color);
+    data.append("isArchived", true);
+    if (this.state.image !== "") {
+      data.append("file", this.state.image);
+    }
 
     services
       .AddANote(data)
       .then((res) => {
         console.log(res);
-        console.log(data.isArchived);
         this.props.getNote();
       })
       .catch((err) => {
@@ -86,30 +87,15 @@ export class TakeANote extends Component {
       const data = new FormData();
       data.append("title", this.state.noteTitle);
       data.append("description", this.state.newNote);
-      if (this.state.color !== "") {
-        data.append("color", this.state.color);
-      }
-      if (this.state.isArchived) {
-        data.append("isArchived", this.state.isArchived);
-      }
+      data.append("color", this.state.color);
       if (this.state.image !== "") {
         data.append("file", this.state.image);
       }
-      console.log(data.entries());
       services
         .AddANote(data)
         .then((res) => {
           console.log(res);
           this.props.getNote();
-          this.setState({
-            showContent: false,
-            newNote: "",
-            noteTitle: "",
-            isArchived: false,
-            isDeleted: false,
-            color: "",
-            image: "",
-          });
         })
         .catch((err) => {
           console.log(err);

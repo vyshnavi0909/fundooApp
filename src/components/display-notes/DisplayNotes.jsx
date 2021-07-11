@@ -101,9 +101,9 @@ export class DisplayNotes extends Component {
     this.handleClose();
   };
 
-  displayImage = (note, index) => {
+  displayImage = (img, index) => {
     let mainUrl = "http://fundoonotes.incubation.bridgelabz.com/";
-    let img = note.imageUrl;
+
     if (img !== undefined && img !== "") {
       let splitter = img.split("/");
       if (splitter.length > 2) {
@@ -112,7 +112,7 @@ export class DisplayNotes extends Component {
         return <img className="note-image" alt="imageUrl" src={image} />;
       }
       console.log("note of" + index + splitter);
-      let image = mainUrl + note.imageUrl;
+      let image = mainUrl + img;
       return <img className="note-image" alt="imageUrl" src={image} />;
     } else if (img === "") {
       return <div></div>;
@@ -134,19 +134,22 @@ export class DisplayNotes extends Component {
             }}
           >
             <CardContent className="card-content">
-              {/* <img className="note-image" alt="" src={note.imageUrl} /> */}
-              <p className="note-textarea note-title" name="title">
+              {this.displayImage(note.imageUrl)}
+              <p
+                className="note-textarea note-title"
+                style={{ fontWeight: "600", marginBottom: "10px" }}
+                name="title"
+              >
                 {note.title}
               </p>
               <p className="notes-para note-textarea" name="desc">
                 {note.description}
               </p>
-              {this.displayImage(note)}
             </CardContent>
           </div>
           <div className="bottom-bar">
             <IconsBar
-              res={note}
+              note={note}
               noteType="updateNote"
               handleCollaborator={this.handleCollaborator}
               setImage={this.setImageUpdateNote}
@@ -167,12 +170,17 @@ export class DisplayNotes extends Component {
           open={this.state.open}
           fullWidth
           aria-labelledby="responsive-dialog-title"
-          style={{ backgroundColor: "none" }}
+          style={{
+            backgroundColor: "none",
+            zIndex: 2,
+          }}
         >
           <DialogTitle
             id="responsive-dialog-title"
+            className="dialog-text"
             style={{ backgroundColor: this.state.color }}
           >
+            {this.displayImage(this.state.image)}
             <TextareaAutosize
               name="title"
               className="note-title"
@@ -188,7 +196,6 @@ export class DisplayNotes extends Component {
                 defaultValue={this.state.desc}
                 onChange={this.handleDescChange}
               />
-              {this.displayImage(this.state.image)}
             </DialogContentText>
           </DialogContent>
           <DialogActions style={{ backgroundColor: this.state.color }}>
@@ -214,7 +221,7 @@ export class DisplayNotes extends Component {
           open={this.state.collaboratorOpen}
           fullWidth
           aria-labelledby="responsive-collab-dialog-title"
-          style={{ backgroundColor: "none" }}
+          style={{ backgroundColor: "none", zIndex: 2 }}
         >
           <DialogTitle id="responsive-collab-dialog-title">
             Collaborators

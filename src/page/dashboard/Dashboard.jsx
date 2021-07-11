@@ -29,7 +29,7 @@ import Trash from "../../components/trash/Trash";
 import "./Dashboard.css";
 import { Route, Switch, useHistory } from "react-router";
 
-const drawerWidth = 240;
+const drawerWidth = 200;
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -43,8 +43,6 @@ const useStyles = makeStyles((theme) => ({
     }),
   },
   appBarShift: {
-    marginLeft: drawerWidth,
-    width: `calc(100% - ${drawerWidth}px)`,
     transition: theme.transitions.create(["width", "margin"], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
@@ -80,7 +78,6 @@ const useStyles = makeStyles((theme) => ({
 
 export default function DashBoard(props) {
   const classes = useStyles();
-  // const theme = useTheme();
   const [open, setOpen] = React.useState(false);
   const history = useHistory();
 

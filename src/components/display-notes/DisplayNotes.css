@@ -11,7 +11,7 @@
 
 .dialog-box {
     background-color: #57575700;
-    width: 700px;
+    width: 100%;
     font-family: sans-serif;
 }
 
@@ -24,8 +24,9 @@
     background-color: none;
 }
 
-
-
+.dialog-text {
+    font-family: sans-serif;
+}
 
 .first,
 .second {
@@ -97,7 +98,7 @@
 }
 
 .note-div {
-    width: 250px;
+    width: 280px;
     display: flex;
     flex-direction: row;
     padding: 10px;
@@ -105,7 +106,6 @@
     max-height: 100vh;
     vertical-align: top;
     margin-bottom: 3%;
-    margin-right: 20px;
 
 }
 
@@ -123,8 +123,10 @@
 }
 
 .note-image {
-    width: 80%;
-    height: 100px;
+    width: 100%;
+    padding-bottom: 10px;
+    height: 150px;
+    background-color: #57575700;
 }
 
 .bottom-bar {
@@ -150,16 +152,17 @@
     font-family: sans-serif;
     text-transform: capitalize;
     margin: 0;
-    margin-bottom: 20px;
 
 }
 
 .note-title {
+    font-weight: 600;
     font-size: 16px;
 }
 
 .note-desc,
 .note-title {
+    font-family: sans-serif;
     width: 100%;
     outline: none;
     border: none;

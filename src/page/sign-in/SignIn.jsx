@@ -52,6 +52,7 @@ export class SignIn extends Component {
         email: this.state.mailId,
         password: this.state.password,
       };
+      console.log(data);
 
       services
         .SignIn(data)
@@ -149,12 +150,12 @@ export class SignIn extends Component {
               Create account
             </Link>
             <Button
-              // onClick={this.onClicked}
-              onClick={() => {
-                Auth.SignIn(() => {
-                  this.props.history.push("/dashboard");
-                });
-              }}
+              onClick={this.onClicked}
+              // onClick={() => {
+              //   Auth.SignIn(() => {
+              //     this.props.history.push("/dashboard");
+              //   });
+              // }}
               variant="contained"
               color="primary"
             >

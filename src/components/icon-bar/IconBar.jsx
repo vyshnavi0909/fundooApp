@@ -25,6 +25,7 @@ export class NotesIconBar extends Component {
       openOptions: false,
       image: null,
     };
+    this.myRef = React.createRef();
   }
 
   handleBlur = () => {
@@ -70,14 +71,12 @@ export class NotesIconBar extends Component {
     if (this.props.noteType === "updateNote") {
       let data = {
         isArchived: true,
-        noteIdList: [this.props.res.id],
+        noteIdList: [this.props.note.id],
       };
 
       services
         .ArchiveNote(data)
         .then((res) => {
-          console.log(res);
-          console.log(data.isArchived);
           this.props.getNote();
         })
         .catch((err) => {
@@ -91,7 +90,7 @@ export class NotesIconBar extends Component {
   handleChangeColor = (e) => {
     if (this.props.noteType === "updateNote") {
       let data = {
-        noteIdList: [this.props.res.id],
+        noteIdList: [this.props.note.id],
         color: e.target.name,
       };
       services
@@ -111,7 +110,7 @@ export class NotesIconBar extends Component {
   onDelete = (e) => {
     if (this.props.noteType === "updateNote") {
       let data = {
-        noteIdList: [this.props.res.id],
+        noteIdList: [this.props.note.id],
         isDeleted: true,
       };
 
@@ -143,6 +142,7 @@ export class NotesIconBar extends Component {
           anchorEl={this.state.anchorEl}
           placement="top"
           transition
+          style={{ zIndex: 10 }}
         >
           {({ TransitionProps }) => (
             <Fade {...TransitionProps} timeout={100}>
@@ -232,6 +232,7 @@ export class NotesIconBar extends Component {
           anchorEl={this.state.anchorEl}
           placement="bottom-start"
           transition
+          style={{ zIndex: 10 }}
         >
           {({ TransitionProps }) => (
             <Fade {...TransitionProps} timeout={100}>
