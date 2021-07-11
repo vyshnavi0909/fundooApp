@@ -13,7 +13,9 @@ import {
   DialogContentText,
   DialogTitle,
   Divider,
+  MenuItem,
   TextareaAutosize,
+  MenuList,
 } from "@material-ui/core";
 import AccountIcon from "@material-ui/icons/AccountCircleOutlined";
 import PersonAddIcon from "@material-ui/icons/PersonAddOutlined";
@@ -30,6 +32,12 @@ export class DisplayNotes extends Component {
       desc: "",
       id: "",
       image: "",
+      collaborator: "",
+      display: false,
+      collabData: {
+        filter: "",
+        usersArray: [],
+      },
     };
   }
 
@@ -50,9 +58,11 @@ export class DisplayNotes extends Component {
     });
   };
 
-  handleCollaborator = () => {
+  handleCollaborator = (note) => {
     this.setState({
+      id: note.id,
       collaboratorOpen: true,
+      collaborator: note.collaborators,
     });
   };
 
@@ -113,21 +123,78 @@ export class DisplayNotes extends Component {
     });
   };
 
-  displayImage = (img, index) => {
-    let mainUrl = "http://fundoonotes.incubation.bridgelabz.com/";
+  handleSearchChange = (e) => {
+    this.setState({
+      collabData: {
+        ...this.state.collabData,
+        filter: e.target.value,
+      },
+    });
 
+    console.log(this.state.collabData.filter);
+    let data = {
+      searchWord: e.target.value,
+    };
+    services
+      .SearchUserList(data)
+      .then((res) => {
+        this.setState({
+          collabData: {
+            ...this.state.collabData,
+            usersArray: res.data.data.details,
+          },
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  handleAddUser = (val) => {
+    let data = val;
+
+    services
+      .AddCollaborator(this.state.id, data)
+      .then((res) => {
+        console.log("collab-res", res);
+      })
+      .catch((err) => {
+        console.log("collab", err);
+      });
+  };
+
+  displayImage = (img) => {
+    let mainUrl = "http://fundoonotes.incubation.bridgelabz.com/";
     if (img !== undefined && img !== "") {
       let splitter = img.split("/");
       if (splitter.length > 2) {
         splitter.splice(0, 1);
         let image = mainUrl + splitter.join("/");
         return <img className="note-image" alt="imageUrl" src={image} />;
+      } else {
+        let image = mainUrl + img;
+        return <img className="note-image" alt="imageUrl" src={image} />;
       }
-      console.log("note of" + index + splitter);
-      let image = mainUrl + img;
-      return <img className="note-image" alt="imageUrl" src={image} />;
     } else if (img === "") {
       return <div></div>;
+    }
+  };
+
+  handleSave = () => {
+    this.setState({
+      collaboratorOpen: false,
+    });
+    this.props.getNote();
+  };
+
+  displayCollaborator = (collaborators) => {
+    if (collaborators !== undefined || collaborators !== "") {
+      let title = "shared with " + collaborators[0].email;
+      return (
+        <div>
+          <AccountIcon fontSize="large" className="owner-icon" title={title} />
+        </div>
+      );
     }
   };
 
@@ -157,6 +224,7 @@ export class DisplayNotes extends Component {
               <p className="notes-para note-textarea" name="desc">
                 {note.description}
               </p>
+              {() => this.displayCollaborator(note.collaborators)}
             </CardContent>
           </div>
           <div className="bottom-bar">
@@ -171,12 +239,19 @@ export class DisplayNotes extends Component {
       </div>
     ));
 
+    const searchList = this.state.collabData.usersArray.map((val, ind) => {
+      return (
+        <MenuItem key={ind} onClick={() => this.handleAddUser(val)}>
+          {val.email}
+        </MenuItem>
+      );
+    });
+
     return (
       <div className="displaynotes">
         {listItems}
 
         {/* note - dialog box */}
-
         <Dialog
           className="dialog-box"
           open={this.state.open}
@@ -254,6 +329,20 @@ export class DisplayNotes extends Component {
                 </div>
               </div>
             </div>
+            {/* <div>
+              <div className="first">
+                <AccountIcon fontSize="large" className="owner-icon" />
+                <div>
+                  <div>
+                    <b className="owner-name">
+                      {this.state.collaborator.firstName}{" "}
+                      {this.state.collaborator.lastName}
+                    </b>
+                  </div>
+                  <p className="owner-tag">{this.state.collaborator.email}</p>
+                </div>
+              </div>
+            </div> */}
             <div className="second">
               <div className="collab-add-icon">
                 <PersonAddIcon />
@@ -262,15 +351,19 @@ export class DisplayNotes extends Component {
                 type="email"
                 className="collab-input"
                 placeholder="Person or email to share with"
+                onChange={this.handleSearchChange}
               />
             </div>
+            <MenuList>{searchList}</MenuList>
           </DialogContent>
           <DialogActions className="collab-btns">
             <div>
               <button className="action-btn" onClick={this.close}>
                 Cancel
               </button>
-              <button className="action-btn">Save</button>
+              <button className="action-btn" onClick={this.handleSave}>
+                Save
+              </button>
             </div>
           </DialogActions>
         </Dialog>

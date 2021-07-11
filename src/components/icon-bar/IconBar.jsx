@@ -32,7 +32,7 @@ export class NotesIconBar extends Component {
     if (this.props.noteType === "newNote") {
       this.props.collab();
     } else if (this.props.noteType === "updateNote") {
-      this.props.handleCollaborator();
+      this.props.handleCollaborator(this.props.note);
     }
   };
 

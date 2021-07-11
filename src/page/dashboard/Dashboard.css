@@ -93,8 +93,6 @@ body {
     margin: 0 10px;
 }
 
-
-
 .dashbd-list {
     top: 60px;
 }
@@ -134,6 +132,11 @@ body {
         margin: 0 5px;
     }
 
+    .content-container {
+        padding: 50px;
+        padding-left: 80px;
+    }
+
 }
 
 @media only screen and (max-width:790px) {
@@ -164,7 +167,6 @@ body {
         padding-left: 60px;
         padding-right: 10px;
     }
-
 
     .icons {
         padding: 0 3px;

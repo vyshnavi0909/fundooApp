@@ -86,6 +86,22 @@ class UserServices {
   GetTrashNotesList = () => {
     return axiosServices.getMethod(`${baseURL}notes/getTrashNotesList`, config);
   };
+
+  SearchUserList = (data) => {
+    return axiosServices.postMethod(
+      `${baseURL}user/searchUserList`,
+      data,
+      config
+    );
+  };
+
+  AddCollaborator = (id, data) => {
+    return axiosServices.postMethod(
+      `${baseURL}notes/${id}/AddcollaboratorsNotes`,
+      data,
+      config
+    );
+  };
 }
 
 export default UserServices;
