@@ -28,6 +28,8 @@ import Trash from "../../components/trash/Trash";
 
 import "./Dashboard.css";
 import { Route, Switch, useHistory } from "react-router";
+import { Button, Divider, Fade, Paper, Popper } from "@material-ui/core";
+import { useState } from "react";
 
 const drawerWidth = 200;
 
@@ -78,7 +80,10 @@ const useStyles = makeStyles((theme) => ({
 
 export default function DashBoard(props) {
   const classes = useStyles();
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
+  const [openProfile, setProfile] = useState(false);
+  const [anchorEl, setAnchorEl] = useState(null);
+
   const history = useHistory();
 
   const handleDrawer = () => {
@@ -87,6 +92,15 @@ export default function DashBoard(props) {
     } else {
       setOpen(true);
     }
+  };
+
+  const handleProfile = (e) => {
+    setAnchorEl(e.currentTarget);
+    setProfile(!openProfile);
+  };
+
+  const handleLogout = () => {
+    history.push("/sign-in");
   };
 
   const redirect = (e) => {
@@ -146,7 +160,7 @@ export default function DashBoard(props) {
             <SettingsIcon className="set-icon icons" />
             <div className="google-icons">
               <AppsIcon className="app-icon icons" />
-              <AccountIcon className="acc-icon icons" />
+              <AccountIcon className="acc-icon icons" onClick={handleProfile} />
             </div>
           </div>
         </Toolbar>
@@ -198,6 +212,39 @@ export default function DashBoard(props) {
           <Route path="/dashboard/trash" component={Trash}></Route>
         </Switch>
       </div>
+
+      <Popper
+        name="more"
+        open={openProfile}
+        anchorEl={anchorEl}
+        placement="bottom"
+        transition
+        style={{ zIndex: 10, right: 0, width: "200px" }}
+      >
+        {({ TransitionProps }) => (
+          <Fade {...TransitionProps} timeout={100}>
+            <Paper className="profile-popper">
+              <div>
+                <AccountIcon fontSize="large" />
+                <h3>Babbur Vyshnavi</h3>
+              </div>
+              <Divider />
+              <Button
+                onClick={handleLogout}
+                style={{
+                  backgroundColor: "#1976d2",
+                  color: "#fff",
+                  padding: "5px 10px",
+                  fontWeight: "600",
+                  margin: "20px",
+                }}
+              >
+                Logout
+              </Button>
+            </Paper>
+          </Fade>
+        )}
+      </Popper>
     </div>
   );
 }

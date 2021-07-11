@@ -32,7 +32,7 @@ export class DisplayNotes extends Component {
       desc: "",
       id: "",
       image: "",
-      collaborator: "",
+      collaborators: "",
       display: false,
       collabData: {
         filter: "",
@@ -41,85 +41,12 @@ export class DisplayNotes extends Component {
     };
   }
 
-  handleClickOpen = (note) => {
-    this.setState({
-      open: true,
-      title: note.title,
-      desc: note.description,
-      id: note.id,
-      color: note.color,
-      image: note.imageUrl,
-    });
-  };
-
-  close = () => {
-    this.setState({
-      collaboratorOpen: false,
-    });
-  };
-
+  // methods to handle collaborator
   handleCollaborator = (note) => {
     this.setState({
       id: note.id,
       collaboratorOpen: true,
-      collaborator: note.collaborators,
-    });
-  };
-
-  handleClose = () => {
-    const data = new FormData();
-    if (this.state.image === "") {
-      data.append("noteId", this.state.id);
-      data.append("title", this.state.title);
-      data.append("description", this.state.desc);
-    } else if (this.state.image !== "") {
-      data.append("noteId", this.state.id);
-      data.append("title", this.state.title);
-      data.append("description", this.state.desc);
-      data.append("file", this.state.image);
-    }
-    console.log(data);
-    services
-      .UpdateNotes(data)
-      .then((res) => {
-        console.log(res);
-        this.props.getNote();
-        this.setState({
-          open: false,
-          image: "",
-        });
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
-  handleTitleChange = (e) => {
-    this.setState({
-      title: e.target.value,
-    });
-  };
-
-  handleDescChange = (e) => {
-    this.setState({
-      desc: e.target.value,
-    });
-  };
-
-  setImageUpdateNote = (content) => {
-    this.setState({ image: content });
-    this.handleClose();
-  };
-
-  handleColor = (col) => {
-    this.setState({
-      color: col,
-    });
-  };
-
-  handleArchiveAndDelete = () => {
-    this.setState({
-      open: false,
+      collaborators: note.collaborators,
     });
   };
 
@@ -163,6 +90,44 @@ export class DisplayNotes extends Component {
       });
   };
 
+  handleSave = () => {
+    this.setState({
+      collaboratorOpen: false,
+    });
+    this.props.getNote();
+  };
+
+  close = () => {
+    this.setState({
+      collaboratorOpen: false,
+    });
+  };
+
+  displayCollaborator = (collaborators) => {
+    if (collaborators !== undefined || collaborators !== "") {
+      let title = "shared with " + collaborators[0].email;
+      return (
+        <div>
+          <AccountIcon fontSize="large" className="owner-icon" title={title} />
+        </div>
+      );
+    }
+  };
+
+  // methods to handle color
+
+  handleColor = (col) => {
+    this.setState({
+      color: col,
+    });
+  };
+
+  // methods to handle image
+  setImageUpdateNote = (content) => {
+    this.setState({ image: content });
+    this.handleClose();
+  };
+
   displayImage = (img) => {
     let mainUrl = "http://fundoonotes.incubation.bridgelabz.com/";
     if (img !== undefined && img !== "") {
@@ -180,24 +145,66 @@ export class DisplayNotes extends Component {
     }
   };
 
-  handleSave = () => {
+  //methods to handle dialog box
+  handleClickOpen = (note) => {
     this.setState({
-      collaboratorOpen: false,
+      open: true,
+      title: note.title,
+      desc: note.description,
+      id: note.id,
+      color: note.color,
+      image: note.imageUrl,
+      collaborators: note.collaborators,
     });
-    this.props.getNote();
   };
 
-  displayCollaborator = (collaborators) => {
-    if (collaborators !== undefined || collaborators !== "") {
-      let title = "shared with " + collaborators[0].email;
-      return (
-        <div>
-          <AccountIcon fontSize="large" className="owner-icon" title={title} />
-        </div>
-      );
+  handleTitleChange = (e) => {
+    this.setState({
+      title: e.target.value,
+    });
+  };
+
+  handleDescChange = (e) => {
+    this.setState({
+      desc: e.target.value,
+    });
+  };
+
+  handleArchiveAndDelete = () => {
+    this.setState({
+      open: false,
+    });
+  };
+
+  handleClose = () => {
+    const data = new FormData();
+    if (this.state.image === "") {
+      data.append("noteId", this.state.id);
+      data.append("title", this.state.title);
+      data.append("description", this.state.desc);
+    } else if (this.state.image !== "") {
+      data.append("noteId", this.state.id);
+      data.append("title", this.state.title);
+      data.append("description", this.state.desc);
+      data.append("file", this.state.image);
     }
+    console.log(data);
+    services
+      .UpdateNotes(data)
+      .then((res) => {
+        console.log(res);
+        this.props.getNote();
+        this.setState({
+          open: false,
+          image: "",
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
+  //render method
   render() {
     const notesList = this.props.notes;
 

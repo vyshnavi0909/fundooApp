@@ -120,6 +120,12 @@ body {
     height: fit-content;
 }
 
+.profile-popper {
+    padding: 40px 30px;
+    text-align: center;
+    box-shadow: 1px 1px 5px #888888;
+}
+
 
 @media only screen and (max-width:1000px) {
     .dashbd-search {
