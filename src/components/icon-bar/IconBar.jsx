@@ -28,20 +28,11 @@ export class NotesIconBar extends Component {
     this.myRef = React.createRef();
   }
 
-  handleBlur = () => {
-    this.setState({
-      openColor: false,
-      anchorEl: null,
-      openOptions: false,
-    });
-  };
-
-  handleImage = (e) => {
-    if (this.props.noteType === "updateNote") {
-      console.log(e.target.files[0]);
-      this.props.setImage(e.target.files[0].name);
-    } else if (this.props.noteType === "newNote") {
-      this.props.setImage(e);
+  handleCollaborator = () => {
+    if (this.props.noteType === "newNote") {
+      this.props.collab();
+    } else if (this.props.noteType === "updateNote") {
+      this.props.handleCollaborator();
     }
   };
 
@@ -51,40 +42,6 @@ export class NotesIconBar extends Component {
       anchorEl: e.currentTarget,
       openOptions: false,
     });
-  };
-
-  moreOptions = (e) => {
-    this.setState({
-      openOptions: !this.state.openOptions,
-      openColor: false,
-      anchorEl: e.currentTarget,
-    });
-  };
-
-  onButtonClick = (e) => {
-    this.setState({
-      colorPopper: e.target.name,
-    });
-  };
-
-  onArchive = () => {
-    if (this.props.noteType === "updateNote") {
-      let data = {
-        isArchived: true,
-        noteIdList: [this.props.note.id],
-      };
-
-      services
-        .ArchiveNote(data)
-        .then((res) => {
-          this.props.getNote();
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    } else if (this.props.noteType === "newNote") {
-      this.props.archiveFunc();
-    }
   };
 
   handleChangeColor = (e) => {
@@ -98,6 +55,7 @@ export class NotesIconBar extends Component {
         .then((res) => {
           console.log(res);
           this.props.getNote();
+          this.props.handleColor(data.color);
         })
         .catch((err) => {
           console.log(err);
@@ -105,6 +63,52 @@ export class NotesIconBar extends Component {
     } else if (this.props.noteType === "newNote") {
       this.props.color(e.target.name);
     }
+  };
+
+  handleImage = (e) => {
+    if (this.props.noteType === "updateNote") {
+      console.log(e.target.files[0]);
+      this.props.setImage(e.target.files[0].name);
+    } else if (this.props.noteType === "newNote") {
+      this.props.setImage(e);
+    }
+  };
+
+  onArchive = () => {
+    if (this.props.noteType === "updateNote") {
+      let data = {
+        isArchived: true,
+        noteIdList: [this.props.note.id],
+      };
+
+      services
+        .ArchiveNote(data)
+        .then((res) => {
+          this.props.getNote();
+          this.props.handleArchiveAndDelete();
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else if (this.props.noteType === "newNote") {
+      this.props.archiveFunc();
+    }
+  };
+
+  handleBlur = () => {
+    this.setState({
+      openColor: false,
+      anchorEl: null,
+      openOptions: false,
+    });
+  };
+
+  moreOptions = (e) => {
+    this.setState({
+      openOptions: !this.state.openOptions,
+      openColor: false,
+      anchorEl: e.currentTarget,
+    });
   };
 
   onDelete = (e) => {
@@ -118,18 +122,11 @@ export class NotesIconBar extends Component {
         .DeleteNote(data)
         .then((res) => {
           this.props.getNote();
+          this.props.handleArchiveAndDelete();
         })
         .catch((err) => {
           console.log(err);
         });
-    }
-  };
-
-  handleCollaborator = () => {
-    if (this.props.noteType === "newNote") {
-      this.props.collab();
-    } else if (this.props.noteType === "updateNote") {
-      this.props.handleCollaborator();
     }
   };
 

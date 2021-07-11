@@ -28,7 +28,7 @@ export class DisplayNotes extends Component {
       open: false,
       title: "",
       desc: "",
-      noteID: "",
+      id: "",
       image: "",
     };
   }
@@ -38,7 +38,7 @@ export class DisplayNotes extends Component {
       open: true,
       title: note.title,
       desc: note.description,
-      noteID: note.id,
+      id: note.id,
       color: note.color,
       image: note.imageUrl,
     });
@@ -59,11 +59,11 @@ export class DisplayNotes extends Component {
   handleClose = () => {
     const data = new FormData();
     if (this.state.image === "") {
-      data.append("noteId", this.state.noteID);
+      data.append("noteId", this.state.id);
       data.append("title", this.state.title);
       data.append("description", this.state.desc);
     } else if (this.state.image !== "") {
-      data.append("noteId", this.state.noteID);
+      data.append("noteId", this.state.id);
       data.append("title", this.state.title);
       data.append("description", this.state.desc);
       data.append("file", this.state.image);
@@ -99,6 +99,18 @@ export class DisplayNotes extends Component {
   setImageUpdateNote = (content) => {
     this.setState({ image: content });
     this.handleClose();
+  };
+
+  handleColor = (col) => {
+    this.setState({
+      color: col,
+    });
+  };
+
+  handleArchiveAndDelete = () => {
+    this.setState({
+      open: false,
+    });
   };
 
   displayImage = (img, index) => {
@@ -208,6 +220,8 @@ export class DisplayNotes extends Component {
                 note={this.state}
                 setImage={this.setImageUpdateNote}
                 handleCollaborator={this.handleCollaborator}
+                handleColor={this.handleColor}
+                handleArchiveAndDelete={this.handleArchiveAndDelete}
               />
               <Button onClick={this.handleClose}>close</Button>
             </div>

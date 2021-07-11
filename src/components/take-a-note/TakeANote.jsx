@@ -96,6 +96,16 @@ export class TakeANote extends Component {
         .then((res) => {
           console.log(res);
           this.props.getNote();
+          this.setState({
+            showContent: false,
+            newNote: "",
+            noteTitle: "",
+            isArchived: false,
+            isDeleted: false,
+            color: "",
+            image: "",
+            collabOpen: false,
+          });
         })
         .catch((err) => {
           console.log(err);
