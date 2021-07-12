@@ -32,7 +32,7 @@ export class DisplayNotes extends Component {
       desc: "",
       id: "",
       image: "",
-      collaborators: "",
+      collaborators: [],
       display: false,
       collabData: {
         filter: "",
@@ -104,13 +104,50 @@ export class DisplayNotes extends Component {
   };
 
   displayCollaborator = (collaborators) => {
-    if (collaborators !== undefined || collaborators !== "") {
-      let title = "shared with " + collaborators[0].email;
-      return (
-        <div>
-          <AccountIcon fontSize="large" className="owner-icon" title={title} />
-        </div>
-      );
+    if (collaborators.length > 0) {
+      let displayCol = [];
+      for (let i = 0; i < collaborators.length; i++) {
+        displayCol.push(
+          <AccountIcon
+            fontSize="large"
+            className="collab-profile"
+            titleAccess={collaborators[i].email}
+          />
+        );
+      }
+      return <div>{displayCol}</div>;
+    } else {
+      return <div></div>;
+    }
+  };
+
+  collabsOnCollabBox = (collabs) => {
+    if (collabs.length > 0) {
+      let dis = [];
+      for (let i = 0; i < collabs.length; i++) {
+        dis.push(
+          // <AccountIcon
+          //   fontSize="large"
+          //   className="collab-profile"
+          //   titleAccess={collabs[i].email}
+          // />
+          <div className="first">
+            <AccountIcon fontSize="large" className="owner-icon" />
+            <div>
+              <div>
+                <b className="owner-name">
+                  {collabs[i].firstName}
+                  {collabs[i].lastName}
+                </b>
+              </div>
+              <p className="owner-tag">{collabs[i].email}</p>
+            </div>
+          </div>
+        );
+      }
+      return <div>{dis}</div>;
+    } else {
+      return <div></div>;
     }
   };
 
@@ -231,7 +268,7 @@ export class DisplayNotes extends Component {
               <p className="notes-para note-textarea" name="desc">
                 {note.description}
               </p>
-              {() => this.displayCollaborator(note.collaborators)}
+              {this.displayCollaborator(note.collaborators)}
             </CardContent>
           </div>
           <div className="bottom-bar">
@@ -291,6 +328,8 @@ export class DisplayNotes extends Component {
                 onChange={this.handleDescChange}
               />
             </DialogContentText>
+            <Divider />
+            {this.displayCollaborator(this.state.collaborators)}
           </DialogContent>
           <DialogActions style={{ backgroundColor: this.state.color }}>
             <div
@@ -336,20 +375,10 @@ export class DisplayNotes extends Component {
                 </div>
               </div>
             </div>
-            {/* <div>
-              <div className="first">
-                <AccountIcon fontSize="large" className="owner-icon" />
-                <div>
-                  <div>
-                    <b className="owner-name">
-                      {this.state.collaborator.firstName}{" "}
-                      {this.state.collaborator.lastName}
-                    </b>
-                  </div>
-                  <p className="owner-tag">{this.state.collaborator.email}</p>
-                </div>
-              </div>
-            </div> */}
+            <Divider />
+            <div className="first">
+              {this.collabsOnCollabBox(this.state.collaborators)}
+            </div>
             <div className="second">
               <div className="collab-add-icon">
                 <PersonAddIcon />

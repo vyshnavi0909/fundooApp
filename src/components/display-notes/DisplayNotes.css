@@ -87,6 +87,11 @@
     color: #000;
 }
 
+.collab-profile {
+    margin: 5px;
+    margin-left: 0;
+}
+
 .action-btn {
     border: none;
     font-size: 16px;
