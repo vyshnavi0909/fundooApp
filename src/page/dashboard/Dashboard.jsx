@@ -167,7 +167,7 @@ export default function DashBoard(props) {
           </div>
           <div className="dashbd-header-icons">
             <span className="search-icon">
-              <SearchIcon fontSize="small" />
+              <SearchIcon style={{ marginTop: "2.5px" }} fontSize="small" />
             </span>
             <RefreshIcon className="ref-icon icons" />
             <ListViewIcon className="lis-icon icons" id="list-icon" />

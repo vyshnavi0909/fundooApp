@@ -13,11 +13,8 @@ import {
   DialogContentText,
   DialogTitle,
   Divider,
-  MenuItem,
   TextareaAutosize,
-  MenuList,
   Popper,
-  Fade,
   Paper,
   List,
 } from "@material-ui/core";
@@ -38,10 +35,7 @@ export class DisplayNotes extends Component {
       image: "",
       collaborators: [],
       display: false,
-      // collabData: {
-      //   filter: "",
       usersArray: [],
-      // },
       openPopper: false,
       anchorEl: null,
     };
@@ -69,10 +63,7 @@ export class DisplayNotes extends Component {
       .SearchUserList(data)
       .then((res) => {
         this.setState({
-          // collabData: {
-          //   ...this.state.collabData,
           usersArray: res.data.data.details,
-          // },
         });
       })
       .catch((err) => {

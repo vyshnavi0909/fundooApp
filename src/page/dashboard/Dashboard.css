@@ -3,11 +3,6 @@ body {
     width: 100%;
 }
 
-/* 
-.dashbd-appbar {
-    background-color: #feefc3;
-} */
-
 .search-icon {
     display: none;
 }
@@ -53,7 +48,6 @@ body {
 .dashbd-inputbase {
     padding: 1px;
     padding-left: 1px;
-    /* transition: theme.transitions.create("width"), */
     width: 100%;
     color: #252525;
 }
