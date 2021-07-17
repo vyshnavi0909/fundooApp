@@ -156,11 +156,6 @@ body {
     .icons {
         margin: 0 5px;
     }
-
-    .content-container {
-        /* padding-left: 80px; */
-    }
-
 }
 
 @media only screen and (max-width: 800px) {
@@ -190,12 +185,14 @@ body {
         width: 0;
         position: unset;
     }
-
 }
 
 
 @media only screen and (max-width:790px) {
 
+    /* .content-container {
+        padding-left: 60px;
+    } */
 
     .acc-icon,
     .app-icon {
