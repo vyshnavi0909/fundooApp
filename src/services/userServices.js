@@ -102,6 +102,10 @@ class UserServices {
       config
     );
   };
+
+  LogOut = () => {
+    return axiosServices.postMethod(`${baseURL}user/logout`, null, config);
+  };
 }
 
 export default UserServices;

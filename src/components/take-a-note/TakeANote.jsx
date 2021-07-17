@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, createRef } from "react";
 import CheckBoxIcon from "@material-ui/icons/CheckBoxOutlined";
 import BrushIcon from "@material-ui/icons/BrushOutlined";
 import PhotoIcon from "@material-ui/icons/PhotoOutlined";
@@ -11,12 +11,17 @@ import {
   Divider,
   MenuItem,
   MenuList,
+  Paper,
+  Popper,
   TextareaAutosize,
+  Fade,
+  List,
 } from "@material-ui/core";
 import AccountIcon from "@material-ui/icons/AccountCircleOutlined";
 import PersonAddIcon from "@material-ui/icons/PersonAddOutlined";
-const services = new UserServices();
 
+const services = new UserServices();
+var collabValue;
 export class TakeANote extends Component {
   constructor(props) {
     super(props);
@@ -32,11 +37,11 @@ export class TakeANote extends Component {
       collabOpen: false,
       collaborators: "",
       display: false,
-      collabData: {
-        filter: "",
-        usersArray: [],
-      },
+      usersArray: [],
+      openPopper: false,
+      anchorEl: null,
     };
+    this.inputRef = createRef();
   }
 
   setImage = (e) => {
@@ -66,9 +71,7 @@ export class TakeANote extends Component {
     data.append("description", this.state.newNote);
     data.append("color", this.state.color);
     data.append("isArchived", true);
-    if (this.state.collaborators !== "") {
-      data.append("collaborators", this.state.collaborators);
-    }
+    console.log(this.state.image);
     if (this.state.image !== "") {
       data.append("file", this.state.image);
     }
@@ -101,13 +104,15 @@ export class TakeANote extends Component {
       const data = new FormData();
       data.append("title", this.state.noteTitle);
       data.append("description", this.state.newNote);
-      data.append("color", this.state.color);
       console.log(this.state.image);
       if (this.state.image !== "") {
         data.append("file", this.state.image);
       }
-      if (this.state.collaborators !== "") {
-        data.append("collaborators", this.state.collaborators);
+      if (this.state.color !== "") {
+        data.append("color", this.state.color);
+      }
+      if (collabValue !== "") {
+        data.append("collaberators", JSON.stringify([collabValue]));
       }
 
       services
@@ -124,13 +129,11 @@ export class TakeANote extends Component {
             color: "",
             image: "",
             collabOpen: false,
-            collaborators: "",
+            collaborators: [],
             display: false,
-            collabData: {
-              filter: "",
-              usersArray: [],
-            },
+            usersArray: [],
           });
+          collabValue = null;
         })
         .catch((err) => {
           console.log(err);
@@ -145,15 +148,10 @@ export class TakeANote extends Component {
   };
 
   handleSearchChange = (e) => {
-    console.log(this.state);
     this.setState({
-      collabData: {
-        ...this.state.collabData,
-        filter: e.target.value,
-      },
+      openPopper: true,
+      anchorEl: e.currentTarget,
     });
-
-    console.log(this.state.collabData.filter);
     let data = {
       searchWord: e.target.value,
     };
@@ -161,10 +159,7 @@ export class TakeANote extends Component {
       .SearchUserList(data)
       .then((res) => {
         this.setState({
-          collabData: {
-            ...this.state.collabData,
-            usersArray: res.data.data.details,
-          },
+          usersArray: res.data.data.details,
         });
       })
       .catch((err) => {
@@ -173,15 +168,12 @@ export class TakeANote extends Component {
   };
 
   handleAddUser = (val) => {
-    console.log("add", this.state);
-    this.setState({
-      collaborators: val,
-    });
+    collabValue = val;
+    this.handleClose();
   };
 
   onSave = () => {
     console.log("save", this.state);
-
     this.setState({
       collabOpen: false,
     });
@@ -196,15 +188,26 @@ export class TakeANote extends Component {
     });
   };
 
-  render() {
-    const searchList = this.state.collabData.usersArray.map((val, ind) => {
+  searchingList = () => {
+    const searchList = this.state.usersArray.map((val, ind) => {
       return (
-        <MenuItem key={ind} onClick={this.handleAddUser(val)}>
+        <List key={ind} onClick={() => this.handleAddUser(val)}>
           {val.email}
-        </MenuItem>
+        </List>
       );
     });
+    return searchList;
+  };
 
+  // handleOnBlur = () => {
+  //   this.setState = {
+  //     openPopper: false,
+  //     anchorEl: null,
+  //   };
+  // };
+
+  render() {
+    console.log("pov", this.state.openPopper);
     const clicked = this.state.showContent;
     let onClickContent;
     if (!clicked) {
@@ -273,13 +276,34 @@ export class TakeANote extends Component {
                 <PersonAddIcon />
               </div>
               <input
+                ref={this.inputRef}
                 type="email"
                 className="collab-input"
                 placeholder="Person or email to share with"
                 onChange={this.handleSearchChange}
+                // onMouseLeave={this.handleOnBlur}
               />
+              <Popper
+                open={this.state.openPopper}
+                anchorEl={this.inputRef.current}
+                placement="bottom-start"
+                transition
+                style={{
+                  width: "20%",
+                  marginTop: "270px ",
+                }}
+              >
+                <Paper
+                  style={{
+                    padding: "20px",
+                    boxShadow: "1px 1px 5px #888",
+                  }}
+                  className="collab-popper"
+                >
+                  {this.searchingList()}
+                </Paper>
+              </Popper>
             </div>
-            <MenuList>{searchList}</MenuList>
           </div>
           <div className="new-collab-btns">
             <div>

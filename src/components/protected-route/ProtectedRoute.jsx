@@ -10,7 +10,6 @@ export default function ProtectedRoute({ component: Component, ...rest }) {
         if (Auth.isAuthenticated()) {
           return <Component {...props} />;
         } else {
-          alert("Please Login first");
           return <Redirect to="/sign-in" />;
         }
       }}

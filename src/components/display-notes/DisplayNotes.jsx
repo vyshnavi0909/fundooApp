@@ -16,6 +16,10 @@ import {
   MenuItem,
   TextareaAutosize,
   MenuList,
+  Popper,
+  Fade,
+  Paper,
+  List,
 } from "@material-ui/core";
 import AccountIcon from "@material-ui/icons/AccountCircleOutlined";
 import PersonAddIcon from "@material-ui/icons/PersonAddOutlined";
@@ -34,10 +38,12 @@ export class DisplayNotes extends Component {
       image: "",
       collaborators: [],
       display: false,
-      collabData: {
-        filter: "",
-        usersArray: [],
-      },
+      // collabData: {
+      //   filter: "",
+      usersArray: [],
+      // },
+      openPopper: false,
+      anchorEl: null,
     };
   }
 
@@ -52,13 +58,10 @@ export class DisplayNotes extends Component {
 
   handleSearchChange = (e) => {
     this.setState({
-      collabData: {
-        ...this.state.collabData,
-        filter: e.target.value,
-      },
+      openPopper: true,
+      anchorEl: e.currentTarget,
     });
 
-    console.log(this.state.collabData.filter);
     let data = {
       searchWord: e.target.value,
     };
@@ -66,10 +69,10 @@ export class DisplayNotes extends Component {
       .SearchUserList(data)
       .then((res) => {
         this.setState({
-          collabData: {
-            ...this.state.collabData,
-            usersArray: res.data.data.details,
-          },
+          // collabData: {
+          //   ...this.state.collabData,
+          usersArray: res.data.data.details,
+          // },
         });
       })
       .catch((err) => {
@@ -93,6 +96,8 @@ export class DisplayNotes extends Component {
   handleSave = () => {
     this.setState({
       collaboratorOpen: false,
+      openPopper: false,
+      anchorEl: null,
     });
     this.props.getNote();
   };
@@ -109,6 +114,7 @@ export class DisplayNotes extends Component {
       for (let i = 0; i < collaborators.length; i++) {
         displayCol.push(
           <AccountIcon
+            key={i}
             fontSize="large"
             className="collab-profile"
             titleAccess={collaborators[i].email}
@@ -126,11 +132,6 @@ export class DisplayNotes extends Component {
       let dis = [];
       for (let i = 0; i < collabs.length; i++) {
         dis.push(
-          // <AccountIcon
-          //   fontSize="large"
-          //   className="collab-profile"
-          //   titleAccess={collabs[i].email}
-          // />
           <div className="first">
             <AccountIcon fontSize="large" className="owner-icon" />
             <div>
@@ -215,17 +216,14 @@ export class DisplayNotes extends Component {
 
   handleClose = () => {
     const data = new FormData();
-    if (this.state.image === "") {
-      data.append("noteId", this.state.id);
-      data.append("title", this.state.title);
-      data.append("description", this.state.desc);
-    } else if (this.state.image !== "") {
-      data.append("noteId", this.state.id);
-      data.append("title", this.state.title);
-      data.append("description", this.state.desc);
+
+    data.append("noteId", this.state.id);
+    data.append("title", this.state.title);
+    data.append("description", this.state.desc);
+    if (this.state.image !== "") {
       data.append("file", this.state.image);
     }
-    console.log(data);
+
     services
       .UpdateNotes(data)
       .then((res) => {
@@ -283,11 +281,11 @@ export class DisplayNotes extends Component {
       </div>
     ));
 
-    const searchList = this.state.collabData.usersArray.map((val, ind) => {
+    const searchList = this.state.usersArray.map((val, ind) => {
       return (
-        <MenuItem key={ind} onClick={() => this.handleAddUser(val)}>
+        <List key={ind} onClick={() => this.handleAddUser(val)}>
           {val.email}
-        </MenuItem>
+        </List>
       );
     });
 
@@ -388,9 +386,23 @@ export class DisplayNotes extends Component {
                 className="collab-input"
                 placeholder="Person or email to share with"
                 onChange={this.handleSearchChange}
+                onMouseLeave={this.handleMouseLeave}
               />
             </div>
-            <MenuList>{searchList}</MenuList>
+            <Popper
+              open={this.state.openPopper}
+              anchorEl={this.state.anchorEl}
+              placement="bottom-start"
+              transition
+              style={{ zIndex: 20, marginTop: "450px", width: "250px" }}
+            >
+              <Paper
+                className="collab-popper"
+                style={{ padding: "10px", boxShadow: "1px 1px 5px #888" }}
+              >
+                {searchList}
+              </Paper>
+            </Popper>
           </DialogContent>
           <DialogActions className="collab-btns">
             <div>

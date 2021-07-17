@@ -8,6 +8,9 @@ body {
     background-color: #feefc3;
 } */
 
+.search-icon {
+    display: none;
+}
 
 .dashbd-menu-btn {
     margin-right: 50px;
@@ -55,13 +58,11 @@ body {
     color: #252525;
 }
 
-
 .dashbd-header-icons {
     display: flex;
     width: 50%;
     justify-content: flex-end;
     color: #575757;
-
 }
 
 .main-container {
@@ -116,8 +117,10 @@ body {
 
 .content-container {
     width: 100%;
-    padding: 100px;
+    padding: 0px;
     height: fit-content;
+    padding-top: 90px;
+    padding-left: 10%;
 }
 
 .profile-popper {
@@ -126,6 +129,22 @@ body {
     box-shadow: 1px 1px 5px #888888;
 }
 
+@media only screen and (max-width:1250px) {
+    .dashbd-search {
+        position: relative;
+        margin-right: 0;
+        padding-right: 0;
+    }
+
+    .icons {
+        margin: 0 5px;
+    }
+
+    .content-container {
+        padding-left: 8%;
+    }
+
+}
 
 @media only screen and (max-width:1000px) {
     .dashbd-search {
@@ -139,16 +158,44 @@ body {
     }
 
     .content-container {
-        padding: 50px;
-        padding-left: 80px;
+        /* padding-left: 80px; */
     }
 
 }
 
-@media only screen and (max-width:790px) {
-    .icons {
-        margin: 0 3px;
+@media only screen and (max-width: 800px) {
+    .dashbd-search-icon {
+        display: none;
     }
+
+    .search-icon {
+        display: flex;
+    }
+
+    .search-bar {
+        display: none;
+    }
+
+    .tool-bar {
+        width: 100%;
+    }
+
+    .dashbd-header-icons {
+        width: 100%;
+    }
+
+    .dashbd-search {
+        background-color: #e4e4e400;
+        box-shadow: none;
+        width: 0;
+        position: unset;
+    }
+
+}
+
+
+@media only screen and (max-width:790px) {
+
 
     .acc-icon,
     .app-icon {
@@ -161,20 +208,32 @@ body {
 }
 
 @media only screen and (max-width:599px) {
-
+    /* 
     .content-container {
         padding-right: 50px;
-    }
+    } */
 }
 
 @media only screen and (max-width:400px) {
 
-    .content-container {
+    /* .content-container {
         padding-left: 60px;
         padding-right: 10px;
-    }
+    } */
 
     .icons {
         padding: 0 3px;
+    }
+
+    .dashbd-keep-icon {
+        font-size: 14px;
+    }
+
+    .keep-icon {
+        height: 30px;
+    }
+
+    #list-icon {
+        display: none;
     }
 }

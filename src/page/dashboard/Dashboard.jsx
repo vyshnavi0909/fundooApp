@@ -25,14 +25,14 @@ import KeepIcon from "./keep.png";
 import Notes from "../../components/notes/Notes";
 import Archive from "../../components/archive/Archive";
 import Trash from "../../components/trash/Trash";
-
+import UserServices from "../../services/userServices";
 import "./Dashboard.css";
 import { Route, Switch, useHistory } from "react-router";
 import { Button, Divider, Fade, Paper, Popper } from "@material-ui/core";
 import { useState } from "react";
 
 const drawerWidth = 200;
-
+const services = new UserServices();
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
@@ -100,7 +100,16 @@ export default function DashBoard(props) {
   };
 
   const handleLogout = () => {
-    history.push("/sign-in");
+    services
+      .LogOut()
+      .then((res) => {
+        console.log("logged out successfully");
+        localStorage.removeItem("token");
+        history.push("/sign-in");
+      })
+      .catch((err) => {
+        console.log("logout", err);
+      });
   };
 
   const redirect = (e) => {
@@ -127,7 +136,7 @@ export default function DashBoard(props) {
     <div>
       <CssBaseline />
       <AppBar position="fixed" className={clsx(classes.appBar)} color="inherit">
-        <Toolbar>
+        <Toolbar className="tool-bar">
           <IconButton
             color="default"
             aria-label="open drawer"
@@ -135,11 +144,11 @@ export default function DashBoard(props) {
             edge="start"
             className="dashbd-menu-btn"
           >
-            <MenuIcon />
+            <MenuIcon fontSize="small" />
           </IconButton>
           <Typography className={classes.title} variant="h6">
             <div className="dashbd-keep-icon">
-              <img src={KeepIcon} alt="keep-icon" />
+              <img src={KeepIcon} alt="keep-icon" className="keep-icon" />
               <span>Keep</span>
             </div>
           </Typography>
@@ -147,16 +156,21 @@ export default function DashBoard(props) {
             <div className="dashbd-search-icon">
               <SearchIcon />
             </div>
-            <InputBase
-              placeholder="Search…"
-              className="dashbd-inputbase"
-              style={{ paddingLeft: 30 + "px" }}
-              inputProps={{ "aria-label": "search" }}
-            />
+            <div className="search-bar">
+              <InputBase
+                placeholder="Search…"
+                className="dashbd-inputbase"
+                style={{ paddingLeft: 30 + "px" }}
+                inputProps={{ "aria-label": "search" }}
+              />
+            </div>
           </div>
           <div className="dashbd-header-icons">
+            <span className="search-icon">
+              <SearchIcon fontSize="small" />
+            </span>
             <RefreshIcon className="ref-icon icons" />
-            <ListViewIcon className="lis-icon icons" />
+            <ListViewIcon className="lis-icon icons" id="list-icon" />
             <SettingsIcon className="set-icon icons" />
             <div className="google-icons">
               <AppsIcon className="app-icon icons" />
