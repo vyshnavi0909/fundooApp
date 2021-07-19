@@ -3,8 +3,8 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import { Link } from "react-router-dom";
 import "./SignIn.css";
-import UserServices from "/home/babbur/Desktop/session3/React Projects/fundoo_app/src/services/userServices.js";
-import Auth from "../../components/auth/Auth";
+import UserServices from "../../services/userServices.js";
+
 const services = new UserServices();
 
 export class SignIn extends Component {
@@ -57,7 +57,6 @@ export class SignIn extends Component {
       services
         .SignIn(data)
         .then((res) => {
-          console.log(res);
           localStorage.setItem("token", res.data.id);
           this.props.history.push("/dashboard");
         })

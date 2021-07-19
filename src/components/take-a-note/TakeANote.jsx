@@ -9,12 +9,9 @@ import { withGetNotes } from "../context-files/Consumer";
 import UserServices from "../../services/userServices";
 import {
   Divider,
-  MenuItem,
-  MenuList,
   Paper,
   Popper,
   TextareaAutosize,
-  Fade,
   List,
 } from "@material-ui/core";
 import AccountIcon from "@material-ui/icons/AccountCircleOutlined";
@@ -198,13 +195,6 @@ export class TakeANote extends Component {
     });
     return searchList;
   };
-
-  // handleOnBlur = () => {
-  //   this.setState = {
-  //     openPopper: false,
-  //     anchorEl: null,
-  //   };
-  // };
 
   render() {
     const clicked = this.state.showContent;

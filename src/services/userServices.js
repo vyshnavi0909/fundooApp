@@ -45,7 +45,12 @@ class UserServices {
   };
 
   GetNotesList = () => {
-    return axiosServices.getMethod(`${baseURL}notes/getNotesList`, config);
+    return axiosServices.getMethod(`${baseURL}notes/getNotesList`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: localStorage.getItem("token"),
+      },
+    });
   };
 
   DeleteNote = (data) => {
