@@ -135,14 +135,14 @@ export class DisplayNotes extends Component {
   };
 
   removeCollab = (col) => {
-    console.log("remove");
+    console.log("remove ", col);
     let userid = col.userId;
     let id = this.state.id;
     services
       .RemoveCollaborator(id, userid)
       .then((res) => {
         console.log(res);
-        this.props.getNote();
+        this.handleSave();
       })
       .catch((err) => {
         console.log(err);
@@ -154,7 +154,7 @@ export class DisplayNotes extends Component {
       let dis = [];
       for (let i = 0; i < collabs.length; i++) {
         dis.push(
-          <div className="collabs-list">
+          <div className="collabs-list" key={i}>
             <div className="first">
               <AccountIcon fontSize="large" className="owner-icon" />
               <div>
@@ -171,7 +171,7 @@ export class DisplayNotes extends Component {
               <img
                 src={deleteImg}
                 alt="collab-remove"
-                onClick={this.removeCollab()}
+                onClick={() => this.removeCollab(collabs[i])}
               />
             </div>
           </div>
