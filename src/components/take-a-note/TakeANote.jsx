@@ -207,7 +207,6 @@ export class TakeANote extends Component {
   // };
 
   render() {
-    console.log("pov", this.state.openPopper);
     const clicked = this.state.showContent;
     let onClickContent;
     if (!clicked) {
@@ -281,7 +280,6 @@ export class TakeANote extends Component {
                 className="collab-input"
                 placeholder="Person or email to share with"
                 onChange={this.handleSearchChange}
-                // onMouseLeave={this.handleOnBlur}
               />
               <Popper
                 open={this.state.openPopper}

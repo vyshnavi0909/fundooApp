@@ -8,6 +8,10 @@ class AxiosService {
   getMethod = (url, data, header) => {
     return axios.get(url, data, header);
   };
+
+  deleteMethod = (url, header) => {
+    return axios.delete(url, header);
+  };
 }
 
 export default AxiosService;

@@ -20,6 +20,8 @@ import {
 } from "@material-ui/core";
 import AccountIcon from "@material-ui/icons/AccountCircleOutlined";
 import PersonAddIcon from "@material-ui/icons/PersonAddOutlined";
+import deleteImg from "./delete.svg";
+
 const services = new UserServices();
 
 export class DisplayNotes extends Component {
@@ -103,19 +105,48 @@ export class DisplayNotes extends Component {
     if (collaborators.length > 0) {
       let displayCol = [];
       for (let i = 0; i < collaborators.length; i++) {
+        let firstLetter = collaborators[i].firstName.charAt(0).toUpperCase();
         displayCol.push(
-          <AccountIcon
+          <span
             key={i}
-            fontSize="large"
             className="collab-profile"
-            titleAccess={collaborators[i].email}
-          />
+            title={collaborators[i].email}
+            style={{
+              border: "3px solid #000",
+              borderRadius: "100%",
+              color: "#000",
+              fontWeight: "bold",
+              padding: "3px 9px",
+              fontFamily: "serif",
+            }}
+          >
+            {firstLetter}
+          </span>
         );
       }
-      return <div>{displayCol}</div>;
+      return (
+        <div style={{ marginTop: "10px", display: "flex", flexWrap: "wrap" }}>
+          {displayCol}
+        </div>
+      );
     } else {
       return <div></div>;
     }
+  };
+
+  removeCollab = (col) => {
+    console.log("remove");
+    let userid = col.userId;
+    let id = this.state.id;
+    services
+      .RemoveCollaborator(id, userid)
+      .then((res) => {
+        console.log(res);
+        this.props.getNote();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   collabsOnCollabBox = (collabs) => {
@@ -123,16 +154,25 @@ export class DisplayNotes extends Component {
       let dis = [];
       for (let i = 0; i < collabs.length; i++) {
         dis.push(
-          <div className="first">
-            <AccountIcon fontSize="large" className="owner-icon" />
-            <div>
+          <div className="collabs-list">
+            <div className="first">
+              <AccountIcon fontSize="large" className="owner-icon" />
               <div>
-                <b className="owner-name">
-                  {collabs[i].firstName}
-                  {collabs[i].lastName}
-                </b>
+                <div>
+                  <b className="owner-name">
+                    {collabs[i].firstName}
+                    {collabs[i].lastName}
+                  </b>
+                </div>
+                <p className="owner-tag">{collabs[i].email}</p>
               </div>
-              <p className="owner-tag">{collabs[i].email}</p>
+            </div>
+            <div className="remove-btn">
+              <img
+                src={deleteImg}
+                alt="collab-remove"
+                onClick={this.removeCollab()}
+              />
             </div>
           </div>
         );
@@ -317,7 +357,6 @@ export class DisplayNotes extends Component {
                 onChange={this.handleDescChange}
               />
             </DialogContentText>
-            <Divider />
             {this.displayCollaborator(this.state.collaborators)}
           </DialogContent>
           <DialogActions style={{ backgroundColor: this.state.color }}>
@@ -339,7 +378,6 @@ export class DisplayNotes extends Component {
         </Dialog>
 
         {/* collaborator dialog box */}
-
         <Dialog
           className="collab-dialog-box"
           open={this.state.collaboratorOpen}
@@ -364,7 +402,6 @@ export class DisplayNotes extends Component {
                 </div>
               </div>
             </div>
-            <Divider />
             <div className="first">
               {this.collabsOnCollabBox(this.state.collaborators)}
             </div>

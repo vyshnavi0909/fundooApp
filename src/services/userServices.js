@@ -103,6 +103,13 @@ class UserServices {
     );
   };
 
+  RemoveCollaborator = (id, userId) => {
+    return axiosServices.deleteMethod(
+      `${baseURL}notes/${id}/removeCollaboratorsNotes/${userId}`,
+      config
+    );
+  };
+
   LogOut = () => {
     return axiosServices.postMethod(`${baseURL}user/logout`, null, config);
   };
