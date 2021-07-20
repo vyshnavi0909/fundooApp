@@ -123,6 +123,19 @@ body {
     box-shadow: 1px 1px 5px #888888;
 }
 
+.resp-search-bar {
+    flex-direction: row;
+    align-items: center;
+    box-shadow: 1px 1px 5px #575757;
+    border-radius: 5px;
+    padding: 5px;
+    width: 100%;
+}
+
+.resp-search-input {
+    margin: 0;
+}
+
 @media only screen and (max-width:1250px) {
     .dashbd-search {
         position: relative;
@@ -184,10 +197,6 @@ body {
 
 @media only screen and (max-width:790px) {
 
-    /* .content-container {
-        padding-left: 60px;
-    } */
-
     .acc-icon,
     .app-icon {
         margin: 0 2px;
@@ -198,11 +207,15 @@ body {
     }
 }
 
-@media only screen and (max-width:599px) {
-    /* 
-    .content-container {
-        padding-right: 50px;
-    } */
+@media only screen and (max-width:689px) {
+
+    .dashbd-menu-btn {
+        margin-right: 0px;
+    }
+
+    #list-icon {
+        display: none;
+    }
 }
 
 @media only screen and (max-width:400px) {
@@ -224,7 +237,5 @@ body {
         height: 30px;
     }
 
-    #list-icon {
-        display: none;
-    }
+
 }

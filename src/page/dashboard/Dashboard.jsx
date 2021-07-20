@@ -83,6 +83,7 @@ export default function DashBoard(props) {
   const [open, setOpen] = useState(false);
   const [openProfile, setProfile] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
+  const [searchDisplay, setsearch] = useState("none");
 
   const history = useHistory();
 
@@ -129,6 +130,13 @@ export default function DashBoard(props) {
     }
   };
 
+  const handleSearchBar = () => {
+    setsearch("flex");
+    document.getElementById("resp-search-icon").style.display = "none";
+    document.getElementById("keep-heading").style.display = "none";
+    document.getElementById("header-icons").style.width = "50%";
+  };
+
   document.body.style.backgroundColor = "white";
   document.title = "Dashboard";
 
@@ -147,7 +155,7 @@ export default function DashBoard(props) {
             <MenuIcon fontSize="small" />
           </IconButton>
           <Typography className={classes.title} variant="h6">
-            <div className="dashbd-keep-icon">
+            <div className="dashbd-keep-icon" id="keep-heading">
               <img src={KeepIcon} alt="keep-icon" className="keep-icon" />
               <span>Keep</span>
             </div>
@@ -165,9 +173,26 @@ export default function DashBoard(props) {
               />
             </div>
           </div>
-          <div className="dashbd-header-icons">
-            <span className="search-icon">
-              <SearchIcon style={{ marginTop: "2.5px" }} fontSize="small" />
+          <div style={{ display: searchDisplay }} className="resp-search-bar">
+            <div className="">
+              <SearchIcon fontSize="small" />
+            </div>
+            <div className="">
+              <InputBase
+                placeholder="Search…"
+                className="resp-search-input"
+                style={{ paddingLeft: "5px" }}
+                inputProps={{ "aria-label": "search" }}
+              />
+            </div>
+          </div>
+          <div className="dashbd-header-icons" id="header-icons">
+            <span className="search-icon" id="resp-search-icon">
+              <SearchIcon
+                style={{ marginTop: "2.5px" }}
+                fontSize="small"
+                onClick={handleSearchBar}
+              />
             </span>
             <RefreshIcon className="ref-icon icons" />
             <ListViewIcon className="lis-icon icons" id="list-icon" />
