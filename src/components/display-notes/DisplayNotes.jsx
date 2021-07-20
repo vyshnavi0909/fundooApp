@@ -79,7 +79,7 @@ export class DisplayNotes extends Component {
     services
       .AddCollaborator(this.state.id, data)
       .then((res) => {
-        console.log("collab-res", res);
+        this.handleSave();
       })
       .catch((err) => {
         console.log("collab", err);
@@ -153,10 +153,24 @@ export class DisplayNotes extends Component {
     if (collabs.length > 0) {
       let dis = [];
       for (let i = 0; i < collabs.length; i++) {
+        let firstLetter = collabs[i].firstName.charAt(0).toUpperCase();
+
         dis.push(
           <div className="collabs-list" key={i}>
             <div className="first">
-              <AccountIcon fontSize="large" className="owner-icon" />
+              <span
+                className="collab-profile"
+                style={{
+                  border: "3px solid #000",
+                  borderRadius: "100%",
+                  color: "#000",
+                  fontWeight: "bold",
+                  padding: "3px 9px",
+                  fontFamily: "serif",
+                }}
+              >
+                {firstLetter}
+              </span>
               <div>
                 <div>
                   <b className="owner-name">

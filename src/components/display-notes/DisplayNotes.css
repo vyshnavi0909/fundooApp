@@ -37,6 +37,13 @@
     font-family: sans-serif;
 }
 
+.collab-dialog-box {
+    width: 100%;
+    padding: 30px;
+    padding-top: 80px;
+
+}
+
 .first,
 .second {
     display: flex;
@@ -227,6 +234,22 @@
     .note-div {
         width: 310px;
     }
+
+    .collab-dialog-box {
+        margin-left: 30px;
+
+    }
+
+
+    .collabs-list {
+        width: 100%;
+    }
+
+    .first {
+        width: 400px;
+    }
+
+
 }
 
 @media only screen and (max-width:790px) {
@@ -246,6 +269,12 @@
 
     .note-image {
         width: 60%;
+    }
+
+    .dialog-box {
+        width: 100%;
+        margin-left: 20px;
+        padding-left: 50px;
     }
 }
 
@@ -267,8 +296,18 @@
         width: 100%;
     }
 
+    .first {
+        width: 300px;
+    }
+
     .displaynotes {
         padding-left: 50px;
+    }
+}
+
+@media only screen and (max-width:499px) {
+    .first {
+        width: 220px;
     }
 }
 
@@ -281,7 +320,16 @@
 
     .displaynotes {
         width: 100%;
+    }
 
+    .collab-dialog-box {
+        margin-left: 10px;
+        padding-right: 10px;
+        margin-right: 0;
+    }
+
+    .first {
+        width: 200px;
     }
 
     .card-content {
