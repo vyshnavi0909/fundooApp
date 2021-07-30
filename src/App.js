@@ -7,7 +7,7 @@ import ResetPassword from "./page/reset-password/ResetPassword";
 import DashBoard from "./page/dashboard/Dashboard";
 import Archive from "./components/archive/Archive";
 import Trash from "./components/trash/Trash";
-import ProtectedRoute from "./components/protected-route/ProtectedRoute";
+import ProtectedRouter from "./components/protected-route/ProtectedRouter";
 import AuthRouter from "./components/auth-router/AuthRouter";
 function App() {
   return (
@@ -17,13 +17,20 @@ function App() {
         <AuthRouter exact path="/sign-in" component={SignIn}></AuthRouter>
         <Route exact path="/forgot-password" component={ForgotPassword}></Route>
         <Route path="/resetpassword" component={ResetPassword}></Route>
-        <ProtectedRoute
-          exact
+        <ProtectedRouter
           path="/dashboard"
           component={DashBoard}
-        ></ProtectedRoute>
-        <ProtectedRoute path="/archive" component={Archive}></ProtectedRoute>
-        <ProtectedRoute path="trash" component={Trash}></ProtectedRoute>
+        ></ProtectedRouter>
+        <ProtectedRouter
+          exact
+          path="/archive"
+          component={Archive}
+        ></ProtectedRouter>
+        <ProtectedRouter
+          exact
+          path="/trash"
+          component={Trash}
+        ></ProtectedRouter>
       </div>
     </Router>
   );

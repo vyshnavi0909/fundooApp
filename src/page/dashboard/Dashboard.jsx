@@ -28,7 +28,7 @@ import Trash from "../../components/trash/Trash";
 import UserServices from "../../services/userServices";
 import "./Dashboard.css";
 import { Route, Switch, useHistory } from "react-router";
-import { Button, Divider, Fade, Paper, Popper } from "@material-ui/core";
+import { Button, Divider, Paper, Popper } from "@material-ui/core";
 import { useState } from "react";
 
 const drawerWidth = 200;
@@ -247,8 +247,8 @@ export default function DashBoard(props) {
       <div className="content-container">
         <Switch>
           <Route exact path="/dashboard" component={Notes}></Route>
-          <Route path="/dashboard/archive" component={Archive}></Route>
-          <Route path="/dashboard/trash" component={Trash}></Route>
+          <Route exact path="/dashboard/archive" component={Archive}></Route>
+          <Route exact path="/dashboard/trash" component={Trash}></Route>
         </Switch>
       </div>
 
@@ -260,29 +260,27 @@ export default function DashBoard(props) {
         transition
         style={{ zIndex: 10, right: 0, width: "200px" }}
       >
-        {({ TransitionProps }) => (
-          <Fade {...TransitionProps} timeout={100}>
-            <Paper className="profile-popper">
-              <div>
-                <AccountIcon fontSize="large" />
-                <h3>Babbur Vyshnavi</h3>
-              </div>
-              <Divider />
-              <Button
-                onClick={handleLogout}
-                style={{
-                  backgroundColor: "#1976d2",
-                  color: "#fff",
-                  padding: "5px 10px",
-                  fontWeight: "600",
-                  margin: "20px",
-                }}
-              >
-                Logout
-              </Button>
-            </Paper>
-          </Fade>
-        )}
+        {
+          <Paper className="profile-popper">
+            <div>
+              <AccountIcon fontSize="large" />
+              <h3>Babbur Vyshnavi</h3>
+            </div>
+            <Divider />
+            <Button
+              onClick={handleLogout}
+              style={{
+                backgroundColor: "#1976d2",
+                color: "#fff",
+                padding: "5px 10px",
+                fontWeight: "600",
+                margin: "20px",
+              }}
+            >
+              Logout
+            </Button>
+          </Paper>
+        }
       </Popper>
     </div>
   );

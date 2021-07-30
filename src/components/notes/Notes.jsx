@@ -53,13 +53,11 @@ export class Notes extends Component {
           notes: this.state.notes,
         }}
       >
-        <div>
-          <div className="note-taker-div">
-            <TakeANote />
-          </div>
-          <div className="cards-container">
-            <DisplayNotes />
-          </div>
+        <div className="note-taker-div">
+          <TakeANote />
+        </div>
+        <div className="cards-container">
+          <DisplayNotes />
         </div>
       </NotesContext.Provider>
     );
