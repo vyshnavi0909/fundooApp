@@ -30,8 +30,8 @@ import "./Dashboard.css";
 import { Route, Switch, useHistory } from "react-router";
 import { Button, Divider, Paper, Popper } from "@material-ui/core";
 import { useState } from "react";
-import { connect } from "react-redux";
 import store from "../../store/store";
+import { connect } from "react-redux";
 
 const drawerWidth = 200;
 const services = new UserServices();
@@ -86,8 +86,14 @@ function DashBoard(props) {
   const [openProfile, setProfile] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const [searchDisplay, setsearch] = useState("none");
-  const [heading, setHeading] = useState("Notes");
-
+  const [pageTitle, setTitle] = useState("Notes");
+  const [bgColor, setBg] = useState({
+    noteColor: "#feefc3",
+    remColor: "#fff",
+    labelColor: "#fff",
+    archColor: "#fff",
+    trashColor: "#fff",
+  });
   const history = useHistory();
 
   const handleDrawer = () => {
@@ -118,6 +124,8 @@ function DashBoard(props) {
 
   const redirect = (e) => {
     const url = e;
+
+    console.log(url);
     if (url === "notes") {
       props.dispatch({ type: "Notes" });
       history.push("/dashboard");
@@ -143,17 +151,54 @@ function DashBoard(props) {
     document.getElementById("header-icons").style.width = "50%";
   };
 
-  store.subscribe(function () {
-    if (store.getState().heading === "Reminder") {
-      setHeading(store.getState().heading);
-    } else if (store.getState().heading === "Label") {
-      setHeading(store.getState().heading);
-    } else if (store.getState().heading === "Archive") {
-      setHeading(store.getState().heading);
-    } else if (store.getState().heading === "Trash") {
-      setHeading(store.getState().heading);
-    } else if (store.getState().heading === "Notes") {
-      setHeading(store.getState().heading);
+  store.subscribe(() => {
+    let title = store.getState().titleReducer.heading;
+    let active = store.getState().listColorReducer.active;
+    if (title === "Notes") {
+      setTitle(title);
+      setBg({
+        noteColor: active,
+        remColor: "#fff",
+        labelColor: "#fff",
+        archColor: "#fff",
+        trashColor: "#fff",
+      });
+    } else if (title === "Reminder") {
+      setTitle(title);
+      setBg({
+        noteColor: "#fff",
+        remColor: active,
+        labelColor: "#fff",
+        archColor: "#fff",
+        trashColor: "#fff",
+      });
+    } else if (title === "Label") {
+      setTitle(title);
+      setBg({
+        noteColor: "#fff",
+        remColor: "#fff",
+        labelColor: active,
+        archColor: "#fff",
+        trashColor: "#fff",
+      });
+    } else if (title === "Archive") {
+      setTitle(title);
+      setBg({
+        noteColor: "#fff",
+        remColor: "#fff",
+        labelColor: "#fff",
+        archColor: active,
+        trashColor: "#fff",
+      });
+    } else if (title === "Trash") {
+      setTitle(title);
+      setBg({
+        noteColor: "#fff",
+        remColor: "#fff",
+        labelColor: "#fff",
+        archColor: "#fff",
+        trashColor: active,
+      });
     }
   });
 
@@ -177,7 +222,7 @@ function DashBoard(props) {
           <Typography className={classes.title} variant="h6">
             <div className="dashbd-keep-icon" id="keep-heading">
               <img src={KeepIcon} alt="keep-icon" className="keep-icon" />
-              <span>{heading}</span>
+              <span>{pageTitle}</span>
             </div>
           </Typography>
           <div className="dashbd-search">
@@ -242,23 +287,64 @@ function DashBoard(props) {
             className="list-items"
             name="notes"
             onClick={() => redirect("notes")}
+            style={{
+              backgroundColor: bgColor.noteColor,
+              borderTopRightRadius: "100px",
+              borderBottomRightRadius: "100px",
+            }}
           >
             <NotesIcon />
             <span className="list-name">Notes</span>
           </div>
-          <div className="list-items" onClick={() => redirect("reminder")}>
+          <div
+            className="list-items"
+            onClick={() => redirect("reminder")}
+            name="reminder"
+            style={{
+              backgroundColor: bgColor.remColor,
+              borderTopRightRadius: "100px",
+              borderBottomRightRadius: "100px",
+            }}
+          >
             <ReminderIcon />
             <span className="list-name">Reminder</span>
           </div>
-          <div className="list-items" onClick={() => redirect("editlabel")}>
+          <div
+            className="list-items"
+            onClick={() => redirect("editlabel")}
+            name="label"
+            style={{
+              backgroundColor: bgColor.labelColor,
+              borderTopRightRadius: "100px",
+              borderBottomRightRadius: "100px",
+            }}
+          >
             <EditIcon />
             <span className="list-name">Edit Label</span>
           </div>
-          <div className="list-items" onClick={() => redirect("archive")}>
+          <div
+            className="list-items"
+            onClick={() => redirect("archive")}
+            name="archive"
+            style={{
+              backgroundColor: bgColor.archColor,
+              borderTopRightRadius: "100px",
+              borderBottomRightRadius: "100px",
+            }}
+          >
             <ArchiveIcon />
             <span className="list-name">Archive</span>
           </div>
-          <div className="list-items" onClick={() => redirect("trash")}>
+          <div
+            className="list-items"
+            onClick={() => redirect("trash")}
+            name="trash"
+            style={{
+              backgroundColor: bgColor.trashColor,
+              borderTopRightRadius: "100px",
+              borderBottomRightRadius: "100px",
+            }}
+          >
             <TrashIcon />
             <span className="list-name">Trash</span>
           </div>
@@ -306,4 +392,10 @@ function DashBoard(props) {
   );
 }
 
-export default connect()(DashBoard);
+function mapStateToProps(state) {
+  return {
+    state,
+  };
+}
+
+export default connect(mapStateToProps)(DashBoard);

@@ -2,7 +2,7 @@ const initialState = {
   heading: "",
 };
 
-function headerReducer(state = initialState, action) {
+function titleReducer(state = initialState, action) {
   switch (action.type) {
     case "Notes":
       return {
@@ -30,4 +30,4 @@ function headerReducer(state = initialState, action) {
   }
 }
 
-export default headerReducer;
+export default titleReducer;

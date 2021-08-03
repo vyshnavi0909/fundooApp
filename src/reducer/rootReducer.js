@@ -1,8 +1,8 @@
 import { combineReducers } from "redux";
-import itemColorReducer from "./itemColorReducer";
-import headerReducer from "./headerReducer";
+import listColorReducer from "./listColorReducer";
+import titleReducer from "./titleReducer";
 
 export default combineReducers({
-  itemColorReducer,
-  headerReducer,
+  listColorReducer,
+  titleReducer,
 });
