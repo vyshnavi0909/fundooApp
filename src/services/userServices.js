@@ -82,14 +82,21 @@ class UserServices {
   };
 
   GetArchiveNotesList = () => {
-    return axiosServices.getMethod(
-      `${baseURL}notes/getArchiveNotesList`,
-      config
-    );
+    return axiosServices.getMethod(`${baseURL}notes/getArchiveNotesList`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: localStorage.getItem("token"),
+      },
+    });
   };
 
   GetTrashNotesList = () => {
-    return axiosServices.getMethod(`${baseURL}notes/getTrashNotesList`, config);
+    return axiosServices.getMethod(`${baseURL}notes/getTrashNotesList`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: localStorage.getItem("token"),
+      },
+    });
   };
 
   SearchUserList = (data) => {

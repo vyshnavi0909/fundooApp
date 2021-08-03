@@ -30,6 +30,8 @@ import "./Dashboard.css";
 import { Route, Switch, useHistory } from "react-router";
 import { Button, Divider, Paper, Popper } from "@material-ui/core";
 import { useState } from "react";
+import { connect } from "react-redux";
+import store from "../../store/store";
 
 const drawerWidth = 200;
 const services = new UserServices();
@@ -78,12 +80,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function DashBoard(props) {
+function DashBoard(props) {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const [openProfile, setProfile] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const [searchDisplay, setsearch] = useState("none");
+  const [heading, setHeading] = useState("Notes");
 
   const history = useHistory();
 
@@ -115,17 +118,20 @@ export default function DashBoard(props) {
 
   const redirect = (e) => {
     const url = e;
-
-    console.log(url);
     if (url === "notes") {
+      props.dispatch({ type: "Notes" });
       history.push("/dashboard");
     } else if (url === "reminder") {
+      props.dispatch({ type: "Reminder" });
       history.push("/dashboard/reminder");
     } else if (url === "editlabel") {
+      props.dispatch({ type: "Label" });
       history.push("/dashboard/editlabels");
     } else if (url === "archive") {
+      props.dispatch({ type: "Archive" });
       history.push("/dashboard/archive");
     } else if (url === "trash") {
+      props.dispatch({ type: "Trash" });
       history.push("/dashboard/trash");
     }
   };
@@ -136,6 +142,20 @@ export default function DashBoard(props) {
     document.getElementById("keep-heading").style.display = "none";
     document.getElementById("header-icons").style.width = "50%";
   };
+
+  store.subscribe(function () {
+    if (store.getState().heading === "Reminder") {
+      setHeading(store.getState().heading);
+    } else if (store.getState().heading === "Label") {
+      setHeading(store.getState().heading);
+    } else if (store.getState().heading === "Archive") {
+      setHeading(store.getState().heading);
+    } else if (store.getState().heading === "Trash") {
+      setHeading(store.getState().heading);
+    } else if (store.getState().heading === "Notes") {
+      setHeading(store.getState().heading);
+    }
+  });
 
   document.body.style.backgroundColor = "white";
   document.title = "Dashboard";
@@ -157,7 +177,7 @@ export default function DashBoard(props) {
           <Typography className={classes.title} variant="h6">
             <div className="dashbd-keep-icon" id="keep-heading">
               <img src={KeepIcon} alt="keep-icon" className="keep-icon" />
-              <span>Keep</span>
+              <span>{heading}</span>
             </div>
           </Typography>
           <div className="dashbd-search">
@@ -285,3 +305,5 @@ export default function DashBoard(props) {
     </div>
   );
 }
+
+export default connect()(DashBoard);

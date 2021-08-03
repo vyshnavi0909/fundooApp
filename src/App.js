@@ -9,6 +9,7 @@ import Archive from "./components/archive/Archive";
 import Trash from "./components/trash/Trash";
 import ProtectedRouter from "./components/protected-route/ProtectedRouter";
 import AuthRouter from "./components/auth-router/AuthRouter";
+
 function App() {
   return (
     <Router>
