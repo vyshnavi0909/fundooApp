@@ -393,6 +393,7 @@ function DashBoard(props) {
 }
 
 function mapStateToProps(state) {
+  console.log(state);
   return {
     state,
   };
