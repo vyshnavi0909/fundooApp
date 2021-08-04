@@ -206,7 +206,7 @@ function DashBoard(props) {
   document.title = "Dashboard";
 
   return (
-    <div>
+    <div className="dashboard-container">
       <CssBaseline />
       <AppBar position="fixed" className={clsx(classes.appBar)} color="inherit">
         <Toolbar className="tool-bar">
