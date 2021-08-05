@@ -308,7 +308,6 @@ export class TakeANote extends Component {
     }
     return (
       <>
-        <div className="sample"></div>
         <div className="take-a-note" onClick={this.handleOnClick}>
           {onClickContent}
         </div>

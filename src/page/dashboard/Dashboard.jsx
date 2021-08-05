@@ -124,7 +124,6 @@ function DashBoard(props) {
 
   const redirect = (e) => {
     const url = e;
-
     console.log(url);
     if (url === "notes") {
       props.dispatch({ type: "Notes" });
@@ -152,6 +151,7 @@ function DashBoard(props) {
   };
 
   store.subscribe(() => {
+    console.log(props);
     let title = store.getState().titleReducer.heading;
     let active = store.getState().listColorReducer.active;
     if (title === "Notes") {
